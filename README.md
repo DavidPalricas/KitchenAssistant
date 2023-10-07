@@ -1,7 +1,9 @@
 # KitchenAssistant
-![Kitchen Assistant](image-url.jpg)
-Kitchen Assistant for Active Ageing at Home
+##### Kitchen Assistant for Active Ageing at Home
 
+![Kitchen Assistant](https://github.com/PedroMiguelTorresCarneiro/KitchenAssistant/blob/main/casaviva%2B_photo.png)
+
+---
 ### Supervisors: 
 
  **Nuno Almeida (nunoalmeida@ua.pt)** ,  **Ana Patrícia Rocha (aprocha@ua.pt)** , **António Teixeira (ajst@ua.pt)**
