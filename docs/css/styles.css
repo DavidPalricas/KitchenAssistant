@@ -10841,7 +10841,7 @@ textarea.form-control-lg {
 header.masthead {
   position: relative;
   background-color: #04414d;
-  background: url("../assets/img") no-repeat center center;   /* falta imagem */
+  background: url("../assets/img/banner-oldAge.jpg") no-repeat center center; 
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
@@ -10861,8 +10861,8 @@ header.masthead h1, header.masthead .h1 {
 }
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
+    padding-top: 5rem;
+    padding-bottom: 8rem;
   }
   header.masthead h1, header.masthead .h1 {
     font-size: 3rem;
