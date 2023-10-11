@@ -48,7 +48,7 @@ Rovisco Pais Rehabilitation Center, and several companies associated with INOVAD
 
 | | Name          | Email                      | GitHub Page                     |
 |-|---------------|----------------------------|---------------------------------|
-|![Alt Text](image-url.jpg)| Ruben Marinho | a40115@ua.pt               | [Ruben Profile](https://github.com/pedro) |
+|<img src="/docs/assets/img/RubenMarinho.jpg" alt="Alt Text" width="100" height="100">| Ruben Marinho | a40115@ua.pt               | [Ruben Profile](https://github.com/pedro) |
 |![Alt Text](image-url.jpg)| Pedro Carneiro| pedrocarneiro@ua.pt        | [Pedro Profile](https://github.com/PedroMiguelTorresCarneiro)  |
 |![Alt Text](image-url.jpg)| Inês Águia    | inesaguia@ua.pt            | [Inês Profile](https://github.com/john)  |
 |![Alt Text](image-url.jpg)| João Rodrigues| rafa.mac@ua.pt             | [João Profile](https://github.com/john)  |
