@@ -48,8 +48,8 @@ Rovisco Pais Rehabilitation Center, and several companies associated with INOVAD
 
 | | Name          | Email                      | GitHub Page                     |
 |-|---------------|----------------------------|---------------------------------|
-|<img src="/docs/assets/img/RubenMarinho.jpg" alt="Alt Text" width="100" height="100">| Ruben Marinho | a40115@ua.pt               | [Ruben Profile](https://github.com/pedro) |
-|<img src="/docs/assets/img/pedrocarneiro_photo.jpg" alt="Alt Text" width="100" height="100">| Pedro Carneiro| pedrocarneiro@ua.pt        | [Pedro Profile](https://github.com/PedroMiguelTorresCarneiro)  |
-|![Alt Text](image-url.jpg)| Inês Águia    | inesaguia@ua.pt            | [Inês Profile](https://github.com/john)  |
+|<img src="/docs/assets/img/RubenMarinho.jpg" alt="Alt Text" width="100" height="100">       | Ruben Marinho | a40115@ua.pt               | [Ruben Profile](https://github.com/pedro) |
+|<img src="/docs/assets/img/pedrocarneiro_photo.jpg" alt="Alt Text" width="120" height="100">| Pedro Carneiro| pedrocarneiro@ua.pt        | [Pedro Profile](https://github.com/PedroMiguelTorresCarneiro)  |
+|<img src="/docs/assets/img/inesaguia_photo.jpeg" alt="Alt Text" width="100" height="130">    | Inês Águia    | inesaguia@ua.pt            | [Inês Profile](https://github.com/inesaguia)  |
 |![Alt Text](image-url.jpg)| João Rodrigues| rafa.mac@ua.pt             | [João Profile](https://github.com/john)  |
 |![Alt Text](image-url.jpg)| David Palricas| david.palricas@ua.pt       | [David Profile](https://github.com/john)  |
