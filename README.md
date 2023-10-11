@@ -39,7 +39,9 @@ Rovisco Pais Rehabilitation Center, and several companies associated with INOVAD
 
 
 ---
-### RELATED WORK
+### WORKPLAN
+
+<img src="/docs/assets/img/workplan_photo.png" alt="Alt Text" width="1000" height="350"> 
 
 
 
