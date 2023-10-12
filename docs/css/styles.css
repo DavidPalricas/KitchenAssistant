@@ -3805,7 +3805,7 @@ textarea.form-control-lg {
 .navbar-text {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  color: var(--bs-navbar-color);
+  color: var(--bs-white);
 }
 .navbar-text a,
 .navbar-text a:hover,
@@ -8166,6 +8166,21 @@ textarea.form-control-lg {
 .bg-danger {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-light-dark {
+  background-color: rgba(var(--bs-light-rgb), 0.1) !important; /* Adjust the opacity value as needed */
+}
+
+.bg-dark-lighter {
+  background-color: rgba(var(--bs-dark-rgb), 0.8) !important; /* Adjust the opacity value as needed */
+}
+
+.bg-dark-lighter-2 {
+  background-color: rgba(var(--bs-dark-rgb), 0.5) !important; /* Adjust the opacity value as needed */
+}
+.bg-dark-lighter-3 {
+  background-color: rgba(var(--bs-dark-rgb), 0.9) !important; /* Adjust the opacity value as needed */
 }
 
 .bg-light {
