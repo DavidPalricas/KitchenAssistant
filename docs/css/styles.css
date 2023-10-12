@@ -597,10 +597,12 @@ progress {
   content: "— ";
 }
 
-.img-fluid {
-  max-width: 100%;
-  height: auto;
+.img-fluid.rounded-circle {
+    width: 150px;  /* Set the width */
+    height: 150px;  /* Set the height */
+    object-fit: cover;  /* Crop the image */
 }
+
 
 .img-thumbnail {
   padding: 0.25rem;
@@ -10916,10 +10918,4 @@ header.masthead h1, header.masthead .h1 {
 footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
-}
-
-.img-fluid {
-  width: 100px;  /* Set the width */
-  height: auto;  /* Maintain aspect ratio */
-  border-radius: 50%;  /* Rounded circle */
 }
