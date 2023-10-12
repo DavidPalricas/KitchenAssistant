@@ -597,7 +597,7 @@ progress {
   content: "— ";
 }
 
-.img-fluid.rounded-circle {
+.img-fluid {
     width: 150px;  /* Set the width */
     height: 150px;  /* Set the height */
     object-fit: cover;  /* Crop the image */
