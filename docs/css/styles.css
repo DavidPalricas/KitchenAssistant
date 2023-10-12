@@ -3735,8 +3735,8 @@ textarea.form-control-lg {
   --bs-navbar-disabled-color: rgba(0, 0, 0, 0.3);
   --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-brand-padding-y: 0.3125rem;
-  --bs-navbar-brand-margin-end: 1rem;
-  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-margin-end: 0; /* Remove this line to center the brand */
+  --bs-navbar-brand-font-size: 3rem;
   --bs-navbar-brand-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-brand-hover-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-nav-link-padding-x: 0.5rem;
@@ -3752,9 +3752,10 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center the content horizontally */
   padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
 }
+
 .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .container-sm,
@@ -8080,6 +8081,16 @@ textarea.form-control-lg {
   color: var(--bs-blue) !important;
 }
 
+.text-red{
+  color: var(--bs-red)
+}
+
+.text-gold{
+  color: goldenrod
+}
+.text-green{
+  color: var(--bs-green)
+}
 
 .text-white {
   --bs-text-opacity: 1;
@@ -10843,34 +10854,39 @@ textarea.form-control-lg {
 
 header.masthead {
   position: relative;
-  background-color: #04414d;
-  background: url("../assets/img/banner-oldAge.jpg") no-repeat center center; 
+  background-color: white; /* Gray with 80% opacity */
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
+  color: blue; /* Blue font color */
 }
+
+
 header.masthead:before {
   content: "";
   position: absolute;
-  background-color: #1c375e;
+  background-color: white;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
   opacity: 0.5;
 }
-header.masthead h1, header.masthead .h1 {
-  font-size: 2rem;
+
+header.masthead h4 {
+  font-size: 1.1rem; /* Adjust the font size as needed */
+  color: var(--bs-black);
+  margin-right: 30px;
 }
+
 @media (min-width: 768px) {
   header.masthead {
     padding-top: 5rem;
     padding-bottom: 8rem;
   }
-  header.masthead h1, header.masthead .h1 {
-    font-size: 3rem;
-  }
 }
+
+
 
 .showcase .showcase-text {
   padding: 3rem;
