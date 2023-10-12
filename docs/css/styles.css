@@ -10917,3 +10917,9 @@ footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
+
+.img-fluid {
+  width: 100px;  /* Set the width */
+  height: auto;  /* Maintain aspect ratio */
+  border-radius: 50%;  /* Rounded circle */
+}
