@@ -1,8 +1,12 @@
 import requests
+import random
 
   #Link da documentação da API: https://spoonacular.com/food-api/docs
 
 API_KEY = "ef6f2279b7864bad8ff9a04de2180657"
+RANDOM = True #Variável que indica se a dá receitas aleatórias ou não
+                  #Considerei verdadeira para que o utilizador não receba sempre as mesmas receitas
+MAX_CALORIES = 1286 #Número máximo de calorias que econtrei por engenharia reversa
 
 
 
@@ -71,7 +75,7 @@ def Ask_for_recipe(tag,recipes):
     while True:
         try:
             recipe_number = int(input())
-            if recipe_number < 0 or recipe_number >= len(recipes):
+            if recipe_number < 0 or recipe_number > len(recipes):
                 print("Número inválido, tente novamente")
             else:
                 break
@@ -79,7 +83,7 @@ def Ask_for_recipe(tag,recipes):
             print("Dado inválido, tente novamente")
             print("Digite o número da receita desejada: ")
  
-    return recipes[recipe_number]
+    return recipes[recipe_number-1]
 
 
 def Number_of_recipes():
@@ -95,6 +99,22 @@ def Number_of_recipes():
             print("Dado inválido, tente novamente")
     
     return number_recipes
+
+
+
+def Random():
+    number_recipes = Number_of_recipes()
+    min_calories = random.randint(0,MAX_CALORIES) 
+
+    if min_calories == MAX_CALORIES-1:
+        max_calories = MAX_CALORIES
+    else:
+        max_calories = random.randint(min_calories+1,MAX_CALORIES+1) 
+
+
+
+    return f"&minCalories={min_calories}&maxCalories={max_calories}&number={number_recipes}&random={RANDOM}" #query_params
+
 
 def Ingredients():
     query_params = "&ingredients="
@@ -130,22 +150,19 @@ def Ingredients():
     return query_params + f"&number={number_recipes}&ignorePantry={ignorePantry}" 
 
 
-
- 
-
-
 def Calories():
-    random = True #Variável que indica se a dá receitas aleatórias ou não
-                  #Considerei verdadeira para que o utilizador não receba sempre as mesmas receitas
-
     while True:
         try:
             print("Digite o número mínimo de calorias: ")
             min_calories = int(input())
+           
+            
             print("Digite o número máximo de calorias: ")
             max_calories = int(input())
-            if min_calories < 0  or max_calories < 0:
+            if min_calories < 0  or max_calories < 0 or max_calories > MAX_CALORIES or min_calories >= MAX_CALORIES:
                 print("Número inválido, tente novamente")
+            elif min_calories >= max_calories:
+                print("Os números de calorias mínimimo têm de ser menor ou diferentes do valor máximo, tente novamente")
             else:
                  break
         except ValueError:
@@ -153,11 +170,11 @@ def Calories():
     
     number_recipes = Number_of_recipes()
 
-    return f"&minCalories={min_calories}&maxCalories={max_calories}&number={number_recipes}&random={random}" #query_params
+    return f"&minCalories={min_calories}&maxCalories={max_calories}&number={number_recipes}&random={RANDOM}" #query_params
 
   
 def Category():
-    categories = {"Ingredientes": 1,"Calorias":2}
+    categories = {"Ingredientes": 1,"Calorias":2,"Receitas aleatórias":3}
     print("Escolha uma categoria para pesquisar a receita: ")
     for category in categories:
         print(f"{categories[category]} : {category}")
@@ -179,8 +196,10 @@ def Category():
             
     if user_choice == 1:
         query_params = Ingredients()
-    else:
+    elif user_choice == 2:
         query_params = Calories()
+    else:
+        query_params = Random()
 
 
     for category in categories:
