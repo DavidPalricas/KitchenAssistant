@@ -157,7 +157,7 @@ def Calories():
 
   
 def Category():
-    categories = {"Ingredientes": 0,"Calorias":1}
+    categories = {"Ingredientes": 1,"Calorias":2}
     print("Escolha uma categoria para pesquisar a receita: ")
     for category in categories:
         print(f"{categories[category]} : {category}")
@@ -167,7 +167,7 @@ def Category():
 
     while True:
         try:
-            if user_choice == 0 or user_choice == 1:
+            if user_choice in range(1,len(categories) +1): #Se a escolha do utilizador estiver entre 1 e 2
                 break
             else:
                 print("Opção inválida, tente novamente")
@@ -177,7 +177,7 @@ def Category():
             print("Dado inválido, tente novamente")
             print("Escolha uma categoria para pesquisar a receita: ")
             
-    if user_choice == 0:
+    if user_choice == 1:
         query_params = Ingredients()
     else:
         query_params = Calories()
