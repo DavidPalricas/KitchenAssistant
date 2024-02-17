@@ -11,10 +11,10 @@ MAX_CALORIES = 1286 #Número máximo de calorias que econtrei por engenharia rev
 MAX_OFFSET = 900 #Número máximo de skips que a API permite
 
 
-def Show(image,meal_type,Ingredients,description,equipments):
+def Show(image,meal_type,ingredients,description,equipments):
     print(f"Imagem da receita: {image}\n")
     print(f"Tipo de refeição: {meal_type}\n")
-    print(f"Ingredientes necessários para a receita: {Ingredients}\n")
+    print(f"Ingredientes necessários para a receita: {ingredients}\n")
     print(f"Todos os passos da receita : {description}\n")
     print(f"Todos os equipamentos necessário para a receita : {equipments}\n")
 
@@ -80,7 +80,7 @@ def Get_and_Show_Recipe_instructions(recipe):
         
     
 def Get_Recipe_information(recipe_id):
-    Ingredients_info= {} #Dicionário com os ingredientes e as quantidades necessárias para a receita
+    ingredients_info= {} #Dicionário com os ingredientes e as quantidades necessárias para a receita
     query = f"https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={API_KEY}"
     response = requests.get(query) #Informações da receita selecionada
 
@@ -95,12 +95,12 @@ def Get_Recipe_information(recipe_id):
 
 
     for ingredient in response.json()["extendedIngredients"]:
-        Ingredients_info[ingredient["name"]] = f"Quantidade {ingredient['measures']['metric']['amount']} {ingredient['measures']['metric']['unitShort']}"
+        ingredients_info[ingredient["name"]] = f"Quantidade {ingredient['measures']['metric']['amount']} {ingredient['measures']['metric']['unitShort']}"
 
 
 
 
-    return image,meal_type,Ingredients_info
+    return image,meal_type,ingredients_info
         
 
 
@@ -131,10 +131,10 @@ def Ask_for_recipe(tag,recipes):
 
 
 def Number_of_recipes():
+    print("\033[91m\tAVISO!\033[0m")
+    print("O número de receitas máximo e receitas é 100 e o número mínimo é 1")
     while True:
         try:
-            print("\033[91m\tAVISO!\033[0m")
-            print("1. O número de receitas máximo e receitas é 100 e o número mínimo é 1")
             print("Digite o número de receitas que deseja ver: ")
          
             number_recipes = int(input())
@@ -219,6 +219,8 @@ def Ingredients():
 
 
 def Calories():
+    print("\033[91m\tAVISO!\033[0m")
+    print("O número máximo de calorias é 1286 e o número mínimo é 0")
     while True:
         try:
             print("Digite o número mínimo de calorias: ")
@@ -339,12 +341,12 @@ def main():
     Status()
     tag,recipes = Query()
     recipe = Ask_for_recipe(tag,recipes)
-    image,meal_type,Ingredients = Get_Recipe_information(recipe[1]) #Informações sobre a receita selecionada através do id da receita
+    image,meal_type,ingredients = Get_Recipe_information(recipe[1]) #Informações sobre a receita selecionada através do id da receita
     description,equipments = Get_and_Show_Recipe_instructions(recipe)
 
         #Função que mostra as informações da receita selecionada
         #É uma função de fase teste para ver as informações que vão ser armazenadas na base de dados
-    Show(image,meal_type,Ingredients,description,equipments)
+    Show(image,meal_type,ingredients,description,equipments)
 
 
   
