@@ -5,9 +5,9 @@ class GetData:
         # Chave do DAVID
         #self.api_key = "ef6f2279b7864bad8ff9a04de2180657"
         # Chave do Pedro
-        self.api_key = "34af4d2879884e459a8b2e5bb71d410e"
+        #self.api_key = "34af4d2879884e459a8b2e5bb71d410e"
         # Chave da Inês
-        #self.api_key = ""
+        self.api_key = "d20575f54b404530829032207847afdb"
         # Chave do Ruben
         #self.api_key = ""
 

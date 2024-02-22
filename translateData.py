@@ -46,7 +46,7 @@ for key,value in ingredients.items():
     pt_value = ts.translate_text(value, "google", "auto", "pt")
     print("[pt]_Ingridient:", pt_key, "- Quantity:", pt_value)
     print("----------------------------------------------------------------------")
-print("\n")    
+print("\n")   
     
 print("------------------------------------")
 print(" --- UTENSILIOS DA RECEITA --- ")
