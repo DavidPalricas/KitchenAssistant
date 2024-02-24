@@ -2,7 +2,7 @@ import requests
 
 class GetData:
     def __init__(self):
-        # Chave do DAVID
+        # Chave do David
         #self.api_key = "ef6f2279b7864bad8ff9a04de2180657"
         # Chave do Pedro
         #self.api_key = "34af4d2879884e459a8b2e5bb71d410e"

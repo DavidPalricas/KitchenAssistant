@@ -44,6 +44,7 @@ def insertRecipe(recipeID,name):
     else:
         print("Failed to insert recipe")      
         
+# working 24/02 18:57
 def insertCategories():
     conn, cursor = connectDatabase()
     categories = ["maincourse", "dessert", "appetizer"]
@@ -69,7 +70,7 @@ def insertRecipeImage(recipeID):
     sourceURL = "https://api.spoonacular.com"
     if conn is not None and cursor is not None:
         try:
-            cursor.execute("INSERT INTO recipe_image (recipe_id, image_url, source_url) VALUES (%s, %s, %s)", (recipeID, imageURL, sourceURL))
+            cursor.execute("INSERT INTO recipe_images (recipe_id, image_url, source_url) VALUES (%s, %s, %s)", (recipeID, imageURL, sourceURL))
             conn.commit()
             print("Recipe image inserted")
         except Error as e:
@@ -81,7 +82,8 @@ def insertRecipeImage(recipeID):
             print("Connection closed")
     else:
         print("Failed to insert recipe image")
-        
+
+# working 24/02 19:23        
 def insertTools(recipeID):
     conn, cursor = connectDatabase()
     tools = data.recipeTools(recipeID)
@@ -89,7 +91,7 @@ def insertTools(recipeID):
     if conn is not None and cursor is not None:
         try:
             for tool in tools:
-                cursor.execute("INSERT INTO tool (name,source_url) VALUES (%s, %s)", (tool, sourceURL))
+                cursor.execute("INSERT INTO tools (name,source_url) VALUES (%s, %s)", (tool, sourceURL))
             conn.commit()
             print("Tools inserted")
         except Error as e:
@@ -109,4 +111,6 @@ name = dataTest[0][1]
 print(name)
 
 insertCategories()
+#insertRecipeImage(recipeID)
+insertTools(recipeID)
 #insertRecipe(recipeID, name)
