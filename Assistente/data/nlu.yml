@@ -3,108 +3,95 @@ version: "3.1"
 nlu:
 - intent: greet
   examples: |
-   - viva
-   - olá
-   - olá assistente
-   - olá companheiro
-   - olá camarada
-   - olá amigo
-   - olá parceiro	
-   - bom dia, assistente
-   - bom dia companheiro
-   - bom dia camarada
-   - bom dia amigo
-   - bom dia parceiro
-   - boa tarde, assistente
-   - boa tarde companheiro
-   - boa tarde camarada
-   - boa tarde amigo
-   - boa tarde parceiro
-   - boa noite, assistente
-   - boa noite companheiro
-   - boa noite camarada
-   - boa noite amigo
-   - boa noite parceiro
-   - saudações, assistente
-   - saudações, companheiro
-   - saudações, camarada
-   - saudações, amigo
-   - saudações, parceiro
-   - hey, assistente
-   - hey, companheiro
-   - hey, camarada
-   - hey, amigo
-   - hey, parceiro
+    - oi Assistente
+    - bom dia, Assistente
+    - boa tarde, Assistente
+    - boa noite, Assistente
+    - viva
+    - olá
+    - boas
+    - oi
+    - viva, assistente
+    - saudações, assistente
+    - hey, assistente
 
 - intent: goodbye
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - xau, Assistente
+    - adeus, Assistente
+    - até logo, Assistente
+    - até amanhã, Assistente
+    - até breve, assistente
+    - até já, assistente
+    - até á próxima, assistente
+
+- intent: ask_random_recipe
+  examples: |
+    - Faz-me uma receita
+    - Gostaria de uma sugestão de receita
+    - Podes-me fazer uma sugestão de receita
+    - Podes-me sugerir uma receita
 
 - intent: affirm
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+   - sim
+   - claro
+   - parece-me bem
+   - correto
+   - okay
+   - ok
+   - sim
+   - certíssimo
+   - afirmativo
 
 - intent: deny
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - não
+    - nope
+    - nunca
+    - acho que não
+    - não gosto assim
+    - nem por isso
 
-- intent: mood_great
+- intent: repeat_step
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - [Repete](passo), por favor
+    - Podes [repete](passo) anterior?
+    - Não te importas de [repete](passo) anterior?
+    - Não te importas de [repete](passo) o último passo?
+    - Não entendi, podes [repete](passo)?
+    - Não compreendi, [repete](passo) por favor
+    - Podes, por favor, [repete](passo) último passo?
+    - [Repete](passo) o último passo por favor
+    - Seria possivel [repete](passo)?
+    - Não ouvi, podes [repete](passo)?
 
-- intent: mood_unhappy
+- intent: confirm_step
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - Avança [passo](avanca) por favor
+    - Podes [passo](avanca)
+    - Comprendi, podes [passo](avanca)
+    - Parece-me bem, podes [passo](avanca)
+    - Certo, podes [passo](avanca)
+    - Feito, podes [passo](avanca)
 
-- intent: bot_challenge
+- intent: ask_specific_recipe
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - Quero uma [bacalhau](receita) 
+    - Hoje quero fazer [lasanha](receita)
+    - Quais são os ingredientes que preciso para fazer [bacalhau](receita)?
+
+- intent: joke
+  examples: |
+    - Conta-me uma piada
+    - Diz-me uma piada
+    - Podes contar-me uma piada
+    - Conta-me uma anedota
+    - Diz-me uma anedota
+    - Podes contar-me uma anedota
+    - Conta-me uma piada, por favor
+    - Diz-me uma piada, por favor
+    - Podes contar-me uma piada, por favor
+    - Conta-me uma anedota, por favor
+    - Diz-me uma anedota, por favor
+    - Podes contar-me uma anedota, por favor
