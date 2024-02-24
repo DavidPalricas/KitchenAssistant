@@ -3,7 +3,7 @@ import random
 
   #Link da documentação da API: https://spoonacular.com/food-api/docs
 
-API_KEY = "ef6f2279b7864bad8ff9a04de2180657"
+API_KEY = "34af4d2879884e459a8b2e5bb71d410e"
 RANDOM = True #Variável que indica se a dá receitas aleatórias ou não
                   #Considerei verdadeira para que o utilizador não receba sempre as mesmas receitas
 MAX_CALORIES = 1286 #Número máximo de calorias que econtrei por engenharia reversa
@@ -147,6 +147,12 @@ def Number_of_recipes():
     
     return number_recipes
 
+
+def Name():
+    user_input = input("Digite o nome da receita que deseja pesquisar: ")
+    return f"&query={user_input.lower()}" #query_params
+
+
 def Meal_type():
     meal_type = ["main course","side dish","dessert","appetizer","salad","bread","breakfast","soup","beverage","sauce","marinade","fingerfood","snack","drink"]
 
@@ -244,7 +250,7 @@ def Calories():
 
   
 def Category():
-    categories = {"Ingredientes": 1,"Calorias":2,"Receitas aleatórias":3,"Tipo de refeição":4}
+    categories = {"Ingredientes": 1,"Calorias":2,"Receitas aleatórias":3,"Tipo de refeição":4,"Por Nome":5}
     print("Escolha uma categoria para pesquisar a receita: ")
     for category in categories:
         print(f"{categories[category]} : {category}")
@@ -274,6 +280,12 @@ def Category():
             query_params = Random()
         case 4:
             query_params = Meal_type()
+        case 5:
+              query_params = Name()
+        case _:
+            print("Opção inválida, tente novamente")
+            Category()
+
     
 
 
@@ -308,8 +320,8 @@ def Query():
         print("Tente novamente\n")
         Query() 
 
-
-    if tag== "Tipo de refeição" or tag == "Receitas aleatórias": #Pesquisas feita por ComplexSearch
+    
+    if tag!= "Ingredientes" or tag != "Calorias": #Pesquisas feita por ComplexSearch
         for recipe in response.json()["results"]: 
          recipes.append((recipe["title"],recipe["id"])) #Lista de tuplos com o nome e id da receita
 
