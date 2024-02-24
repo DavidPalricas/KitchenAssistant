@@ -1,13 +1,19 @@
+-- Criar a base de dados se ela não existir
+CREATE DATABASE IF NOT EXISTS recipe_database;
+
+-- Selecionar a base de dados
+USE recipe_database;
+
 -- Criar Tabela de Categorias
 -- Exemplos de categorias: (Sobremesas, Pratos Principais, Entradas, Vegan, Saudável)
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT
 );
 
 -- Criar Tabela de Ingredientes
-CREATE TABLE ingredients (
+CREATE TABLE IF NOT EXISTS ingredients (
     ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     nutri_score_value CHAR(1),
@@ -15,7 +21,7 @@ CREATE TABLE ingredients (
 );
 
 -- Criar Tabela de Receitas
-CREATE TABLE recipes (
+CREATE TABLE IF NOT EXISTS recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -28,7 +34,7 @@ CREATE TABLE recipes (
 );
 
 -- Criar Tabela de Ingredientes das Receitas
-CREATE TABLE recipe_ingredients (
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
     recipe_ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT ,
     ingredient_id INT ,
@@ -39,7 +45,7 @@ CREATE TABLE recipe_ingredients (
 );
 
 -- Criar Tabela de Instruções das Receitas
-CREATE TABLE recipe_instructions (
+CREATE TABLE IF NOT EXISTS recipe_instructions (
     recipe_instruction_id INT AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT NOT NULL,
     step_number INT NOT NULL,
@@ -50,13 +56,13 @@ CREATE TABLE recipe_instructions (
 
 -- Criar Tabela de Tags
 -- Exemplos de tags: (Vegan, under 30 min, Glúten-free, high-Protein, Low-Cal)
-CREATE TABLE tags (
+CREATE TABLE IF NOT EXISTS tags (
     tag_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
 -- Criar Tabela de Associação de Tags às Receitas
-CREATE TABLE recipe_tags (
+CREATE TABLE IF NOT EXISTS recipe_tags (
     recipe_id INT ,
     tag_id INT ,
     PRIMARY KEY (recipe_id, tag_id),
@@ -65,7 +71,7 @@ CREATE TABLE recipe_tags (
 );
 
 -- À posteriori: Criar Tabela de Imagens das Receitas (Para depois usar na apresentação visual)
-CREATE TABLE recipe_images (
+CREATE TABLE IF NOT EXISTS recipe_images (
     image_id INT AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT ,
     image_url TEXT ,
@@ -74,7 +80,7 @@ CREATE TABLE recipe_images (
 );
 
 -- Criar Tabela de utensílios
-CREATE TABLE tools (
+CREATE TABLE IF NOT EXISTS tools (
     tool_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) ,
     description TEXT,
@@ -82,11 +88,15 @@ CREATE TABLE tools (
 );
 
 -- Criar Tabela de Associação de utensilios às Receitas
-CREATE TABLE istructions_tools (
+CREATE TABLE IF NOT EXISTS istructions_tools (
     recipe_instruction_id INT ,
     tool_id INT ,
     PRIMARY KEY (recipe_instruction_id, tool_id),
     FOREIGN KEY (recipe_instruction_id) REFERENCES recipe_instructions (recipe_instruction_id) ON DELETE CASCADE,
     FOREIGN KEY (tool_id) REFERENCES tools (tool_id) ON DELETE RESTRICT
 );
-```
+
+-- Criar um novo usuário e conceder permissões (opcional)
+CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON recipe_database.* TO 'admin'@'localhost';
+FLUSH PRIVILEGES;
