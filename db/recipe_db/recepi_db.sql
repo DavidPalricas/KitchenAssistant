@@ -2,7 +2,7 @@
 -- Criar Tabela de Receitas
 CREATE TABLE recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     number_of_servings INT,
     cooking_time INT, -- Tempo em minutos necessário para preparar a receita
     health_score INT, -- score de saúde da receita

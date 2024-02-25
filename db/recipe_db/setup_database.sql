@@ -78,6 +78,6 @@ CREATE TABLE IF NOT EXISTS istructions_tools (
 );
 
 -- Criar um novo usuário e conceder permissões (opcional)
-CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON recipe_database.* TO 'admin'@'localhost';
-FLUSH PRIVILEGES;
+-- CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
+-- GRANT ALL PRIVILEGES ON recipe_database.* TO 'admin'@'localhost';
+-- FLUSH PRIVILEGES;
