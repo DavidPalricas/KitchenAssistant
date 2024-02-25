@@ -1,6 +1,10 @@
 version: "3.1"
 
 nlu:
+- regex : receita
+  examples: |
+   - ^[a-zA-Z\s&-]+$
+
 - intent: greet
   examples: |
     - oi Assistente
@@ -79,6 +83,7 @@ nlu:
   examples: |
     - Quero uma [bacalhau](receita) 
     - Hoje quero fazer [lasanha](receita)
+    - Quero fazer [pasta] (receita)
     - Quais são os ingredientes que preciso para fazer [bacalhau](receita)?
 
 - intent: joke
