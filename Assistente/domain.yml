@@ -14,6 +14,7 @@ entities:
 - repete
 - avanca
 - receita
+- numeropessoas
 
 slots:
   repete:
@@ -34,6 +35,12 @@ slots:
     mappings:
     - type: from_entity
       entity: receita
+  numeropessoas:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: numeropessoas
 
 responses:
   utter_greet:
@@ -42,12 +49,27 @@ responses:
   utter_repeatStep:
   - text: Okay! Sem problema! Vou então repetir os passos!
 
+  utter_cancel:
+  - text: Okay! Está cancelado!
+
   utter_goodbye:
   - text: Adeus!
   - text: Lembre-se, estou sempre à sua disposição!
 
   utter_default:
   - text: Desculpe, não percebi. Pode repetir?
+
+  utter_understood:
+      - text: Compreendido!
+  
+  utter_ask_howcanHelp:
+    - text: Como é que posso ajudar?
+  
+  utter_ask_num_people:
+    - text: Para que número de pessoas devo ajustar a receita?
+  
+  utter_nextStep:
+    - text: Quando estiver apostos podemos começar com o passo a passo.
 
   utter_affirm:
   - text: Ótimo! Vamos continuar!

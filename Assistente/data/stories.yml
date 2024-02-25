@@ -1,16 +1,55 @@
-version: "3.1"
+version: '3.1'
 
 stories:
 
-- story: joke
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: joke
-  - action: utter_joke
-  
+  - story: give a specific recipe and repeat last step
+    steps:
+    - intent: greet
+    - action: utter_ask_howcanHelp
+    - intent: inform
+      entities:
+      - receita: "lasanha"
+    - action: utter_understood
+    - action: utter_ask_num_people
+    - intent: inform
+      entities:
+      - numeropessoas: "quatro"
+    - action: utter_understood
+    - action: get_specific_recipe
+    - action: utter_nextStep
+    - intent: inform
+      entities:
+        - avança: "Avança"
+    - action: utter_understood
+    - action:
+    - intent: inform
+      entities:
+      - repete: "Repete"
+    - action: repete_step 
 
 
+  - story: give a list of recipes and repeat last step
+    steps:
+    - intent: greet
+    - action: utter_ask_howcanHelp
+    - intent: inform
+      entities:
+      - receita: "aleatória"
+    - action: utter_understood
+    - action: utter_ask_num_people
+    - intent: inform
+      entities:
+      - numeropessoas: "quatro"
+    - action: utter_understood
+    - action: get_random_recipe
 
 
+  - story: repeat last step
+    steps:
+    - intent:
+    - action: 
 
+  - story: cancel recipe
+    steps:
+    - intent:
+    - action:
