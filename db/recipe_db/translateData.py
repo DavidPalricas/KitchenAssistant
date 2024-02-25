@@ -5,7 +5,7 @@ from getData import GetData
 
 data = GetData()
 
-recipeId = data.getRecipe("main course")
+#recipeId = data.getRecipe("main course")
 
 # get random recipes translated to portuguese
 def randomRecipes(number="10", tag="main course"):
@@ -124,8 +124,8 @@ def recipeSteps(recipeId):
 #test_recipeIngrients = recipeIngredients(recipeId)
 #test_tools = recipeTools(recipeId)
 #test_steps = recipeSteps(recipeId)
-test_categories = categories(recipeId)
-print(test_categories)
+#test_categories = categories(recipeId)
+#print(test_categories)
 
 # --------------------------------------------------------------------------------------------
 #

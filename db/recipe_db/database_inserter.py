@@ -307,13 +307,22 @@ def insertTools(recipeID):
     else:
         print("Failed to insert tools")
         
-dataTest = data.randomRecipes(1,"dessert")
-recipeID = dataTest[0][0]
-print(recipeID)
-name = dataTest[0][1]
-print(name)
+dataTest = data.randomRecipes(5,"main course")
+print("DataTest: ",dataTest)
+
+for key,value in dataTest:
+    recipeID = key
+    name = value
+    print("Inserting recipe",name," into database: [ID ", recipeID, "]")
+    #insertRecipe(name)
+    #print("Recipe inserted")
+
+#recipeID = dataTest[0][0]
+#print(recipeID)
+#name = dataTest[0][1]
+#print(name)
 #print("Inserting recipe into database")
-insertRecipe(name)
+#insertRecipe(name)
 #print("Recipe inserted")
 #print("---------------------------------")
 #print("Inserting tags into database")
