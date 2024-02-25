@@ -22,6 +22,40 @@ def recipeImage(recipeId):
     
     return image_URL
 
+def categories(recipeId):
+    # ['salad', 'lunch', 'main course', 'main dish', 'dinner']
+    categories = data.getCategories(recipeId)
+    pt_categories = [ts.translate_text(category, "google", "auto", "pt").lower() for category in categories]
+    pt_tags = []
+    
+    for tag in pt_categories:
+        pt_tags.append(tag) if tag not in pt_tags else None
+    return pt_tags
+
+def recipeCategory():
+    categories = ["main course", "side dish", "dessert","appetizer","salad","bread","breakfast","soup","beverage","sauce","marinade","fingerfood","snack","drink"]
+    pt_categories = [ts.translate_text(category, "google", "auto", "pt").lower() for category in categories]
+    
+    return pt_categories
+
+def recipeTime(recipeId):
+    # [20]
+    cookingTime = data.getRecipeTime(recipeId)
+    
+    return cookingTime
+
+def recipeServings(recipeId):
+    # [4]
+    servings = data.getRecipeServings(recipeId)
+    
+    return servings
+
+def recipeHealthScore(recipeId):
+    # [4]
+    healthScore = data.getRecipeHealthScore(recipeId)
+    
+    return healthScore
+
 def recipeIngredients(recipeId):
     # {
     #   'bacon': '0,227 kg', 
@@ -90,7 +124,8 @@ def recipeSteps(recipeId):
 #test_recipeIngrients = recipeIngredients(recipeId)
 #test_tools = recipeTools(recipeId)
 #test_steps = recipeSteps(recipeId)
-#print(test_recipeImage)
+test_categories = categories(recipeId)
+print(test_categories)
 
 # --------------------------------------------------------------------------------------------
 #
