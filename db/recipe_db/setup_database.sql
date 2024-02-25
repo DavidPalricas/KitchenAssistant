@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS tools (
 );
 
 -- Criar Tabela de Associação de utensilios às Receitas
-CREATE TABLE IF NOT EXISTS istructions_tools (
+CREATE TABLE IF NOT EXISTS instructions_tools (
     recipe_instruction_id INT ,
     tool_id INT ,
     PRIMARY KEY (recipe_instruction_id, tool_id),
