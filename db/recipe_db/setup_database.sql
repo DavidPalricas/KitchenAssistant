@@ -4,14 +4,6 @@ CREATE DATABASE IF NOT EXISTS recipe_database;
 -- Selecionar a base de dados
 USE recipe_database;
 
--- Criar Tabela de Categorias
--- Exemplos de categorias: (Sobremesas, Pratos Principais, Entradas, Vegan, Saudável)
-CREATE TABLE IF NOT EXISTS categories (
-    category_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT
-);
-
 -- Criar Tabela de Ingredientes
 CREATE TABLE IF NOT EXISTS ingredients (
     ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,13 +16,8 @@ CREATE TABLE IF NOT EXISTS ingredients (
 CREATE TABLE IF NOT EXISTS recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
     number_of_servings INT,
-    prep_time INT, -- Tempo em minutos
-    cook_time INT, -- Tempo em minutos
-    category_id INT,
-    source_url TEXT, -- URL da fonte original da receita
-    FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE SET NULL
+    source_url TEXT -- URL da fonte original da receita
 );
 
 -- Criar Tabela de Ingredientes das Receitas
@@ -83,7 +70,6 @@ CREATE TABLE IF NOT EXISTS recipe_images (
 CREATE TABLE IF NOT EXISTS tools (
     tool_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) ,
-    description TEXT,
     source_url TEXT -- URL da fonte original do utensílio
 );
 
