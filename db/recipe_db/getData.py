@@ -5,9 +5,9 @@ class GetData:
         # Chave do David
         #self.api_key = "ef6f2279b7864bad8ff9a04de2180657"
         # Chave do Pedro
-        #self.api_key = "34af4d2879884e459a8b2e5bb71d410e"
+        self.api_key = "34af4d2879884e459a8b2e5bb71d410e"
         # Chave da Inês
-        self.api_key = "d20575f54b404530829032207847afdb"
+        #self.api_key = "d20575f54b404530829032207847afdb"
         # Chave do Ruben
         #self.api_key = ""
 
@@ -26,6 +26,13 @@ class GetData:
         # Formata a quantidade para 3 casas decimais para legibilidade
         formatted_quantity = round(converted_quantity, 3)
         return formatted_quantity, converted_unit
+
+    def getCategories(self,recipeId):
+        # Retorna uma lista de categorias para uma receita
+        query = f"{self.base_url}/recipes/{recipeId}/information?apiKey={self.api_key}"
+        response = requests.get(query)
+        data = response.json()
+        return data.get('dishTypes', [])
 
     def getRecipe(self, tag="main course"):
         # Retorna um ID de receita com base em uma tag (main course, dessert, appetizer)
@@ -111,24 +118,48 @@ class GetData:
                 }
         return steps_info
 
-    def getPrepTime(self, recipeId):
-        # Retorna o tempo de preparação da receita
+    def getRecipeServings(self, recipeId):
+        # Retorna o número de porções que uma receita faz
         query = f"{self.base_url}/recipes/{recipeId}/information?apiKey={self.api_key}"
         response = requests.get(query)
         data = response.json()
-        return data.get('preparationMinutes', 'Not specified')
+        return data.get('servings', 'Not specified')
     
-    def getCookTime(self, recipeId):
-        # Retorna o tempo de confeção da receita
+    def getRecipeTime(self, recipeId):
+        # Retorna o tempo de preparação de uma receita
         query = f"{self.base_url}/recipes/{recipeId}/information?apiKey={self.api_key}"
         response = requests.get(query)
         data = response.json()
-        return data.get('cookingMinutes', 'Not specified')
+        return data.get('readyInMinutes', 'Not specified')
 
+    def getRecipeHealthScore(self, recipeId):
+        # Retorna a pontuação de saúde de uma receita
+        query = f"{self.base_url}/recipes/{recipeId}/information?apiKey={self.api_key}"
+        response = requests.get(query)
+        data = response.json()
+        return data.get('healthScore', 'Not specified')
+    
+    def getRecipeCard(self, recipeId, mask='potMask', backgroundImage='none', backgroundColor='ffffff', fontColor='333333'):
+        # Construir a URL da consulta para gerar o cartão da receita
+        query = f"{self.base_url}/recipes/{recipeId}/card?apiKey={self.api_key}&mask={mask}&backgroundImage={backgroundImage}&backgroundColor={backgroundColor}&fontColor={fontColor}"
+        
+        # Fazer a requisição GET ao endpoint para obter o cartão da receita
+        response = requests.get(query)
+        
+        if response.status_code == 200:
+            # Se a requisição for bem-sucedida, extrair a URL do cartão da receita da resposta
+            data = response.json()
+            return data.get('url', 'URL do cartão da receita não encontrada')
+        else:
+            # Se ocorrer um erro na requisição, retornar uma mensagem de erro
+            return f"Erro ao obter o cartão da receita: {response.status_code}"
+
+    
 # Exemplo
 if __name__ == "__main__":
     data = GetData()
     recipeId = data.getRecipe("main course")
+    recipeCardUrl = data.createRecipeCard("Baked Chicken", "Chicken, Salt, Pepper", "1. Preheat the oven to 350 degrees F. 2. Season the chicken with salt and pepper. 3. Bake for 30 minutes, or until the chicken is cooked through.", 30, 4, "https://spoonacular.com/recipeImages/123.jpg")
     
     print("\n")
     print("Random Recipes:", data.getRandomRecipes(10, "main course"))
@@ -145,7 +176,13 @@ if __name__ == "__main__":
     print("\n")
     print("Steps:", data.getRecipeSteps(recipeId))
     print("\n")
-    print("Preparation Time:", data.getPrepTime(recipeId))
+    print("Categories:", data.getCategories(recipeId))
     print("\n")
-    print("Cooking Time:", data.getCookTime(recipeId))
+    print("Servings:", data.getRecipeServings(recipeId))
+    print("\n")
+    print("Time:", data.getRecipeTime(recipeId))
+    print("\n")
+    print("Recipe Card:", data.getRecipeCard(recipeId))
+    print("\n")
+    print("Recipe Card:", recipeCardUrl)
     print("\n")
