@@ -1,18 +1,11 @@
--- Criar Tabela de Categorias
-
--- Criar Tabela de Ingredientes
-CREATE TABLE ingredients (
-    ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    nutri_score_value CHAR(1),
-    source_url VARCHAR(255) -- URL da fonte original do nutri_score do ingrediente 
-);
 
 -- Criar Tabela de Receitas
 CREATE TABLE recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     number_of_servings INT,
+    cooking_time INT, -- Tempo em minutos necessário para preparar a receita
+    health_score INT, -- score de saúde da receita
     source_url TEXT -- URL da fonte original da receita
 );
 
@@ -20,11 +13,12 @@ CREATE TABLE recipes (
 CREATE TABLE recipe_ingredients (
     recipe_ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT ,
-    ingredient_id INT ,
+    name VARCHAR(255) NOT NULL,
     quantity DECIMAL(10, 2),
     unit VARCHAR(50), -- (gramas, mililitros, colheres de sopa)
-    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE,
-    FOREIGN KEY (ingredient_id) REFERENCES ingredients (ingredient_id) ON DELETE RESTRICT
+    nutri_score_value CHAR(1),
+    source_url VARCHAR(255), -- URL da fonte original do nutri_score do ingrediente 
+    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
 );
 
 -- Criar Tabela de Instruções das Receitas
