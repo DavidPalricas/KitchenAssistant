@@ -249,7 +249,7 @@ def associateRecipeTools(recipe_instruction_ID, toolID):
     conn, cursor = connectDatabase()
     if conn is not None and cursor is not None:
         try:
-            cursor.execute("INSERT INTO istructions_tools (recipe_instruction_id, tool_id) VALUES (%s, %s)", (recipe_instruction_ID, toolID))
+            cursor.execute("INSERT INTO instructions_tools (recipe_instruction_id, tool_id) VALUES (%s, %s)", (recipe_instruction_ID, toolID))
             conn.commit()
             print("(Recipe, tools) Association inserted")
             print("--------------------------------- DONE")
