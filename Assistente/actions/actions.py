@@ -119,7 +119,8 @@ class ActionRandomRecipe(Action):
          params = self.Random() #Parâmetros da receita aleatória
 
          response = self.Query(params,api_key)
-
+         
+         print(response)
          if response == [] or response["results"] == []:
             self.Random() #Se a API não retornar nenhuma receita, uma nova receita será selecionada
          
@@ -199,7 +200,7 @@ class ActionSpecifRecipe(Action):
 
 
         
-        def Query(self, params,api_key,recipe_name):
+        def Query(self, params,api_key):
             query = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + api_key + params
             response = requests.get(query)
             response = response.json()
@@ -255,11 +256,10 @@ class ActionSpecifRecipe(Action):
 
             
 
-            #recipe_name = "pasta"
 
             params = self.Recipe_Name(recipe_name) #Parâmetros da receita aleatória
 
-            response = self.Query(params,api_key,recipe_name)
+            response = self.Query(params,api_key)
             
             print(response)
             if response != [] or response["results"] != []:
