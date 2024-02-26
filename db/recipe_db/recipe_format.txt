@@ -1,0 +1,37 @@
+NAME = 'recipe name'
+
+INGREDIENTS = {
+    'ingredient1': 'unit',
+    'ingredient2': 'unit',
+    'ingredient3': 'unit',
+    'ingredient4': 'unit',
+    'ingredient5': 'unit',
+    'ingredient6': 'unit',
+    'ingredient7': 'unit'
+}
+
+TOOLS = ['tool1', 'tool2', 'tool3']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'descrição do passo',
+        'tools': ['tools1', 'tool2', 'tool3']
+    },
+    2: {
+        'description': 'descrição do passo',
+        'tools': ['tools1', 'tool2', 'tool3']
+    },
+    3: {
+        'description': 'descrição do passo',
+        'tools': ['tools1', 'tool2', 'tool3']
+    },
+	4: {
+        'description': 'descrição do passo',
+        'tools': ['tools1', 'tool2', 'tool3']
+    }}
+
+COOKING_TIME = '12'
+
+NUMBER_OF_SERVINGS = '4'
+
+IMAGE_URL = 'www.spoonacular.com'
