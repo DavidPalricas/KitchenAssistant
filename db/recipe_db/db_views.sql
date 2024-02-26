@@ -126,21 +126,21 @@ JOIN
 -- SELECTS PARA USAR AS VIEWS CRIADAS -------------------------------------------
 
 -- 1. Visualização das Informações da Receita
-SELECT * FROM recipe_information WHERE RECEITA = 'NomeDaReceita';
+SELECT * FROM recipe_information WHERE RECEITA = 'Pica-Pau de Entremeada';
 
 -- 2. Visualização dos Ingredientes de uma Receita Selecionada
-SELECT * FROM recipe_ingredients_view WHERE recipe_id = IDDaReceita;
+SELECT * FROM recipe_ingredients_view WHERE recipe_id = 57;
 
 -- 3. Visualização das Ferramentas para uma Receita Selecionada
-SELECT * FROM recipe_tools_view WHERE recipe_id = IDDaReceita;
+SELECT * FROM recipe_tools_view WHERE recipe_id = 57;
 
 -- 4. Visualização das Instruções de uma Receita Selecionada e Ferramentas Usadas
-SELECT * FROM recipe_instructions_tools_view WHERE recipe_id = IDDaReceita;
+SELECT * FROM recipe_instructions_tools_view WHERE recipe_id = 57;
 
 -- 5. Visualização da URL da Imagem da Receita para uma Receita Selecionada
-SELECT * FROM recipe_image_view WHERE recipe_id = IDDaReceita;
+SELECT * FROM recipe_image_view WHERE recipe_id = 57;
 
 -- 6. Visualização das Tags de uma Receita Selecionada
-SELECT * FROM recipe_tags_view WHERE recipe_id = IDDaReceita;
+SELECT * FROM recipe_tags_view WHERE recipe_id = 57;
 
 -- -------------------------------------------------------------------------------
