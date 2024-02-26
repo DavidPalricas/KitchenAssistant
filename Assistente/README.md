@@ -18,10 +18,10 @@
 ## 5. Executar o ficheiro de ações personalizadas no 2º terminal:
     rasa run actions
 
-##6. Repetir os passos 1 e 2 noutro terminal
+## 6. Repetir os passos 1 e 2 noutro terminal 
 
-##7. Executar o seguinte comando no 3ºterminal para executar o asssistente na Web:
-     rasa run --enable-api --cors="*"
+## 7. Executar o seguinte comando no 3ºterminal para executar o asssistente na Web:
+    rasa run --enable-api --cors="*"
 
 
     
