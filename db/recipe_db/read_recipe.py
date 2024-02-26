@@ -1,4 +1,6 @@
+import argparse
 import ast
+
 
 def read_recipe_from_txt(file_path):
     recipe_data = {}
@@ -35,26 +37,36 @@ def read_recipe_from_txt(file_path):
 
     return recipe_data
 
-# Exemplo de uso
-file_path = 'recipes/Gambas ao alho.txt'
-recipe_data = read_recipe_from_txt(file_path)
-#print(recipe_data)
-print("RECIPE NAME:", recipe_data.get("NAME"))
-print("\n")
-print("RECIPE INGREDIENTS:", recipe_data.get("INGREDIENTS"))
-print("\n")
-print("RECIPE TOOLS:", recipe_data.get("TOOLS"))
-print("\n")
-print("RECIPE INSTRUCTIONS:", recipe_data.get("INSTRUCTIONS"))
-print("\n")
-print("RECIPE TIME:", recipe_data.get("COOKING_TIME"))
-print("\n")
-print("RECIPE SERVINGS:", recipe_data.get("NUMBER_OF_SERVINGS"))
-print("\n")
-print("RECIPE IMAGE:", recipe_data.get("IMAGE_URL"))
-print("\n")
-print("RECIPE TAGS:", recipe_data.get("TAGS"))
-print("\n")
+def main(file_path):
+    recipe_data = read_recipe_from_txt(file_path)
+    print("RECIPE NAME:", recipe_data.get("NAME"))
+    print("\n")
+    print("RECIPE INGREDIENTS:", recipe_data.get("INGREDIENTS"))
+    print("\n")
+    print("RECIPE TOOLS:", recipe_data.get("TOOLS"))
+    print("\n")
+    print("RECIPE INSTRUCTIONS:", recipe_data.get("INSTRUCTIONS"))
+    print("\n")
+    print("RECIPE TIME:", recipe_data.get("COOKING_TIME"))
+    print("\n")
+    print("RECIPE SERVINGS:", recipe_data.get("NUMBER_OF_SERVINGS"))
+    print("\n")
+    print("RECIPE IMAGE:", recipe_data.get("IMAGE_URL"))
+    print("\n")
+    print("RECIPE TAGS:", recipe_data.get("TAGS"))
+    print("\n")
+
+if __name__ == "__main__":
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="Read and display recipe data from a text file.")
+    parser.add_argument('file_path', type=str, help='Path to the recipe text file.')
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Call the main function with the provided file path
+    main(args.file_path)
+
 
 
 
