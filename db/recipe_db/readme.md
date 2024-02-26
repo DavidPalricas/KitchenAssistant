@@ -20,19 +20,19 @@ brew services start mariadb
 ### Acesso ao MariaDB
 - Acessar o MariaDB:
 ```bash
-mysql -u root
+mysql -u
 ```
 
 ### Criar a Base de Dados
 - Criar uma base de dados:
 ```sql
-CREATE DATABASE minha_base_de_dados;
+CREATE DATABASE recipe_database;
 ```
 
 ### Importar um Ficheiro SQL
 - Importar um ficheiro SQL para a base de dados:
 ```bash
-mysql -u root minha_base_de_dados < /caminho/para/o/ficheiro.sql
+mysql -u recipe_database < db/recipe_db/setup_database.sql 
 ```
 
 ## Windows
@@ -46,19 +46,18 @@ mysql -u root minha_base_de_dados < /caminho/para/o/ficheiro.sql
 ### Acesso ao MariaDB
 - Abra o Prompt de Comando e acesse o MariaDB:
 ```bash
-mysql -u root -p
+mysql -u
 ```
 
 ### Criar a Base de Dados
 - Criar uma base de dados:
 ```sql
-CREATE DATABASE minha_base_de_dados;
+CREATE DATABASE recipe_database;
 ```
 
 ### Importar um Ficheiro SQL
 - Importar um ficheiro SQL para a base de dados:
 ```bash
-mysql -u root -p minha_base_de_dados < C:\caminho\para\o\ficheiro.sql
+mysql -u  recipe_database < db/recipe_db/setup_database.sql 
 ```
 
-**Nota**: Substitua `minha_base_de_dados` pelo nome da sua base de dados e ajuste os caminhos de acordo com o seu ambiente específico.
