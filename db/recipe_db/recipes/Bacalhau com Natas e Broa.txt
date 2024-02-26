@@ -1,0 +1,65 @@
+NAME = 'Bacalha com Natas e Broa'
+
+INGREDIENTS = {
+    'Postas de bacalhau demolhado': '4 uni',
+    'Molho pequeno grelos': '1 uni',
+    'Broa de milho picada groseiramente': '400 g',
+    'Azeite': '6 colher-de-sopa',
+    'Cebolas grandes cortadas em meia lua finas': '2 uni',
+    'Dentes de alho picados': '4 uni',
+    'Folhas de louro': '3 uni',
+    'Natas frescas': '400 ml',
+    'Sal': '0 q.b',
+    'Pimenta branca': '0 q.b',
+    'Noz-moscada': '0 q.b'
+}
+
+TOOLS = ['Panela', 'Colher', 'Escorredor', 'Escumadeira', 'Recipiente', 'Tacho Largo', 'Tabuleiro Grande', 'Forno']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Numa panela coloque água para ferver e tempere com sal, quando levantar fervura junte os grelos e mergulhe-os com a ajuda de uma colher. 
+        Tape e deixe cozer entre 15 a 20 minutos até que os grelos estejam tenros',
+        'tools': ['Panela', 'Colher']
+    },
+    2: {
+        'description': 'Depois dos grelos cozidos, escorra-os.',
+        'tools': ['Panela', 'Escorregor']
+    },
+    3: {
+        'description': 'Entretanto, coloque outra panela de água a ferver, introduza o bacalhau. Logo que comece a ferver retire o bacalahu com a ajuda de uma escumadeira e reserve.',
+        'tools': ['Panela', 'Escumadeira']
+    },
+    4: {
+        'description': 'Limpe o bacalhau de peles e espinhas e desfie.',
+        'tools': ['Recipiente']
+    },
+	5: {
+        'description': 'Num tacho largo, leve ao lume o azeite, a cebola, o alho e o louro.
+        Mexa e deixe refogar até que a cebola comece a alourar, adicione o bacalhau e mexa. Tempere com noz-moscada e pimenta.
+        Mexa novamente e deixe refogar em lume baixo',
+        'tools': ['Tacho largo', 'Colher']
+    },
+    	6: {
+        'description': 'Depois do bacalhau refogado, adicione as natas. Mexa e deixe ferver.
+        Quando começar a ferver retire as folhas de louro e adicione os grelos. Deixe cozinhar até que o molho fique apurado.',
+        'tools': ['Tacho largo', 'Colher']
+    },
+    	7: {
+        'description': 'Num tabuleiro grande de ir ao forno espalhe o preparado de bacalhau e grelos de forma uniforme.
+         Alise e por cima distribua a broa já picada.',
+        'tools': ['Tabuleiro grande', 'Colher', 'Forno']
+    },
+    	8: {
+        'description': 'Leve ao forno a 190ºC, por aproximadamente 25 minutos e deixe tostar.
+        Quando a broa estiver douradinha, retire e sirva.',
+        'tools': ['Tabuleiro grande', 'Colher', 'Forno'] 
+ }}
+
+COOKING_TIME = '70'
+
+NUMBER_OF_SERVINGS = '8'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Bacalhau-com-Natas-e-Broa-SI-2.jpg',
+
+TAGS = ['Principal', 'Broa', 'Bacalhau', 'Grelos']
