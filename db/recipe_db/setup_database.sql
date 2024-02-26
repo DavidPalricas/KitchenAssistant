@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS recipes (
     name VARCHAR(255) NOT NULL,
     number_of_servings INT,
     cooking_time INT, -- Tempo em minutos necessário para preparar a receita
-    health_score INT, -- score de saúde da receita
     source_url TEXT -- URL da fonte original da receita
 );
 
@@ -21,7 +20,7 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     name VARCHAR(255) NOT NULL,
     quantity DECIMAL(10, 2),
     unit VARCHAR(50), -- (gramas, mililitros, colheres de sopa)
-    nutri_score_value CHAR(1),
+    calories INT, -- Calorias por o spoonacular
     source_url VARCHAR(255), -- URL da fonte original do nutri_score do ingrediente 
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
 );
@@ -32,7 +31,6 @@ CREATE TABLE IF NOT EXISTS recipe_instructions (
     recipe_id INT NOT NULL,
     step_number INT NOT NULL,
     description TEXT NOT NULL,
-    time INT, -- Tempo em minutos necessário para esta etapa
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
 );
 
