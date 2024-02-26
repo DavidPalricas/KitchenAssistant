@@ -36,7 +36,27 @@ def read_recipe_from_txt(file_path):
     return recipe_data
 
 # Exemplo de uso
-file_path = 'recipe_format.txt'
+file_path = 'recipes/Gambas ao alho.txt'
 recipe_data = read_recipe_from_txt(file_path)
+#print(recipe_data)
+print("RECIPE NAME:", recipe_data.get("NAME"))
+print("\n")
+print("RECIPE INGREDIENTS:", recipe_data.get("INGREDIENTS"))
+print("\n")
+print("RECIPE TOOLS:", recipe_data.get("TOOLS"))
+print("\n")
+print("RECIPE INSTRUCTIONS:", recipe_data.get("INSTRUCTIONS"))
+print("\n")
+print("RECIPE TIME:", recipe_data.get("COOKING_TIME"))
+print("\n")
+print("RECIPE SERVINGS:", recipe_data.get("NUMBER_OF_SERVINGS"))
+print("\n")
+print("RECIPE IMAGE:", recipe_data.get("IMAGE_URL"))
+print("\n")
+print("RECIPE TAGS:", recipe_data.get("TAGS"))
+print("\n")
 
-print(recipe_data)
+
+
+
+
