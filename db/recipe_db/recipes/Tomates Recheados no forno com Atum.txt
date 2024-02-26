@@ -1,0 +1,56 @@
+NAME = 'Tomates recheados no forno com atum'
+
+INGREDIENTS = {
+    'Tomate grandes e maduros': '6 uni',
+    'Azeite': '2 colheres-de-sopa',
+    'Alho francês parte branca cortada em rodelas finas': '1 uni',
+    'Folha de louro': '1 uni',
+    'Atum em conserva de azeite ou água (bem escorrido)': '3 uni',
+    'Azeitonas pretas cortadas em rodelas': '80 g',
+    'Sal': '0 q.b',
+    'Pimenta branca': 'o q.b',
+    'Folhas de orégão secas': '0 q.b',
+    'Queijo mozzarela ralado': '70 g',
+    'Queijo parmesão ralado': '70 g'
+}
+
+TOOLS = ['Recipiente', 'Faca', 'Colher', 'Tábua', 'Tigela', 'Frigideira', 'Forno', 'Assadeira']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Comece pela preparação dos tomates, cortando-lhes o topo. De seguida, com ajuda de uma faca e uma colher de forma alternada, retire a polpa do tomate e reserve, descartando a água e as sementes. Guarde os tomates para mais tarde rechear.',
+        'tools': ['Recipiente', 'Faca', 'Colher']
+    },
+    2: {
+        'description': 'Retire a parte fibrosa da polpa obtida dos tomates e corte o restante em cubinhos, misture numa tigela. Num outro recipiente misture as duas qualidades de queijo. ',
+        'tools': ['Faca', 'Tábua', 'Tigela', 'Recipiente']
+    },
+    3: {
+        'description': 'Numa frigideira leve ao lume o azeite, o alho francês e o louro. Deixe refogar e mexa até que o alho francês amoleça. Adicione o tomate em cubinhos e deixe refogar bem.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	4: {
+        'description': 'Depois de tudo bem refogado, junte o atum. Tempere com um pouco de sal e pimenta. Envolva bem e deixe refogar. Retire do lume.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	5: {
+        'description': 'Misture as rodelas de azeitona. Junte 2/3 do queijo e retire a folha de louro.
+Envolva bem. Tempere com um pouco de orégãos.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	6: {
+        'description': 'Divida o recheio pelos tomates, com a ajuda de uma colher pressione bem o recheio nos mesmo para garantir que estão bem recheados. Distribua os tomates por uma assadeira e coloque o queijo que sobrou por cima deles. Polvilhe um pouco de orégãos e tape-os com topo cortado previamente',
+        'tools': ['Assadeira', 'Colher']
+    },
+	7: {
+        'description': 'Leve ao forno pré-aquecido nos 190ºC e deixe cozinhar durante 35 minutos. No fim do tempo basta retirar e está pronto a servir',
+        'tools': ['Forno', 'Assadeira']
+    }}
+
+COOKING_TIME = '70'
+
+NUMBER_OF_SERVINGS = '6'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Tomates-Recheados-Atum-SI-1.jpg',
+
+TAGS = ['Entrada', 'Tomate', 'Atum', 'Azeitonas']
