@@ -34,4 +34,6 @@ COOKING_TIME = '12'
 
 NUMBER_OF_SERVINGS = '4'
 
-IMAGE_URL = 'www.spoonacular.com'
+IMAGE_URL = 'www.spoonacular.com',
+
+TAGS = ['tag1', 'tag2', 'tag3']
