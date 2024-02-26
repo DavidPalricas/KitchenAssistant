@@ -1,0 +1,6 @@
+[
+  {
+    "name": "receita",
+    "pattern": "receita\\s+de\\s+(\\S+(?:\\s+\\S+)*)"
+  }
+]

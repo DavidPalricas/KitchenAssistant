@@ -1,0 +1,36 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-avanca",
+      "2": "I-avanca",
+      "3": "L-avanca",
+      "4": "U-avanca",
+      "5": "B-passo",
+      "6": "I-passo",
+      "7": "L-passo",
+      "8": "U-passo",
+      "9": "B-receita",
+      "10": "I-receita",
+      "11": "L-receita",
+      "12": "U-receita",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-avanca": 1,
+      "I-avanca": 2,
+      "L-avanca": 3,
+      "U-avanca": 4,
+      "B-passo": 5,
+      "I-passo": 6,
+      "L-passo": 7,
+      "U-passo": 8,
+      "B-receita": 9,
+      "I-receita": 10,
+      "L-receita": 11,
+      "U-receita": 12,
+      "O": 0
+    },
+    "num_tags": 13
+  }
+]

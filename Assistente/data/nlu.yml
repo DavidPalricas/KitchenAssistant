@@ -1,9 +1,18 @@
 version: "3.1"
 
 nlu:
-- regex : receita
+- regex: receita
   examples: |
-   - ^[a-zA-Z\s&-]+$
+    - (?<=de\s)(\S+(?:\s+\S+)*)
+
+
+
+- intent: ask_specific_recipe
+  examples: |
+    - Quero uma receita de [bacalhau](receita)
+    - Hoje quero fazer receita de [lasanha](receita)
+    - Quero fazer receita de [pasta](receita)
+
 
 - intent: greet
   examples: |
@@ -79,12 +88,7 @@ nlu:
     - Certo, podes [passo](avanca)
     - Feito, podes [passo](avanca)
 
-- intent: ask_specific_recipe
-  examples: |
-    - Quero uma [bacalhau](receita) 
-    - Hoje quero fazer [lasanha](receita)
-    - Quero fazer [pasta] (receita)
-    - Quais são os ingredientes que preciso para fazer [bacalhau](receita)?
+
 
 - intent: joke
   examples: |

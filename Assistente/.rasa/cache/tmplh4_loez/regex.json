@@ -1,0 +1,6 @@
+[
+  {
+    "name": "receita",
+    "pattern": "^[a-zA-Z\\s&-]+$"
+  }
+]

@@ -81,23 +81,24 @@ class ActionRandomRecipe(Action):
         return f"&offset={offset}&number={number}"
     
     def Status(self,api_key):
-        query_base = f"https://api.spoonacular.com/recipes/complexSearch?apiKey={api_key}"
-        response= requests.get(query_base)
-        status = response.status_code
-        if status== 200: #Código 200 indica que a conexão foi realizada com sucesso
-            print("\033[92mConexão realizada com sucesso\033[0m\n") #Código de cor verde para indicar que a conexão foi realizada com sucesso
-        elif status == 402: #Código 402 indica que a chave de API atingiu o limite de uso
+        status = 0
+
+        while True:
+            query_base = f"https://api.spoonacular.com/recipes/complexSearch?apiKey={api_key}"
+            response= requests.get(query_base)
+            status = response.status_code
+
+            if status == 200:
+                break
+    
             i = API_KEYS.index(api_key)
-            
             if i == len(API_KEYS)-1:
-                return None
+                api_key = None
+                break
             else:
-                api_key = API_KEYS[i+1] #Muda a chave de API
-                self.Status(api_key) #Chama a função novamente para verificar se a nova chave de API está funcionando
-        else:
-            print("\033[91mErro na conexão\033[0m") #Código de cor vermelha para indicar que houve um erro na conexão
-            api_key = None
-            
+                api_key = API_KEYS[i+1]
+                print("\033[93mTentando outra chave de API\033[0m\n") #Código de cor amarela para indicar que a conexão não foi realizada com sucesso
+    
         return api_key
 
     def run(self, dispatcher: CollectingDispatcher,
@@ -113,12 +114,13 @@ class ActionRandomRecipe(Action):
              dispatcher.utter_message(text=message)
              return []
          
+         print("\033[92mConexão realizada com sucesso\033[0m\n")
 
          params = self.Random() #Parâmetros da receita aleatória
 
          response = self.Query(params,api_key)
 
-         if response == []:
+         if response == [] or response["results"] == []:
             self.Random() #Se a API não retornar nenhuma receita, uma nova receita será selecionada
          
 
@@ -202,38 +204,35 @@ class ActionSpecifRecipe(Action):
             response = requests.get(query)
             response = response.json()
 
-            if response == [] or response["results"] == []:
-                params = self.Recipe_Name(recipe_name)
-                self.Query(params,api_key,recipe_name) #Se a API não retornar nenhuma receita, uma nova receita será selecionada
-
             return response
         
         def Recipe_Name(self,recipe_name):
-             #Nome da receita caso o usuário não tenha especificado totalemente o nome da receita
-             # Por exemplo se o usário escrver "bolo" assim pode lhe aparecer no resultado "bolo de chocolate" ou "bolo de cenoura", etc.
-            offset = random.randint(0, MAX_OFFSET)
             number = 1 #Número de receitas que serão retornadas
-            return f"&query={recipe_name.lower()}&offset={offset}&number={number}"
+            return f"&query={recipe_name.lower()}&number={number}"
         
         def Status(self,api_key):
-            query_base = f"https://api.spoonacular.com/recipes/complexSearch?apiKey={api_key}"
-            response= requests.get(query_base)
-            status = response.status_code
-            if status== 200: #Código 200 indica que a conexão foi realizada com sucesso
-                print("\033[92mConexão realizada com sucesso\033[0m\n") #Código de cor verde para indicar que a conexão foi realizada com sucesso
-            elif status == 402: #Código 402 indica que a chave de API atingiu o limite de uso
+            status = 0
+
+            while True:
+                query_base = f"https://api.spoonacular.com/recipes/complexSearch?apiKey={api_key}"
+                response= requests.get(query_base)
+                status = response.status_code
+
+                if status == 200:
+                    break
+        
                 i = API_KEYS.index(api_key)
-                
                 if i == len(API_KEYS)-1:
-                    return None
+                    api_key = None
+                    break
                 else:
-                    api_key = API_KEYS[i+1] #Muda a chave de API
-                    self.Status(api_key) #Chama a função novamente para verificar se a nova chave de API está funcionando
-            else:
-                print("\033[91mErro na conexão\033[0m") #Código de cor vermelha para indicar que houve um erro na conexão
-                api_key = None
-                
+                    api_key = API_KEYS[i+1]
+                    print("\033[93mTentando outra chave de API\033[0m\n") #Código de cor amarela para indicar que a conexão não foi realizada com sucesso
+        
             return api_key
+           
+                
+          
 
         def run(self, dispatcher: CollectingDispatcher,
                 tracker: Tracker, 
@@ -242,28 +241,35 @@ class ActionSpecifRecipe(Action):
             api_key = API_KEYS[0]
             message = "Nehuma receita encontrada"
             api_key = self.Status(api_key)
+           
 
             if api_key == None:
                 message = "Erro na conexão"
                 dispatcher.utter_message(text=message)
                 return []
             
-            #recipe_name = next(tracker.get_latest_entity_values("receita"), None) #Nome da receita que o usuário deseja
+            print("\033[92mConexão realizada com sucesso\033[0m\n")
+            recipe_name = tracker.get_slot("receita")
+             
+            print(recipe_name)
 
-            recipe_name = "pasta"
+            
+
+            #recipe_name = "pasta"
 
             params = self.Recipe_Name(recipe_name) #Parâmetros da receita aleatória
 
             response = self.Query(params,api_key,recipe_name)
-
-            for r in response["results"]:
-                recipe = (r["title"], r["id"]) 
-                
-
-                if self.Get_Recipe_Info(recipe[1],api_key) != None or self.Get_Recipe_instructions(recipe,api_key) != None:
-                    image,meal_type,ingredients_info = self.Get_Recipe_Info(recipe[1],api_key)
-                    description,all_equipaments = self.Get_Recipe_instructions(recipe,api_key)
-                    message = f"\tReceita: {recipe[0]}\n\n\nImagem: {image}\n\n\nTipo de refeição: {meal_type}\n\n\nIngredientes: {ingredients_info}\n\n\nPassos: {description}\n\n\nEquipamentos: {all_equipaments}"
+            
+            print(response)
+            if response != [] or response["results"] != []:
+                for r in response["results"]:
+                    recipe = (r["title"], r["id"]) 
+            
+                    if self.Get_Recipe_Info(recipe[1],api_key) != None or self.Get_Recipe_instructions(recipe,api_key) != None:
+                        image,meal_type,ingredients_info = self.Get_Recipe_Info(recipe[1],api_key)
+                        description,all_equipaments = self.Get_Recipe_instructions(recipe,api_key)
+                        message = f"\tReceita: {recipe[0]}\n\n\nImagem: {image}\n\n\nTipo de refeição: {meal_type}\n\n\nIngredientes: {ingredients_info}\n\n\nPassos: {description}\n\n\nEquipamentos: {all_equipaments}"
 
             dispatcher.utter_message(text=message)
             return []
