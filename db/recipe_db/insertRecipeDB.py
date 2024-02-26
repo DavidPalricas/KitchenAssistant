@@ -4,6 +4,7 @@ from mysql.connector import Error
 from getData import GetData
 import translators as ts
 import re
+import argparse
 
 # conda install mysql-connector-python
 # pip install mysql-connector-python
@@ -335,43 +336,23 @@ from read_recipe import read_recipe_from_txt
             
 if __name__ == "__main__":
     
-    #    
-    file_path = 'recipes/Pica-Pau de Entremeada.txt'
-    recipe_data = read_recipe_from_txt(file_path)
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="Insert recipes into the database from text files.")
+    parser.add_argument('file_paths', metavar='path', type=str, nargs='+',
+                        help='Path to the recipe text file(s) to be processed.')
     
-    insertVector = InsertRecipeDB(recipe_data)
-    insertVector.insertRecipe()
-    #print(f"Recipe {insertVector.name} inserted successfully")
-
+    # Parse arguments
+    args = parser.parse_args()
+    
+    # Process each file path provided
+    for file_path in args.file_paths:
+        print(f"Processing file: {file_path}")
+        recipe_data = read_recipe_from_txt(file_path)
+        
+        insertVector = InsertRecipeDB(recipe_data)
+        insertVector.insertRecipe()
+        
+    # 
+    # RUN COMMAND:
     #
-    file_path = 'recipes/Amêijoas à Bulhão Pato.txt'
-    recipe_data = read_recipe_from_txt(file_path)
-    
-    insertVector = InsertRecipeDB(recipe_data)
-    insertVector.insertRecipe()
-    #print(f"Recipe {insertVector.name} inserted successfully")
-    
-    #
-    file_path = 'recipes/Cogumelos Recheados com Alheira.txt'
-    recipe_data = read_recipe_from_txt(file_path)
-    
-    insertVector = InsertRecipeDB(recipe_data)
-    insertVector.insertRecipe()
-    #print(f"Recipe {insertVector.name} inserted successfully")
-    
-    #
-    file_path = 'recipes/Gambas ao alho.txt'
-    recipe_data = read_recipe_from_txt(file_path)
-    
-    insertVector = InsertRecipeDB(recipe_data)
-    insertVector.insertRecipe()
-    #print(f"Recipe {insertVector.name} inserted successfully")
-    
-    
-    #
-    #file_path = 'recipes/Pica-Pau de Entremeada.txt'
-    #recipe_data = read_recipe_from_txt(file_path)
-    
-    #insertVector = InsertRecipeDB(recipe_data)
-    #insertVector.insertRecipe()
-    #print(f"Recipe {insertVector.name} inserted successfully")
+    # python insert_recipe.py "recipes/Pica-Pau de Entremeada.txt" "recipes/Amêijoas à Bulhão Pato.txt"
