@@ -48,8 +48,8 @@ def insertRecipe(name):
                 health_score = data.recipeHealthScore(recipeID)
                 cursor.execute("UPDATE recipes SET number_of_servings = %s, cooking_time = %s, health_score = %s WHERE recipe_id = %s", (servings, cook_time, health_score, recipeID))
                 conn.commit()
-                print("Recipe inserted")
-                print("--------------------------------- DONE")
+                print(f"Recipe '{name}'inserted with number of servings: {servings}, cooking time: {cook_time} and health score: {health_score} ---------- D O N E")
+                print("\n")
                 
             # insert tags deveria ser feito fora desta função porque elas tem de ser inicialializadas automaticamente
             tags = data.categories(recipeID)
@@ -73,6 +73,7 @@ def insertRecipe(name):
             
             # insert instructions [and associate(instructions, tools)]
             instructions = data.recipeSteps(recipeID)
+            print("INSERT RECIPE - Instructions: ",instructions)
             insertRecipeInstructions(recipeID, instructions)
         
         except Error as e:
@@ -91,8 +92,8 @@ def associateRecipeTags(recipeID, tagID):
         try:
             cursor.execute("INSERT INTO recipe_tags (recipe_id, tag_id) VALUES (%s, %s)", (recipeID, tagID))
             conn.commit()
-            print("(Recipe, tags) Association inserted")
-            print("--------------------------------- DONE")
+            print(f"(Recipe '{recipeID}', tag '{tagID}') Association inserted ----------------- D O N E")
+            print("\n")
         except Error as e:
             print(e)
             print("Failed to insert recipe tags")
@@ -115,9 +116,10 @@ def insertTags(tags):
                 if not result:
                     # Somente insere se a tag não existir
                     cursor.execute("INSERT INTO tags (name) VALUES (%s)", (category,))
-            conn.commit()
-            print("Tags inserted")
-            print("--------------------------------- DONE")
+                    print(f"Tag '{category}' inserted")
+                    conn.commit()
+            print("Tags inserted ----------------- D O N E")
+            print("\n")
         except Error as e:
             print(e)
             print("Failed to insert categories")
@@ -163,8 +165,8 @@ def insertRecipeImage(recipeID):
                 # A imagem não existe, insira-a
                 cursor.execute("INSERT INTO recipe_images (recipe_id, image_url, source_url) VALUES (%s, %s, %s)", (recipeID, imageURL, sourceURL))
                 conn.commit()
-                print("Recipe image inserted")
-                print("--------------------------------- DONE")
+                print("Recipe image inserted ----------------- D O N E")
+                print("\n")
 
         except Error as e:
             print(e)
@@ -190,11 +192,12 @@ def insertRecipeIngredients(recipeID, ingredients):
                     quantity = quantity.replace(',', '.')  # Converter vírgula em ponto para padronizar o formato decimal
                     cursor.execute("INSERT INTO recipe_ingredients (recipe_id, name, quantity, unit, nutri_score_value, source_url) VALUES (%s, %s, %s, %s, %s, %s)", 
                                    (recipeID, name, quantity, unit, nutri_score, sourceURL))
+                    print(f"Ingredient '{name}' inserted with quantity: {quantity} and unit: {unit}")
                 else:
                     print(f"Não foi possível processar o ingrediente: {name} com quantidade e unidade: {quantity_unit}")
             conn.commit()
-            print("Ingredients inserted")
-            print("--------------------------------- DONE")
+            print("Ingredients inserted ----------------- D O N E")
+            print("\n")
         except Error as e:
             print(e)
             print("Failed to insert ingredients")
@@ -220,6 +223,7 @@ def insertRecipeInstructions(recipeID, instructions):
                     cursor.execute("INSERT INTO recipe_instructions (recipe_id, step_number, description, time) VALUES (%s, %s, %s, %s)", 
                                    (recipeID, step, data['description'], time))
                     conn.commit()
+                    print(f"Instruction '{data['description']}' inserted for step {step}")
                     instructions_id = cursor.lastrowid
                 else:
                     # Instrução já existe, você pode escolher atualizar ou simplesmente ignorar
@@ -251,8 +255,8 @@ def associateRecipeTools(recipe_instruction_ID, toolID):
         try:
             cursor.execute("INSERT INTO instructions_tools (recipe_instruction_id, tool_id) VALUES (%s, %s)", (recipe_instruction_ID, toolID))
             conn.commit()
-            print("(Recipe, tools) Association inserted")
-            print("--------------------------------- DONE")
+            print(f"(Instruction '{recipe_instruction_ID}', tool '{toolID}') Association inserted ----------------- D O N E")
+            print("\n")
         except Error as e:
             print(e)
             print("Failed to insert recipe tools")
@@ -279,11 +283,12 @@ def getToolsIdsByName(tool_name):
             cursor.close()
             conn.close()
             print("Connection closed")
-    return NULL
+    return None
     
 def insertTools(recipeID):
     conn, cursor = connectDatabase()
     tools = data.recipeTools(recipeID)
+    print("INSERT_TOOLS - Tools: ",tools)
     sourceURL = "https://api.spoonacular.com"
     if conn is not None and cursor is not None:
         try:
@@ -294,9 +299,10 @@ def insertTools(recipeID):
                 # Se a ferramenta não existir, inserir
                 if result is None:
                     cursor.execute("INSERT INTO tools (name,source_url) VALUES (%s, %s)", (tool, sourceURL))
-            conn.commit()
-            print("Tools inserted")
-            print("--------------------------------- DONE")
+                    conn.commit()
+                    print(f"Tool '{tool}' inserted")
+            print("Tools inserted ----------------- D O N E")
+            print("\n")
         except Error as e:
             print(e)
             print("Failed to insert tools")
@@ -307,15 +313,19 @@ def insertTools(recipeID):
     else:
         print("Failed to insert tools")
         
-dataTest = data.randomRecipes(5,"main course")
-print("DataTest: ",dataTest)
+dataTest = data.randomRecipes(2,"main course")
+#print("DataTest: ",dataTest)
 
 for key,value in dataTest:
     recipeID = key
     name = value
     print("Inserting recipe",name," into database: [ID ", recipeID, "]")
-    #insertRecipe(name)
-    #print("Recipe inserted")
+    #for key,value in data.recipeSteps(recipeID).items():
+    #    print("Step: ",key," - ",value)
+    print("Recipe",name," inserted into database ------------------------------------------")
+    print("\n")
+    insertRecipe(name)
+    print("Recipe inserted")
 
 #recipeID = dataTest[0][0]
 #print(recipeID)

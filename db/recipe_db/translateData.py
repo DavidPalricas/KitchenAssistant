@@ -11,10 +11,17 @@ data = GetData()
 def randomRecipes(number="10", tag="main course"):
     #[ (RecipeID, name), (RecipeID, name), ...]
     randomRecipes = data.getRandomRecipes(number,tag)
+    #print(randomRecipes)
     # Criar uma nova lista com os nomes das receitas modificados
     pt_recipes = [(key, ts.translate_text(value, "google", "auto", "pt")) for key, value in randomRecipes]
 
     return pt_recipes
+
+def recipe(tag):
+    recipe = data.getRecipeNameByTag(tag)
+    #print(recipe)
+    pt_recipe = ts.translate_text(recipe, "google", "auto", "pt")
+    return pt_recipe
     
 def recipeImage(recipeId):
     # 'https://spoonacular.com/recipeImages/595736-556x370.jpg'
@@ -126,7 +133,8 @@ def recipeSteps(recipeId):
 #test_steps = recipeSteps(recipeId)
 #test_categories = categories(recipeId)
 #print(test_categories)
-
+test_recipe = recipe("main course")
+print(test_recipe)
 # --------------------------------------------------------------------------------------------
 #
 # INITIAL TESTS
