@@ -1,0 +1,54 @@
+NAME = 'Pica-Pau de Entremeada'
+
+INGREDIENTS = {
+    'Entremeada fatiada, cortada em tiras': '600 g',
+    'banha': '2 colheres-de-sopa',
+    'dentes de alho esmagados com casca': '4 uni',
+    'folhas de louro': '2 uni',
+    'manteiga': '1 colher-de-sopa',
+    'mostarda': '2 colheres-de-chá',
+    'vinho branco': '100 ml',
+    'azeitonas pretas': '50 g',
+    'azeitonas verdes': '50 g',
+    'azeitonas verdes recheadas com pimento': '50 g',
+    'pickles picados': '50 g',
+    'Salsa picada': '0 q.b',
+    'limão cortado em gomos': '1 uni',
+    'Sal': '0 q.b',
+    'pimentão doce': '1 colher-de-chá',
+    'molho inglês': '1 colher-de-chá',
+    'Piri-Piri': '0 q.b'
+}
+
+TOOLS = ['Recipiente', 'Colher', 'Frigideira', 'Prato']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Começamos com a preparação da entremeada, temperamos com sal, piri-piri e pimentão-doce. Envolvemos bem.',
+        'tools': ['Recipiente', 'Colher']
+    },
+    2: {
+        'description': 'Numa frigideira larga, leve ao lume a banha, os dentes de alho e as folhas de louro. Deixe aquecer muito bem. Quando tudo estiver bem quente, junte a entremeada e deixe fritar por igual até que fique bem lourinha.',
+        'tools': ['Frigideira', 'Colher']
+    },
+    3: {
+        'description': 'Depois da entremeada bem frita, junte a mostarda, o molho inglês, o vinho branco e a manteiga. Mexa muito bem e deixe ferver 30 segundos até que o álcool evapore.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	4: {
+        'description': 'Logo que o molho fique apurado, adicione sumo de 1/4 de limão. Mexa e por fim coloque a salsa.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	5: {
+        'description': 'Coloque num prato de servir, por cima espalhe os pickles e as azeitonas.
+Finalmente, decore a gosto com os gomos de limão. E está pronto a servir! ',
+        'tools': ['Frigideira', 'Colher', 'Prato']
+    }}
+
+COOKING_TIME = '15'
+
+NUMBER_OF_SERVINGS = '4'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Pica-Pau-de-Entremeada-SI-1.jpg',
+
+TAGS = ['Entrada', 'menos de 30 minutos', 'porco']

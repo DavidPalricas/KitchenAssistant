@@ -1,0 +1,39 @@
+NAME = 'Amêijoas à Bulhão Pato'
+
+INGREDIENTS = {
+	'amêijoas': '1 kg',
+	'azeite': '1 dl',
+	'alho cortado em rodelas': '2 uni',
+	'vinho branco': '2 colheres-de-sopa',
+	'coentros picados': '1 molhinho',
+	'limão': '1 uni',
+	'sal': '0 q.b', 
+	'pimenta': '0 q.b'
+}
+
+TOOLS = ['Recipiente grande', 'Tacho largo', 'Colher', 'Taça grande']
+
+INSTRUCTIONS = { 
+	1 : {
+		'description' : 'Deixe as amêijoas num recipiente grande em água temperada com sal, durante pelo menos 3 horas para perderem a areia. Passadas as três horas lave bem as amêijoas.',
+		'tools' : ['Recipiente grande']
+	},
+	2 : {
+		'description' : 'Num tacho largo coloque azeite, os alhos e deixe aquecer. Junte os coentros, o vinho branco e depois de ferver junte as amêijoas. Tempere com um pouco de sal e pimenta. Mexa tudo com uma colher, tape e deixe cozinhar em lume médio até as amêijoas abrirem. Quando as amêijoas começarem a abrir, aumente o lume até apurar um pouco o molho.',
+		'tools' : ['Tacho largo', 'Colher']
+	},
+	3 : {
+		'description' : 'Depois de todas as amêijoas abertas, coloque-as numa taça grande. Deixe o molho apurar mais 2 minutos. Regue as amêijoas com o molho e tempere com sumo de limão.Por fim, decore com gomos de limão e está pronto a ser consumido',
+		'tools' : ['Taça grande']
+	}}
+
+
+COOKING_TIME = '190'
+
+NUMBER_OF_SERVINGS = '3'
+
+IMAGE_URL = 'https://www.saborintenso.com/attachments/videos-entradas-petiscos/240d1246564553-ameijoas-bulhao-pato-ameijoas-bulhao-pato-1.jpg',
+
+TAGS = ['Entrada']
+
+

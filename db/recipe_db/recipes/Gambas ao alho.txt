@@ -1,0 +1,41 @@
+NAME = 'Gambas ao alho'
+
+INGREDIENTS = {
+    'camarão fresco ou descongelado': '800 g',
+    'azeite': '125 ml',
+    'dentes de alho descascados e esmagados': '6 uni',
+    'Sumo de limão': '0 q.b',
+    'Piri-piri': '0 q.b',
+    'folha de louro': '1 uni',
+    'Salsa picada': '0 q.b',
+    'whisky': '60 ml',
+    'Sal': '0 q.b'
+}
+
+TOOLS = ['Recipiente', 'Colher', 'Frigideira']
+
+INSTRUCTIONS = { 
+    1 : {
+        'description': 'Descasque os camarões e retire-lhes a tripa, tempere-os com um pouco de sal, piri-piri e sumo de limão. Envolva bem',
+        'tools': ['Recipiente', 'Colher']
+    },
+    2 : {
+        'description': 'Leve ao lume uma frigideira larga com o azeite, os dentes de alho e o louro. Deixe aquecer bem, até os dentes de alho alourarem.',
+        'tools': ['Frigideira', 'Colher']
+    },
+    3 : {
+        'description': 'Quando os dentes de alhos estiverem louros, junte o camarão e deixe que fritem. Quando começarem a ganhar cor, regue com o whisky e aumento o fogo. Deixe que fritem por aproximadamente 1 minuto, até que fiquem bem lourinhos.',
+        'tools': ['Frigideira', 'Colher']
+    },
+	4 : {
+        'description': 'Por fim, misture a salsa e retire do lume. E está pronto a servir!',
+        'tools': ['Colher', 'Recipiente']
+    }}
+
+COOKING_TIME = '15'
+
+NUMBER_OF_SERVINGS = '4'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Gambas-Ajillo-SI-1.jpg',
+
+TAGS = ['Entrada', 'Menos de 30 minutos', 'Marisco']
