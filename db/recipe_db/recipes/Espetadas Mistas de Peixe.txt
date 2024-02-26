@@ -1,0 +1,45 @@
+NAME = 'Espetadas Mistas de Peixe'
+
+INGREDIENTS = {
+    'Lombos de Perca do nilo cortado em cubos': '200 g',
+    'Lombos de Salmão cortado em cubos': '200 g',
+    'Lulas médias limpas, cortadas em pedaços': '3 uni',
+    'Camarões': '4 uni',
+    'Pimento pequeno cortado em pedaços': '1/2 uni',
+    'Cebola pequena cortada em pedaços': '1/2 unit',
+    'Manteiga derretida': '50 g',
+    'Sumo de limão': '1/2 uni',
+    'Sal': '0 q.b',
+    'Pimenta': '0 q.b',
+
+}
+
+TOOLS = ['Tábua', 'Faca', 'Recipiente', 'Espetos', 'Prato', 'Grelhador', 'Tenaz', 'Travessa', 'Tigela', 'Colher']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Comece por lavar e limpar os peixes, os camarões e as lulas.
+De seguida corte os ingredientes, os peixes em cubos, as lulas, os camarões, o pimento e a cebola em pedaços.',
+        'tools': ['Tábua', 'Faca', 'Recipiente']
+    },
+    2: {
+        'description': 'Em espetos de madeira, coloque alternadamente, pedaços de pimento, lula, perca do nilo, cebola, salmão e camarão. Tempere as espetadas de ambos os lados com sal e pimenta.',
+        'tools': ['Espetos', 'Prato']
+    },
+    3: {
+        'description': 'Grelhe as espetadas de ambos os lados durante 7 minutos, num grelhador quente e previamente untado com azeite. Depois das espetadas grelhadas, retire-as para uma travessa.',
+        'tools': ['Grelhador', 'Tenaz', 'Travessa']
+    },
+	4: {
+        'description': 'Numa tigela misture a manteiga com sumo de 1/2 limão e salsa picada.
+Sirva a espetada com o molho por cima ou à parte, acompanhada de legumes e salada.',
+        'tools': ['Tigela', 'Colher', 'Travessa']
+    }}
+
+COOKING_TIME = '20'
+
+NUMBER_OF_SERVINGS = '4'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Espetadas-Mistas-de-Peixe-SI-1.jpg',
+
+TAGS = ['Principal', 'Peixe', 'Salmão', 'Camarão', 'Menos de 30 minutos']
