@@ -1,0 +1,56 @@
+NAME = 'Caldo de Tomate com Peixe e Camarão'
+
+INGREDIENTS = {
+    'Posta de Pescada': '2 uni',
+    'Camarão': '300 g',
+    'Azeite': '80 ml',
+    'Cebola picado': '1 uni',
+    'Dente de alho picado': '2 uni',
+    'Folha de Louro': '1 uni',
+    'Tomate maduro cortado em cubos': '500 g',
+    'Polpa de tomate': '3 colheres-de-sopa',
+    'Massa a gosto': '100 g',
+    'Molho de salsa': '1 uni',
+    'Picante': '0 q.b',
+    'Sal': '0 q.b'
+}
+
+TOOLS = ['Panela', 'Colher', 'Recipiente', 'Coador', 'Prato', 'Varinha Mágica', 'Tacho', 'Colher de servir']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Numa panela coloque 2 litros de água para ferver, tempere com sal. Assim que levantar fervura, coloque o peixe e o camarão a cozer, aproximadamente 10 minutos.',
+        'tools': ['Panela']
+    },
+    2: {
+        'description': 'Depois de tudo cozido, retire para um prato. Deixe arrefecer e reserve o caldo. Descasque o camarão e limpe e desfie o peixe, descartando a pele e as espinhas. ',
+        'tools': ['Panela', 'Colher', 'Recipiente', 'Coador', 'Prato']
+    },
+    3: {
+        'description': 'Numa outra panela, leve ao lume o azeite, a cebola, os alhos e a folha de louro. Mexa, e deixe refogar. Adicione o tomate e deixe refogar. Adicione ao refogado, a água de cozer o peixe coada e a polpa de tomate. Tempere com picante a gosto. e deixe ferver durante 10 minutos.',
+        'tools': ['Panela', 'Colher']
+    },
+    4: {
+        'description': 'Passado os 10 minutos, retire a folha de louro. Passe o caldo com a varinha mágica.',
+        'tools': ['Panela', 'Colher', 'Varinha Mágica']
+    },
+    5: {
+        'description': 'Num tacho largo, leve ao lume o azeite, a restante cebola, o restante louro, os alhos picados e o bacon. Mexa e deixe refogar, junte os cogumelos. Tempere com sal e pimenta.',
+        'tools': ['Tacho', 'Colher', 'Recipiente']
+    },
+    6: {
+        'description': 'Junte a massa, mexa e deixe cozer durante 15 minutos.',
+        'tools': ['Tacho', 'Colher']
+    },
+     7: {
+        'description': 'Depois da massa cozida, junte o peixe, o camarão e a salsa. Mexa e sirva.',
+        'tools': ['Panela', 'Colher de servir', 'Prato']
+    }}
+
+COOKING_TIME = '45'
+
+NUMBER_OF_SERVINGS = '6'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Caldo-de-Tomate-com-Peixe-e-Tomate-SI-1.jpg',
+
+TAGS = ['Sopa', 'Peixe', 'Pescada', 'Camarão', 'Menos de uma hora']
