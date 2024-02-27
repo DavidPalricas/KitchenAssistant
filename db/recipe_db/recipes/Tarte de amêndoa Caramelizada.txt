@@ -1,0 +1,54 @@
+NAME = 'Tarte de amêndoa Caramelizada'
+
+INGREDIENTS = {
+    'Manteiga para a base': '150 g',
+    'Açúcar para a base': '175 g',
+    'Farinha de trigo para a base': '175 g',
+    'Fermento em pó para a base': '1 colher-de-sopa',
+    'Ovos para a base': '2 uni',
+    'Leite para a base': '4 colheres-de-sopa',
+    'Manteiga para a base': '125 g',
+    'Açúcar para a cobertura': '125 g',
+    'Amêndoa palitada': '150 g',
+    'Leite para a cobertura': '4 colheres-de-sopa'
+}
+
+TOOLS = ['Tarteira de fundo amovível', 'Papel vegetal cortado ao tamanho da base', 'Recipiente', 'Colher', 'Forno', 'Tigela', 'Batedeira', 'Tacho', 'Faca']
+
+INSTRUCTIONS = { 
+    1: {
+        'description': 'Comece por fazer a base. Numa tigela, coloque a manteiga cortada em pedaços e o açúcar. Bata até que fique um creme. Enquanto bate, junte ao creme, um a um os ovos partidos. Bata até que fique um creme homogéneo.',
+        'tools': ['Tigela', 'Batedeira']
+    },
+    2: {
+        'description': 'Depois do creme batido, junte o fermento e 1/3 da farinha(para a base) peneirada. Envolva tudo com uma colher e vá juntando a restante farinha peneirada. Na última adição de farinha, junte o leite. Misture muito bem até que fique uma massa homogénea.',
+        'tools': ['Tigela', 'Colher']
+    },
+    3: {
+        'description': 'Espalhe o preparado no fundo da tarteira. Leve ao forno pré-aquecido nos 170ºC e deixe cozer entre 12 a 15 minutos.',
+        'tools': ['Tarteira de fundo amovível', 'Colher', 'Forno']
+    },
+    4: {
+        'description': 'Entretanto, prepare rapidamente a cobertura. Num tacho leve ao lume a manteiga, o açúcar, a amêndoa e o leite. Mexa e deixe derreter a manteiga. Depois da manteiga derretida, deixe ferver em lume médio durante 3 minutos até que fique lourinho.',
+        'tools': ['Tacho', 'Colher']
+    },
+    5: {
+        'description': 'Passados os 12 minutos da tarte no forno, retire-a e cubra-a rapidamente com o preparado de amêndoa para que este não arrefeça e solidifique. Não é necessário espalhar com muito rigor a amêndoa, pois no forno, o açúcar irá derreter e espalhar-se-á uniformemente.',
+        'tools': ['Tarteira de fundo amovível', 'Colher', 'Forno']
+    },
+	6: {
+        'description': 'Coloque novamente a tarte no forno e aumente a temperatura para os 190ºC. Deixe alourar cerca de 7 minutos até que a amêndoa fique tostada a gosto.',
+        'tools': ['Tarteira de fundo amovível', 'Colher', 'Forno']
+    },
+    7: {
+        'description': 'Retire a tarte e deixe arrefecer. Depois de fria, passe com uma faca à volta da tarte e desenforme. E está pronta a servir.',
+        'tools': ['Tarteira de fundo amovível', 'Colher', 'Forno', 'Faca']
+    }}
+
+COOKING_TIME = '30'
+
+NUMBER_OF_SERVINGS = '8'
+
+IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Tarte-de-Amendoa-Caramelizada-SI-1.jpg',
+
+TAGS = ['Sobremesa', 'Tarte', 'Amêndoa', 'Caramelo', 'Menos de 30 minutos']
