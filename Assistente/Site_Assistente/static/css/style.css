@@ -1,24 +1,30 @@
-#chat-box {
-    max-height: 400px;
-    overflow-y: auto;
-    /* Permite Scroll Vertical */
-}
-
-#chat-messages {
-    margin-right: 15px;
-}
-
-body {
-    background-color: #222222;
-    /* Dark gray or black */
-}
-
-h1 {
-    color: white;
-    position: fixed;
-    right: 30%;
-    top: 10%;
-    font-family: 'Florilla Fista', sans-serif;
-    text-shadow: 1px 1px 1px white;
-    /* offsetX, offsetY, blurRadius, color */
-}
+    #chat-button {
+        position: fixed;
+        width: 75px;
+        height: 75px;
+    }
+    
+    #chat-box {
+        max-height: 400px;
+        overflow-y: auto;
+        /* Permite Scroll Vertical */
+    }
+    
+    #chat-messages {
+        margin-right: 15px;
+    }
+    
+    body {
+        background-color: #222222;
+        /* Dark gray or black */
+    }
+    
+    h1 {
+        color: white;
+        position: fixed;
+        right: 30%;
+        top: 10%;
+        font-family: 'Florilla Fista', sans-serif;
+        text-shadow: 1px 1px 1px white;
+        /* offsetX, offsetY, blurRadius, color */
+    }
