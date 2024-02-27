@@ -47,7 +47,7 @@ INSTRUCTIONS = {
         'tools': ['Tabuleiro']
     },
 	8: {
-        'description': 'Leve ao forno pré-aquecido a 18'ºC e deixe tostar entre 30 a 40 minutos. Depois do arroz douradinho é só retirar e servir.',
+        'description': 'Leve ao forno pré-aquecido a 180ºC e deixe tostar entre 30 a 40 minutos. Depois do arroz douradinho é só retirar e servir.',
         'tools': ['Tabuleiro', 'Colher']
 }}
 
