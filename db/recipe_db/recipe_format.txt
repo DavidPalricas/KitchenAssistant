@@ -1,13 +1,13 @@
 NAME = 'recipe name'
 
 INGREDIENTS = {
-    'ingredient1': 'unit',
-    'ingredient2': 'unit',
-    'ingredient3': 'unit',
-    'ingredient4': 'unit',
-    'ingredient5': 'unit',
-    'ingredient6': 'unit',
-    'ingredient7': 'unit'
+    'maçã': '100 g',
+    'pera': '100 g',
+    'nutela': '100 g',
+    'rice': '100 g',
+    'pimento': '100 g',
+    'garlic': '100 g',
+    'beef': '100 g'
 }
 
 TOOLS = ['tool1', 'tool2', 'tool3']
