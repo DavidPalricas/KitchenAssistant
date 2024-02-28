@@ -78,10 +78,12 @@ class ActionSpecifRecipe(Action):
                 domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
             
             tag = tracker.get_slot("receita")
+            print("TAG: ", tag)
             
-            recipe_id = self.get_recipe_id(tag) 
-            R_ID = recipe_id
+            recipe_id = self.get_recipe_id(tag)[0] 
+            print("RECEITA ID: ", recipe_id)
             name = q.getRecipeName(recipe_id)
+            print("RECIPE NAME: ",name)
             r_ingredients = self.get_ingredients(recipe_id)
             r_tools = self.get_tools(recipe_id)
             
