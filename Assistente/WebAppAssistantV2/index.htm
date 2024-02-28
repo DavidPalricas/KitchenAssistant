@@ -362,10 +362,7 @@ InitializeKWS();
         console.log(voices[i]);
         if(voices[i].name.includes("Duarte")) ttsSpeaker=voices[i];
       }
-      
-
     }
-
     console.log(ttsSpeaker);
   };
   
@@ -391,7 +388,11 @@ InitializeKWS();
 
 
 
-
+  // --------------------------------------------------------------------------------------
+  //
+  // UNICO SPOT PARA ALTERAÇÕES - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!
+  //  - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!
+  // --------------------------------------------------------------------------------------
   function sendMMI(final_transcript){
 
     var obj = new Object();
@@ -399,8 +400,86 @@ InitializeKWS();
     $.post( "http://localhost:5005/model/parse", JSON.stringify(obj), function( data ) {
     console.log(data);
 
- 
-    if(data.intent.name=='change_color'){
+    switch(data.intent.name){
+      case "ask_spefific_recipe":
+        var recipe = '';
+        for (let i = 0; i < data.entities.length; i++)
+        {
+          if(data.entities[i].entity=='recipe')
+            recipe=data.entities[i].value;
+        }
+        var message = {'intent':'ask_spefific_recipe','recipe':recipe}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "greet":
+        var message = {'intent':'greet'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "goodbye":
+        var message = {'intent':'goodbye'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "ask_random_recipe":
+        var message = {'intent':'ask_random_recipe'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "affirm":
+        var message = {'intent':'affirm'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "deny":
+        var message = {'intent':'deny'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "repeat_step":
+        var message = {'intent':'repeat_step'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "confirm_step":
+        break;
+      case "joke":
+        var message = {'intent':'joke'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+      case "ask_recipe_instructions":
+        break;
+      case "default":
+        break;
+    }
+
+    /* if(data.intent.name=='change_color'){
       var shape='' ;
       var color='' ;
 
@@ -411,7 +490,7 @@ InitializeKWS();
         if(data.entities[i].entity=='color')
     	    color=data.entities[i].value;
       }
-  
+    
       var message = {'intent':'change_color','shape':shape,'color':color}
       var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
       var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -419,6 +498,7 @@ InitializeKWS();
             doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
             setValue(JSON.stringify(result))));
     }
+    */
   });
 
   /*

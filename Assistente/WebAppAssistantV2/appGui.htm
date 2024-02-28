@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <title>CASA VIVA + APPGUI</title>
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/chat.js"></script>
     
     <style>
       body {
@@ -46,26 +50,70 @@
       .recognized{
         font-size:x-large;
       }
+      #chat-button {
+        position: center;
+        width: 75px;
+        height: 75px;
+      }
+    
+      #chat-box {
+          max-height: 400px;
+          overflow-y: auto;
+          /* Permite Scroll Vertical */
+      }
+      
+      #chat-messages {
+          margin-right: 15px;
+      }
+      
+      
+      h1 {
+          color: white;
+          position: fixed;
+          right: 30%;
+          top: 10%;
+          font-family: 'Florilla Fista', sans-serif;
+          text-shadow: 1px 1px 1px white;
+          /* offsetX, offsetY, blurRadius, color */
+      }
 
     </style>
+
   </head>
   <body>
     <h1 style="background-color: #4F5D73; margin: 0;">CASA VIVA + APP GUI</h1>
 
-
-
-    <div id="response" class=""  style="">d</div>
     
-    <div style="width: 500px;">
+    <div>
+      
+  
+      <!--ChatBox-->
+  
+      <div id="chat-box" class="card position-fixed shadow d-none" style="bottom: 100px; right: 35%;width: 400px;">
+          <div class="card-head bg-primary text-white">
+              KitchenAssistant
+              <button id="close" type="button" class="btn-close float-end" aria-label="Close"></button>
+  
+  
+          </div>
+  
+          <div id="chat-messages" class="card-body">
+              <!-- Mensagens do chat aparecerão aqui-->
+  
+          </div>
+  
+          <div class="card-footer">
+              <input id="chat-input" type="text" class="form-control" placeholder="Digite sua mensagem">
+  
+          </div>
+  
+      </div>
 
-    
-    <svg class="a" id="a" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-    viewBox="0 0 320 100" style="enable-background:new 0 0 320 100;" xml:space="preserve">
-      <polygon points="50, 0, 0,100,100,100" class="triangle"  />
-      <rect x="110"  width="100" height="100" class="square"/>
-      <circle cx="270" cy="50" r="50" class="circle" />
-    </svg>
-  </div>
+      <button id="chat-button" type="button" class="btn btn-primary rounded-circle position-fixed chat-sign-button" style="bottom: 20px;right: 50%;">
+        <i class="fa-regular fa-message fa-2x"></i>
+      </button>
+  
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@latest/dist/svg.min.js"></script>
     <script src="js/mmi.js"></script>
@@ -75,129 +123,162 @@
 
 
 
-<script type="module">
+    <script type="module">
 
 
-  var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
-  var mmiCli_Out = null;
-  mmiCli_Out = new MMIClientSocket(mmiCli_Out_add + "APP");
-  mmiCli_Out.onMessage.on(im1MessageHandler);
-  mmiCli_Out.onOpen.on(socketOpenHandler);
-	mmiCli_Out.openSocket();
+      var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
+      var mmiCli_Out = null;
+      mmiCli_Out = new MMIClientSocket(mmiCli_Out_add + "APP");
+      mmiCli_Out.onMessage.on(im1MessageHandler);
+      mmiCli_Out.onOpen.on(socketOpenHandler);
+      mmiCli_Out.openSocket();
 
 
-  function socketOpenHandler(event) {
-    console.log("---------------openSocketHandler---------------")
+      function socketOpenHandler(event) {
+        console.log("---------------openSocketHandler---------------")
 
-    if(mmiCli_Out.socket.readyState !== WebSocket.OPEN)
-    {
-        return;
-    }
-  }
-
-  
-  let circle = SVG.find('.circle');
-  let square = SVG.find('.square');
-  let triangle = SVG.find('.triangle');
-
-  circle.animate().attr({fill:'#ccc'});
-  square.animate().attr({fill:'#ccc'});
-  triangle.animate().attr({fill:'#ccc'});
-
-
-  function im1MessageHandler(data) {
-
-    console.log("--------------im1MessageHandler---------------");
-
-    if(data != null && data!="RENEW" && data!="OK") {
-      console.log(data);
-      var content = $(data).find("emma\\:interpretation").first().text().trim();
-      if (typeof content == 'string') {
-        try {
-          // Try to parse XML
-          console.log(content);
-
-          //$("#response").html(content);
-          //$("#response").addClass("container");
-          //$("#response").addClass("responseText");
-
-          let c = JSON.parse(content);
-          let shape;
-          let color;
-          if (c.hasOwnProperty("nlu") && c.nlu.intent=="change_color") {
-            switch(c.nlu.shape.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
-              case 'triangulo': shape = triangle; break;
-              case 'quadrado': shape = square; break;
-              case 'circulo': shape = circle; break;
-            }
-
-            switch(c.nlu.color.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
-              case 'azul': color = "#3333FF"; break;
-              case 'verde': color = "#33FF33"; break;
-              case 'cinzento': color = "#aaa"; break;
-              case 'vermelho': color = "#FF3333"; break;
-              case 'branco': color = "#fff"; break;
-              case 'rosa': color = "#ff66b2"; break;
-              case 'amarelo': color = "#ffff33"; break;
-              case 'preto': color = "#000"; break;
-              case 'laranja': color = "#FF9933"; break;
-            }
-
-
-            
-            shape.animate().attr({ fill: color });
-            sendToVoice("Mudei o " + c.nlu.shape + " para a cor " + c.nlu.color);
-          }
-
-          
-          /*setTimeout(function(){
-            $("#response").html("");
-            $("#response").removeClass("container");
-            $("#response").removeClass("responseText");
-          }, 3000);
-          */
+        if(mmiCli_Out.socket.readyState !== WebSocket.OPEN)
+        {
+            return;
         }
-        catch (e) { console.log(e); }
-
       }
-    }
-  }
+
+      /* UNUSED CODE
+      let circle = SVG.find('.circle');
+      let square = SVG.find('.square');
+      let triangle = SVG.find('.triangle');
+
+      circle.animate().attr({fill:'#ccc'});
+      square.animate().attr({fill:'#ccc'});
+      triangle.animate().attr({fill:'#ccc'});
+      */
+
+      function im1MessageHandler(data) {
+
+        console.log("--------------im1MessageHandler---------------");
+
+        if(data != null && data!="RENEW" && data!="OK") {
+          console.log(data);
+          var content = $(data).find("emma\\:interpretation").first().text().trim();
+          if (typeof content == 'string') {
+            try {
+              // Try to parse XML
+              console.log(content);
+
+              //$("#response").html(content);
+              //$("#response").addClass("container");
+              //$("#response").addClass("responseText");
+
+              // Parse JSON from XML content index.htm
+              let c = JSON.parse(content);
+              let recipe;
 
 
-/////
-
-  var mmiCli_1 = null;
-  mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/APPSPEECH");
-
-  circle.on('click', function(){
-      console.log("circulo");
-      sendToVoice("circulo");
-  })
-
-  square.on('click', function(){
-      console.log("quadrado");
-      sendToVoice("quadradoç");
-  })
-
-  triangle.on('click', function(){
-      console.log("triangulo");
-      sendToVoice("triangulo");
-  })
-
-  function sendToVoice(texto){
-    //let speak = "&lt;speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"&gt;&lt;p&gt;" + "quadrado" + "&lt;/p&gt;&lt;/speak&gt";
-  let speak = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"><p>"+texto+"</p></speak>";
-  var result = speak;
-      mmiCli_1.sendToIM(new LifeCycleEvent("APPSPEECH", "IM", "text-1", "ctx-1").
-          doStartRequest(new EMMA("text-", "text", "command", 1, 0).
-            setValue(JSON.stringify(result))));
-  }
-  
+              if(c.hasOwnProperty("nlu")){
+                recipe = c.nlu.intent;
+                switch(c.nelu.intent){
+                  case "ask_specific_recipe":
+                    console.log(c.nlu.entity);
+                    break;
+                  case "greet":
+                    break;
+                  case "goodbye":
+                    break;
+                  case "ask_random_recipe":
+                    console.log(c.nlu);
+                    break;
+                  case "affirm":
+                    break;
+                  case "deny":
+                    break;
+                  case "repeat_step":
+                    break;
+                  case "confirm_step":
+                    break;
+                  case "joke":
+                    break;
+                  case "default":
+                    break;
+                }
 
 
+              }
+              
+              /* UNUSED CODE
+              if (c.hasOwnProperty("nlu") && c.nlu.intent=="change_color") {
+                switch(c.nlu.shape.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
+                  case 'triangulo': shape = triangle; break;
+                  case 'quadrado': shape = square; break;
+                  case 'circulo': shape = circle; break;
+                }
 
-  /////////////////////////////////////////
+                switch(c.nlu.color.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')){
+                  case 'azul': color = "#3333FF"; break;
+                  case 'verde': color = "#33FF33"; break;
+                  case 'cinzento': color = "#aaa"; break;
+                  case 'vermelho': color = "#FF3333"; break;
+                  case 'branco': color = "#fff"; break;
+                  case 'rosa': color = "#ff66b2"; break;
+                  case 'amarelo': color = "#ffff33"; break;
+                  case 'preto': color = "#000"; break;
+                  case 'laranja': color = "#FF9933"; break;
+                }
+                
 
-</script> 
+
+                
+                shape.animate().attr({ fill: color });
+                sendToVoice("Mudei o " + c.nlu.shape + " para a cor " + c.nlu.color);
+              }
+              */
+
+              
+              /* UNUSED CODE
+              setTimeout(function(){
+                $("#response").html("");
+                $("#response").removeClass("container");
+                $("#response").removeClass("responseText");
+              }, 3000);
+              */
+            }
+            catch (e) { console.log(e); }
+          }
+        }
+      }
+
+
+    /////
+
+      var mmiCli_1 = null;
+      mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/APPSPEECH");
+
+      /* UNUSED CODE TO SEND TO VOICE
+      circle.on('click', function(){
+          console.log("circulo");
+          sendToVoice("circulo");
+      })
+
+      square.on('click', function(){
+          console.log("quadrado");
+          sendToVoice("quadradoç");
+      })
+
+      triangle.on('click', function(){
+          console.log("triangulo");
+          sendToVoice("triangulo");
+      })
+      */
+
+      function sendToVoice(texto){
+        //let speak = "&lt;speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"&gt;&lt;p&gt;" + "quadrado" + "&lt;/p&gt;&lt;/speak&gt";
+      let speak = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"><p>"+texto+"</p></speak>";
+      var result = speak;
+          mmiCli_1.sendToIM(new LifeCycleEvent("APPSPEECH", "IM", "text-1", "ctx-1").
+              doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                setValue(JSON.stringify(result))));
+      }
+      
+      /////////////////////////////////////////
+    </script> 
   </body>
 </html>
