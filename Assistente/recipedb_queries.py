@@ -33,6 +33,31 @@ def getRecipes():
         cursor.close()
         conn.close()
 
+# Returns the recipe_id of a recipe given its tag
+def getRecipeByTag(tag):
+    """Obtém IDs de receitas pelo nome da tag."""
+    conn = create_connection()
+    if conn is None:
+        return None
+    query = """
+    SELECT r.recipe_id
+    FROM recipes AS r
+    JOIN recipe_tags AS rt ON r.recipe_id = rt.recipe_id
+    JOIN tags AS t ON rt.tag_id = t.tag_id
+    WHERE t.name = %s
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, (tag,))
+        recipe_ids = cursor.fetchall()  # Isso retornará uma lista de tuplas, cada uma contendo apenas o recipe_id
+        return [recipe_id[0] for recipe_id in recipe_ids] if recipe_ids else None
+    except Error as e:
+        print(f"Erro: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+
 # Returns the recipe_id of a recipe given its name
 def getRecipe(name):
     conn = create_connection()
@@ -175,45 +200,49 @@ def getPreviousInstruction(recipe_id, step):
 
 
 # Exemplo de como utilizar as funções modificadas
-#recipes = getRecipes()
-#print("Receitas:", recipes)
-#print("\n")
-#recipe_id = getRecipe("Arroz de Pato")
+# recipes = getRecipes()
+# print("Receitas:", recipes)
+# print("\n")
+# recipe_id = getRecipe("Arroz de Pato")
 
-#ingredients = getIngredients(recipe_id)
-#print("Ingredientes:", ingredients)
-#print("\n")
-#tools = getTools(recipe_id)
-#print("Utensílios:", tools)
-#print("\n")
+# ingredients = getIngredients(recipe_id)
+# print("Ingredientes:", ingredients)
+# print("\n")
+# tools = getTools(recipe_id)
+# print("Utensílios:", tools)
+# print("\n")
 
-#numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+# numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-#print("TESTING getNextInstruction")
-#for step in numbers: 
-#    step_description = getNextInstruction(recipe_id, step)
-#    real_step = step + 1
-#    if step_description is None:
-#        continue
-#    print(f"Passo atual {step} e o  PROXIMO PASSO {(real_step)}: {step_description}")
-#print("\n")
-#print("TESTING getPreviousInstruction")
-#for step in reversed(numbers): 
-#    step_description = getPreviousInstruction(recipe_id, step)
-#    real_step = step - 1
-#    if step_description is None:
-#        continue
-#    print(f"Passo atual {step} e o PASSO ANTERIOR {(real_step)}: {step_description}")
-#print("\n")
+# print("TESTING getNextInstruction")
+# for step in numbers: 
+#     step_description = getNextInstruction(recipe_id, step)
+#     real_step = step + 1
+#     if step_description is None:
+#         continue
+#     print(f"Passo atual {step} e o  PROXIMO PASSO {(real_step)}: {step_description}")
+# print("\n")
+# print("TESTING getPreviousInstruction")
+# for step in reversed(numbers): 
+#     step_description = getPreviousInstruction(recipe_id, step)
+#     real_step = step - 1
+#     if step_description is None:
+#         continue
+#     print(f"Passo atual {step} e o PASSO ANTERIOR {(real_step)}: {step_description}")
+# print("\n")
 
 
-#random_recipe_id = getRandomRecipe()
-#random_recipe_name = getRecipeName(random_recipe_id)
-#print("Receita aleatória:", random_recipe_name)
-#print("\n")
-#random_recipe_ingredients = getIngredients(random_recipe_id)
-#print("Ingredientes:", random_recipe_ingredients)
-#print("\n")
-#random_recipe_tools = getTools(random_recipe_id)
-#print("Utensílios:", random_recipe_tools)
-#print("\n")
+# random_recipe_id = getRandomRecipe()
+# random_recipe_name = getRecipeName(random_recipe_id)
+# print("Receita aleatória:", random_recipe_name)
+# print("\n")
+# random_recipe_ingredients = getIngredients(random_recipe_id)
+# print("Ingredientes:", random_recipe_ingredients)
+# print("\n")
+# random_recipe_tools = getTools(random_recipe_id)
+# print("Utensílios:", random_recipe_tools)
+# print("\n")
+
+# print("TESTING getRecipeByTag")
+# #print(getRecipeByTag("Salmão"))
+# #print(getRecipeName(getRecipeByTag("Salmão")[0]))

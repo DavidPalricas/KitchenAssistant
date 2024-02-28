@@ -68,16 +68,17 @@ nlu:
 
 - intent: repeat_step
   examples: |
-    - [Repete](passo), por favor
-    - Podes [repete](passo) anterior?
-    - Não te importas de [repete](passo) anterior?
-    - Não te importas de [repete](passo) o último passo?
-    - Não entendi, podes [repete](passo)?
-    - Não compreendi, [repete](passo) por favor
-    - Podes, por favor, [repete](passo) último passo?
-    - [Repete](passo) o último passo por favor
-    - Seria possivel [repete](passo)?
-    - Não ouvi, podes [repete](passo)?
+    - Repete por favor
+#    - [Repete](passo), por favor
+#    - Podes [repete](passo) anterior?
+#    - Não te importas de [repete](passo) anterior?
+#    - Não te importas de [repete](passo) o último passo?
+#    - Não entendi, podes [repete](passo)?
+#    - Não compreendi, [repete](passo) por favor
+#    - Podes, por favor, [repete](passo) último passo?
+#    - [Repete](passo) o último passo por favor
+#    - Seria possivel [repete](passo)?
+#    - Não ouvi, podes [repete](passo)?
 
 - intent: confirm_step
   examples: |

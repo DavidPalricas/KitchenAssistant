@@ -34,7 +34,7 @@ rules:
 - rule: repeat
   steps:
   - intent: repeat_step
-  - action: utter_repeatStep
+  - action: action_repeat_step
 
 - rule: default
   steps:

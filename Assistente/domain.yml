@@ -17,6 +17,16 @@ entities:
 - numeropessoas
 
 slots:
+  recipe_id:
+    type: text
+    mappings:
+    - type: custom
+      action: action_random_recipe
+  recipe_step:
+    type: text
+    mappings:
+    - type: custom
+      action: action_random_step
   repete:
     type: text
     influence_conversation: true
