@@ -101,7 +101,7 @@ def getTools(recipe_id):
     if conn is None:
         return []
     query = """
-    SELECT t.name FROM tools t
+    SELECT DISTINCT t.name FROM tools t
     JOIN instructions_tools it ON t.tool_id = it.tool_id
     JOIN recipe_instructions ri ON it.recipe_instruction_id = ri.recipe_instruction_id
     WHERE ri.recipe_id = %s

@@ -66,7 +66,20 @@
           margin-right: 15px;
       }
       
+      #conteudo {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centraliza os itens horizontalmente se desejar */
+      }
       
+      #conteudo h2, #conteudo img, #conteudo table {
+        margin-bottom: 20px; /* Ajuste conforme necessário */
+      }
+
+      #conteudo th, #conteudo td {
+        font-size: 12px; /* Ajuste para o tamanho desejado */
+      }
+
       h1 {
           background-color: #4F5D73;
           color: burlywood;
@@ -82,22 +95,53 @@
           /* offsetX, offsetY, blurRadius, color */
       }
 
-      img {
-        position: fixed;
-        left: 50%; /* Center the image relative to the viewport */
-        top: 10%;
-        width: 400px;
-        height: 400px;
-        transform: translateX(-50%); /* Shift it back by half its own width to center */
+      #image-container {
+        display: flex;
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: flex-start; /* Alinha ao topo */
       }
     
-
+      #table-container {
+          display: flex;
+          flex-direction: row; /* Alinha os elementos filhos lado a lado */
+          justify-content: center; /* Centraliza os elementos filhos horizontalmente */
+          flex-wrap: wrap; /* Permite que os elementos filhos se ajustem conforme a largura do contêiner */
+          gap: 5px; /* Adiciona um espaço entre as tabelas */
+      }
+      
+      #table-container table {
+        width: auto; /* ou uma largura específica que permita que duas tabelas caibam lado a lado */
+        /*max-width: 90%; /* Isso assegura que duas tabelas possam caber lado a lado */
+      }
+      
+      img {
+          width: 250px;
+          height: 250px;
+      }
+    
       .sender {
         color: blue;
       }
       
       .message {
           color: black;
+      }
+
+      table {
+        /*top : 100%; */
+        width: 100%;
+        border-collapse: collapse;
+      }
+      
+      th, td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+      }
+      
+      thead {
+          background-color: #4F5D73;
+          color: white;
       }
 
     </style>
@@ -111,6 +155,18 @@
       
       <div id = "conteudo">
         <!--PARA POSTERIORMENTE APARECEREM A IMAGEM-->  
+        
+        <div id="title">
+
+        </div>
+        
+        <div id="image-container">
+
+        </div>
+
+        <div id="table-container">
+
+        </div>
       </div>
 
       <!--ChatBox-->
@@ -185,25 +241,125 @@
 
       function addMsgToChat(user, message){
         // Determine the sender
-        let sender = user === 'user' ? 'Você' : 'Assistente';
+        let sender = user;
         // Append the message to the chat
         $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
       }
 
-      function addRecipeName(recipe_name){
-        let container = document.getElementById("conteudo");
-        let name = document.createElement("h2");
-        name.textContent = recipe_name;
-        container.appendChild(name);
+      function addRecipeName(recipe_name) {
+        let container = document.getElementById("title");
+        // Verifica se já existe um elemento h2 dentro do contêiner
+        let existingH2 = container.querySelector("h2");
+    
+        // Se já existir um h2, atualiza o texto
+        if (existingH2) {
+            existingH2.textContent = recipe_name;
+        } else {
+            // Se não, cria um novo h2 e adiciona ao contêiner
+            let name = document.createElement("h2");
+            name.textContent = recipe_name;
+            container.appendChild(name);
+        }
       }
-
-      function addImage(img_url){
-        let container = document.getElementById("conteudo");
-        let img = document.createElement("img");
-        img.src = img_url;
-        container.appendChild(img);
+      
+      function addImage(img_url) {
+        let container = document.getElementById("image-container");
+        // Verifica se já existe uma imagem dentro do contêiner
+        let existingImg = container.querySelector("img");
+    
+        // Se já existir uma imagem, atualiza o atributo src
+        if (existingImg) {
+            existingImg.src = img_url;
+        } else {
+            // Se não, cria uma nova imagem e adiciona ao contêiner
+            let img = document.createElement("img");
+            img.src = img_url;
+            container.appendChild(img);
+        }
       }
-
+      
+      function addIngredientsTable(ingredients) {
+        let container = document.getElementById("table-container");
+        // Verifica e remove a tabela existente de ingredientes
+        let existingTable = container.querySelector("#ingredients-table");
+        if (existingTable) {
+            container.removeChild(existingTable);
+        }
+        
+        // Cria a nova tabela de ingredientes
+        let table = document.createElement("table");
+        table.id = "ingredients-table"; // Adiciona um ID único
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
+        let rowHead = document.createElement("tr");
+        
+        // Define os títulos das colunas
+        let headers = ["Ingrediente", "Valor", "Quantidade"];
+        headers.forEach(headerText => {
+            let header = document.createElement("th");
+            header.textContent = headerText;
+            rowHead.appendChild(header);
+        });
+        
+        thead.appendChild(rowHead);
+        table.appendChild(thead);
+        
+        // Adiciona os dados dos ingredientes no corpo da tabela
+        ingredients.forEach(ingredient => {
+            let row = document.createElement("tr");
+            
+            let nameCell = document.createElement("td");
+            nameCell.textContent = ingredient.name;
+            row.appendChild(nameCell);
+            
+            let quantityCell = document.createElement("td");
+            quantityCell.textContent = ingredient.quantity;
+            row.appendChild(quantityCell);
+            
+            let unitCell = document.createElement("td");
+            unitCell.textContent = ingredient.unit;
+            row.appendChild(unitCell);
+            
+            tbody.appendChild(row);
+        });
+        
+        table.appendChild(tbody);
+        container.appendChild(table);
+     }
+    
+     function addToolsTable(tools) {
+      let container = document.getElementById("table-container");
+      // Verifica e remove a tabela existente de utensílios
+      let existingTable = container.querySelector("#tools-table");
+      if (existingTable) {
+          container.removeChild(existingTable);
+      }
+      
+      // Cria a nova tabela de utensílios
+      let table = document.createElement("table");
+      table.id = "tools-table"; // Adiciona um ID único
+      let thead = document.createElement("thead");
+      let tbody = document.createElement("tbody");
+      let rowHead = document.createElement("tr");
+      let header = document.createElement("th");
+      header.textContent = "Utensílios";
+      rowHead.appendChild(header);
+      thead.appendChild(rowHead);
+      table.appendChild(thead);
+      
+      // Adiciona os dados dos utensílios no corpo da tabela
+      tools.forEach(tool => {
+          let row = document.createElement("tr");
+          let cell = document.createElement("td");
+          cell.textContent = tool[0]; // Considerando que cada ferramenta é um elemento em um array
+          row.appendChild(cell);
+          tbody.appendChild(row);
+      });
+      
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+  
       /* FUNCTION : GET RANDOM RECIPE
       RETURN: 
       {
@@ -359,6 +515,7 @@
         return data;
       }
     
+      var recipe_id = 0;
 
       async function im1MessageHandler(data) {
 
@@ -380,6 +537,7 @@
               // Parse JSON from XML content index.htm
               let c = JSON.parse(content);
               let recipe;
+              
 
 
               if(c.hasOwnProperty("nlu")){
@@ -395,6 +553,8 @@
                   case "ask_random_recipe":
                     //console.log(c.nlu);
                     data = await getRandRecipe()
+                    recipe_id = data.recipe_id;
+                    console.log("RECIPE_ID : " , recipe_id);
                     console.log("DATA: " , data);
                     console.log("DATA PARSING" + data.recipe_name);
                     let recipe_name = data.recipe_name;
@@ -402,12 +562,28 @@
                     let img_url = data.recipe_img;
                     console.log("IMG URL: " + img_url);
                     addImage(img_url);
+                    let ingredients = await getIngredients(data.recipe_id);
+                    addIngredientsTable(ingredients);
+                    console.log("INGREDIENTS: ", ingredients);
+                    let tools = await getTools(data.recipe_id);
+                    addToolsTable(tools);
+                    console.log("TOOLS: ", tools);
                     // THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES
                     sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . PARA MOSTRAR A PREPARAÇÃO DIGA: VAMOS COMEÇAR COM A RECEITA");
+                    let user_audio = c.nlu.audioReconized;
                     openChatBox();
+                    addMsgToChat('Você',': ' + user_audio);
                     addMsgToChat('Assistente','Para Mostrar a Preparação, diga : Vamos começar com a receita');
                     break;
                   case "ask_first_step":
+                    console.log("ASK FIRST STEP -----------------------------");
+                    let instruction = await getActualInstruction(recipe_id, 1);
+                    console.log("INSTRUCTION: ", instruction.actual_instruction);
+                    let first_step = c.nlu.audioReconized;
+                    openChatBox();
+                    addMsgToChat('Você',': ' + first_step);
+                    addMsgToChat('Assistente', instruction.actual_instruction);
+                    sendToVoice(instruction.actual_instruction);
                     break;
                   case "ask_repeat_step":
                     break;
