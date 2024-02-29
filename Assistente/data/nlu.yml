@@ -5,14 +5,57 @@ nlu:
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*)
 
-
-
+# Ask for a SPECIFIC RECIPE [recipe_tag](receita)
 - intent: ask_specific_recipe
   examples: |
     - Quero uma receita de [bacalhau](receita)
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
 
+# Ask for a RANDOM RECIPE
+- intent: ask_random_recipe
+  examples: |
+    - Faz-me uma receita
+    - Gostaria de uma sugestão de receita
+    - Podes-me fazer uma sugestão de receita
+    - Podes-me sugerir uma receita
+
+# Ask for REPETE THE STEP (Assuming that we know what step we are)
+- intent: ask_repeat_step
+  examples: |
+    - Repete por favor
+  #  - [Repete](passo), por favor
+  #  - Podes [repete](passo) anterior?
+  #  - Não te importas de [repete](passo) anterior?
+  #  - Não te importas de [repete](passo) o último passo?
+  #  - Não entendi, podes [repete](passo)?
+  #  - Não compreendi, [repete](passo) por favor
+  #  - Podes, por favor, [repete](passo) último passo?
+  #  - [Repete](passo) o último passo por favor
+  #  - Seria possivel [repete](passo)?
+  #  - Não ouvi, podes [repete](passo)?
+
+# Ask to SHOW THE FIRST STEP
+- intent: ask_first_step
+  examples: |
+    - Mostra-me o primeiro passo
+    - Vamos começar com a receita
+    - Let's go
+    - vamos começar a cozinhar
+
+# Ask to go to the NEXT STEP
+- intent: ask_next_step
+  examples: |
+    - Avança para o próximo passo
+    - Podes avançar
+    - Acabei este passo da-me o proximo
+    - Passa para o proximo passo
+  #  - Avança [passo](avanca) por favor
+  #  - Podes [passo](avanca)
+  #  - Comprendi, podes [passo](avanca)
+  #  - Parece-me bem, podes [passo](avanca)
+  #  - Certo, podes [passo](avanca)
+  #  - Feito, podes [passo](avanca)
 
 - intent: greet
   examples: |
@@ -38,13 +81,6 @@ nlu:
     - até já, assistente
     - até á próxima, assistente
 
-- intent: ask_random_recipe
-  examples: |
-    - Faz-me uma receita
-    - Gostaria de uma sugestão de receita
-    - Podes-me fazer uma sugestão de receita
-    - Podes-me sugerir uma receita
-
 - intent: affirm
   examples: |
    - sim
@@ -65,31 +101,6 @@ nlu:
     - acho que não
     - não gosto assim
     - nem por isso
-
-- intent: repeat_step
-  examples: |
-    - Repete por favor
-#    - [Repete](passo), por favor
-#    - Podes [repete](passo) anterior?
-#    - Não te importas de [repete](passo) anterior?
-#    - Não te importas de [repete](passo) o último passo?
-#    - Não entendi, podes [repete](passo)?
-#    - Não compreendi, [repete](passo) por favor
-#    - Podes, por favor, [repete](passo) último passo?
-#    - [Repete](passo) o último passo por favor
-#    - Seria possivel [repete](passo)?
-#    - Não ouvi, podes [repete](passo)?
-
-- intent: confirm_step
-  examples: |
-    - Avança [passo](avanca) por favor
-    - Podes [passo](avanca)
-    - Comprendi, podes [passo](avanca)
-    - Parece-me bem, podes [passo](avanca)
-    - Certo, podes [passo](avanca)
-    - Feito, podes [passo](avanca)
-
-
 
 - intent: joke
   examples: |

@@ -4,10 +4,11 @@ intents:
 - goodbye
 - affirm
 - deny
-- repeat_step
-- confirm_step
-- ask_random_recipe
 - ask_specific_recipe
+- ask_random_recipe
+- ask_repeat_step
+- ask_first_step
+- ask_next_step
 - joke
 
 entities:
