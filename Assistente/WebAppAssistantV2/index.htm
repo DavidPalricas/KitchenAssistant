@@ -388,11 +388,10 @@ InitializeKWS();
 
 
 
-  // --------------------------------------------------------------------------------------
-  //
-  // UNICO SPOT PARA ALTERAÇÕES - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!
-  //  - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!
-  // --------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------------------
+  // | UNICO SPOT PARA ALTERAÇÕES - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!                                      |
+  // |                                                               - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!   |
+  // ---------------------------------------------------------------------------------------------------------------
   function sendMMI(final_transcript){
 
     var obj = new Object();
@@ -455,15 +454,29 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "repeat_step":
-        var message = {'intent':'repeat_step'}
+      case "ask_repeat_step":
+        var message = {'intent':'ask_repeat_step'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
         mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "confirm_step":
+        case "ask_first_step":
+        var message = {'intent':'ask_first_step'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
+        break;
+        case "ask_next_step":
+        var message = {'intent':'ask_next_step'}
+        var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+        var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+        mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+              doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify(result))));
         break;
       case "joke":
         var message = {'intent':'joke'}
@@ -478,6 +491,10 @@ InitializeKWS();
       case "default":
         break;
     }
+  // ---------------------------------------------------------------------------------------------------------------
+  // | UNICO SPOT PARA ALTERAÇÕES - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!                                      |
+  // |                                                               - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!   |
+  // ---------------------------------------------------------------------------------------------------------------
 
     /* if(data.intent.name=='change_color'){
       var shape='' ;
