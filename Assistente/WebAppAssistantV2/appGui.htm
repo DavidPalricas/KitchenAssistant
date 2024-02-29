@@ -38,7 +38,7 @@
       .responseText{
         border: solid 2px #8ea7cf;
         margin: 2%;
-        color: #41683a;
+        color: #010101;
       }
 
       .bottomNav{
@@ -94,6 +94,14 @@
         height: 300px;
       }
 
+      .sender {
+        color: blue;
+      }
+      
+      .message {
+          color: black;
+      }
+
     </style>
 
   </head>
@@ -111,8 +119,7 @@
       <div id="chat-box" class="card position-fixed shadow d-none" style="bottom: 100px; right: 35%;width: 400px;">
           <div class="card-head bg-primary text-white">
               KitchenAssistant
-              <button id="close" type="button" class="btn-close float-end" aria-label="Close"></button>
-  
+              <!-- <button id="close" type="button" class="btn-close float-end" aria-label="Close"></button> -->
   
           </div>
   
@@ -125,6 +132,8 @@
               <input id="chat-input" type="text" class="form-control" placeholder="Digite sua mensagem">
   
           </div>
+
+
   
       </div>
 
@@ -172,7 +181,18 @@
       triangle.animate().attr({fill:'#ccc'});
       */
 
-      function addElements(recipe_name){
+      function openChatBox() {
+        $("#chat-box").removeClass("d-none");
+      }
+
+      function addMsgToChat(user, message){
+        // Determine the sender
+        let sender = user === 'user' ? 'Você' : 'Assistente';
+        // Append the message to the chat
+        $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
+      }
+
+      function addRecipeName(recipe_name){
         let container = document.getElementById("conteudo");
         let name = document.createElement("h2");
         name.textContent = recipe_name;
@@ -186,36 +206,161 @@
         container.appendChild(img);
       }
 
+      /* FUNCTION : GET RANDOM RECIPE
+      RETURN: 
+      {
+        "recipe_id": ,
+        "recipe_img": ,
+        "recipe_name": 
+      }*/
       async function getRandRecipe() {
             const response = await fetch('http://127.0.0.1:5000/recipe/random');
             const data = await response.json();
             console.log("DATA INSIDE GET FUNCTION: ", data);
             return data;
-        }
+      }
 
-      /*function getRandRecipe() {
-        fetch('http://127.0.0.1:5000/recipe/random')
-            .then(response => response.json())
-            .then(data => {
-                console.log("GETRANDRECIPE - DATA: " +data);
-              })
-            .catch(error => console.error('Error fetching data:', error));
-            
+      /* FUNCTION : GET ALL RECIPES
+      RETURN: 
+      [
+        {
+          "recipe_name": ,
+          "recipe_servings": ,
+          "recipe_time":
+        },
+        {
+          "recipe_name": ,
+          "recipe_servings": ,
+          "recipe_time":
+        },
+        {
+          "recipe_name": ,
+          "recipe_servings": ,
+          "recipe_time":
+        },
+        ... 
+      ]*/
+      async function getAllRecipes() {
+        const response = await fetch('http://127.0.0.1:5000/recipes');
+        const data = await response.json();
+        console.log("All Recipes: ", data);
+        return data;
+      }
+      
+      /* FUNCTION : GET RECIPES BY TAG
+      RETURN: 
+      {
+        "recipe_ids": [id]
       }*/
+      async function getRecipesByTag(tag) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/tag/${tag}`);
+        const data = await response.json();
+        console.log(`Recipes with tag ${tag}: `, data);
+        return data;
+      }
+      
+      /* FUNCTION : GET RECIPES BY NAME - NOT WORKING -
+      RETURN: 
+      {
+        "recipe_id": 
+      }*/
+      async function getRecipeByName(name) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/name/${encodeURIComponent(name)}`);
+        const data = await response.json();
+        console.log(`Recipe named ${name}: `, data);
+        return data;
+      }
+      
+      /* FUNCTION : GET INGREDIENTS BY RECIPE_ID
+      RETURN: 
+      [
+        {
+          "name": "ingredient1",
+          "quantity": "4.00",
+          "unit": "uni"
+        },
+        {
+          "name": "ingredient2",
+          "quantity": "4.00",
+          "unit": "uni"
+        },
+        ... 
+      ]*/
+      async function getIngredients(recipeId) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/ingredients`);
+        const data = await response.json();
+        console.log(`Ingredients for recipe ID ${recipeId}: `, data);
+        return data;
+      }
 
-      /*async function getRandRecipe() {
-        try {
-            const response = await fetch('http://127.0.0.1:5000/recipe/random');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            return data; // Return the data here
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return null; // Return null or throw an error, depending on your error handling strategy
-        }
-    }*/
+      /* FUNCTION : GET TOOLS BY RECIPE_ID
+      RETURN: 
+      [
+        [
+          "tool1"
+        ],
+        [
+          "tool2"
+        ],
+        ...
+      ]*/
+      async function getTools(recipeId) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/tools`);
+        const data = await response.json();
+        console.log(`Tools for recipe ID ${recipeId}: `, data);
+        return data;
+      }
+
+      /* FUNCTION : GET NEXT INSTRUCTION BY RECIPE_ID AND STEP
+      STEP = 0 -> FIRST INSTRUCTION (STEP 1)
+      STEP = 1 -> SECOND INSTRUCTION (STEP 2)
+      ...
+      STEP = N -> N+1 INSTRUCTION (STEP N+1) -> RETURN NULL
+      RETURN: 
+      {
+        "next_instruction": "instruction"
+      }*/
+      async function getNextInstruction(recipeId, step) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/next-instruction/${step}`);
+        const data = await response.json();
+        console.log(`Next instruction for recipe ID ${recipeId} and step ${step}: `, data);
+        return data;
+      }
+      
+      /* FUNCTION : GET PREVIOUS INSTRUCTION BY RECIPE_ID AND STEP
+      STEP = 0 -> FIRST INSTRUCTION (STEP -1) -> RETURN NULL
+      STEP = 1 -> SECOND INSTRUCTION (STEP 0) -> RETURN NULL
+      STEP = 2 -> THIRD INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+      ...
+      STEP = N -> N-1 INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+      RETURN: 
+      {
+        "previous_instruction": "instruction"
+      }*/
+      async function getPreviousInstruction(recipeId, step) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/previous-instruction/${step}`);
+        const data = await response.json();
+        console.log(`Previous instruction for recipe ID ${recipeId} and step ${step}: `, data);
+        return data;
+      }
+
+      /* FUNCTION : GET ACTUAL INSTRUCTION BY RECIPE_ID AND STEP
+      STEP = 0 -> 0 INSTRUCTION (STEP -1) -> RETURN NULL
+      STEP = 1 -> FIRST INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+      STEP = 2 -> SECOND INSTRUCTION (STEP 2) -> RETURN SECOND INSTRUCTION
+      ...
+      STEP = N -> N INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+      RETURN: 
+      {
+        "previous_instruction": "instruction"
+      }*/
+      async function getActualInstruction(recipeId, step) {
+        const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/actual-instruction/${step}`);
+        const data = await response.json();
+        console.log(`Actual instruction for recipe ID ${recipeId} and step ${step}: `, data);
+        return data;
+      }
+    
 
       async function im1MessageHandler(data) {
 
@@ -251,15 +396,18 @@
                     break;
                   case "ask_random_recipe":
                     //console.log(c.nlu);
-                  
                     data = await getRandRecipe()
                     console.log("DATA: " , data);
                     console.log("DATA PARSING" + data.recipe_name);
                     let recipe_name = data.recipe_name;
-                    addElements(recipe_name);
+                    addRecipeName(recipe_name);
                     let img_url = data.recipe_img;
                     console.log("IMG URL: " + img_url);
                     addImage(img_url);
+                    // THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES
+                    sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . PARA MOSTRAR A PREPARAÇÃO DIGA: VAMOS COMEÇAR COM A RECEITA");
+                    openChatBox();
+                    addMsgToChat('Assistente','Para Mostrar a Preparação, diga : Vamos começar com a receita');
                     break;
                   case "ask_first_step":
                     break;
@@ -349,9 +497,39 @@
       })
       */
 
+      /*
+      function speakText(text) {
+        function setVoiceAndSpeak() {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-PT';
+            const voices = speechSynthesis.getVoices();
+            const voice = voices.find(voice => voice.lang === 'pt-PT');
+            if (voice) {
+                utterance.voice = voice;
+            }
+            speechSynthesis.speak(utterance);
+        }
+    
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = setVoiceAndSpeak;
+        } else {
+            setVoiceAndSpeak();
+        }
+     }*/
+    
+     function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+      }
+  
+     
+    
+
       function sendToVoice(texto){
         //let speak = "&lt;speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"&gt;&lt;p&gt;" + "quadrado" + "&lt;/p&gt;&lt;/speak&gt";
-      let speak = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"><p>"+texto+"</p></speak>";
+      //let speak = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"><p>"+texto+"</p></speak>";
+      let speak = `<speak version="1.1" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/TR/speech-synthesis11/synthesis.xsd" xml:lang="pt-PT"><p>${texto}</p></speak>`;
+
       var result = speak;
           mmiCli_1.sendToIM(new LifeCycleEvent("APPSPEECH", "IM", "text-1", "ctx-1").
               doStartRequest(new EMMA("text-", "text", "command", 1, 0).
