@@ -38,7 +38,16 @@ CORS(app)
 def fetch_recipes():
     """Fetch all recipes."""
     recipes = db.getRecipes()
-    return jsonify(recipes)
+    # Format each recipe to include only the desired fields
+    formatted_recipes = [
+        {
+            'recipe_name': recipe['name'],
+            'recipe_servings': recipe['number_of_servings'],
+            'recipe_time': recipe['cooking_time']
+        }
+        for recipe in recipes
+    ]
+    return jsonify(formatted_recipes)
 
 @app.route('/recipe/tag/<tag>', methods=['GET'])
 def fetch_recipe_by_tag(tag):
@@ -88,6 +97,12 @@ def fetch_previous_instruction(recipe_id, step):
     """Fetch the previous instruction for a given recipe ID and current step."""
     previous_instruction = db.getPreviousInstruction(recipe_id, step)
     return jsonify({'previous_instruction': previous_instruction})
+
+@app.route('/recipe/<int:recipe_id>/actual-instruction/<int:step>', methods=['GET'])
+def fetch_actual_instruction(recipe_id, step):
+    """Fetch the previous instruction for a given recipe ID and current step."""
+    actual_instruction = db.getActualInstruction(recipe_id, step)
+    return jsonify({'actual_instruction': actual_instruction})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

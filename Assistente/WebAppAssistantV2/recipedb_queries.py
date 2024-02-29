@@ -22,12 +22,13 @@ def getRecipes():
         return []
     query = "SELECT name, number_of_servings, cooking_time FROM recipes"
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)  # Ensure cursor returns dictionaries
         cursor.execute(query)
         recipes = cursor.fetchall()
+        # No need for further formatting here, as each row is already a dictionary
         return recipes
     except Error as e:
-        print(f"Erro: {e}")
+        print(f"Error: {e}")
         return []
     finally:
         cursor.close()
@@ -83,12 +84,12 @@ def getIngredients(recipe_id):
         return []
     query = "SELECT name, quantity, unit FROM recipe_ingredients WHERE recipe_id = %s"
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)  # Adjust based on your DB connector's syntax
         cursor.execute(query, (recipe_id,))
         ingredients = cursor.fetchall()
         return ingredients
     except Error as e:
-        print(f"Erro: {e}")
+        print(f"Error: {e}")
         return []
     finally:
         cursor.close()
@@ -154,7 +155,7 @@ def getRecipeName(recipe_id):
         cursor.close()
         conn.close()
 
-# Returns a list of tuples with the description of all instructions of a recipe
+# Returns a list with the description of the next instruction of a recipe
 def getNextInstruction(recipe_id, step):
     """Obtém a descrição do próximo passo para um recipe_id e step dado."""
     conn = create_connection()
@@ -175,7 +176,7 @@ def getNextInstruction(recipe_id, step):
         cursor.close()
         conn.close()
 
-# Returns a list of tuples with the description of all instructions of a recipe
+# Returns a list with the description of the previous instruction of a recipe
 def getPreviousInstruction(recipe_id, step):
     """Obtém a descrição do passo anterior para um recipe_id e step dado."""
     conn = create_connection()
@@ -189,6 +190,28 @@ def getPreviousInstruction(recipe_id, step):
     try:
         cursor = conn.cursor()
         cursor.execute(query, (recipe_id, previous_step))
+        instruction = cursor.fetchone()
+        return instruction[0] if instruction else None
+    except Error as e:
+        print(f"Erro: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+        
+# Returns a list with the actual instruction of a recipe
+def getActualInstruction(recipe_id, step):
+    """Obtém a descrição do passo anterior para um recipe_id e step dado."""
+    conn = create_connection()
+    if step == 0:  # Não existe instrução anterior ao primeiro passo
+        return None
+    query = """
+    SELECT description FROM recipe_instructions
+    WHERE recipe_id = %s AND step_number = %s
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, (recipe_id, step))
         instruction = cursor.fetchone()
         return instruction[0] if instruction else None
     except Error as e:
