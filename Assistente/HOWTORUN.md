@@ -20,6 +20,8 @@ java -jar mmiframeworkV2.jar
 
 ## Terceiro Passo: Correr o Rasa
 
+O Rasa usa para dar reconhecer as entidades e intents.
+
 1. Ativar o ambiente virtual do Rasa:
 
 ```bash
