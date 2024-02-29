@@ -68,19 +68,15 @@
       
       
       h1 {
-          color: white;
-          position: fixed;
-          right: 30%;
-          top: 10%;
+          background-color: #4F5D73;
+          color: burlywood;
+          text-align: center;
           font-family: 'Florilla Fista', sans-serif;
-          text-shadow: 1px 1px 1px white;
-          /* offsetX, offsetY, blurRadius, color */
+          text-shadow: 1px 1px 1px black;
       }
       h2 {
           color: black;
-          position: fixed;
-          right: 30%;
-          top: 20%;
+          text-align: center;
           font-family: 'Florilla Fista', sans-serif;
           text-shadow: 1px 1px 1px white;
           /* offsetX, offsetY, blurRadius, color */
@@ -88,11 +84,13 @@
 
       img {
         position: fixed;
-        right: 30%;
-        top: 30%;
-        width: 300px;
-        height: 300px;
+        left: 50%; /* Center the image relative to the viewport */
+        top: 10%;
+        width: 400px;
+        height: 400px;
+        transform: translateX(-50%); /* Shift it back by half its own width to center */
       }
+    
 
       .sender {
         color: blue;
