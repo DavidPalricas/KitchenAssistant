@@ -56,6 +56,7 @@
 
 
 
+    <button id="startInteraction">Iniciar Interação</button>
 
     
 
@@ -124,6 +125,15 @@
     <script type="text/javascript" src="kws__/run-impulse.js"></script>
 
 <script type="module">
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('startInteraction').addEventListener('click', function() {
+        // Inicia o reconhecimento de fala
+        recognition.start();
+        console.log("Interação iniciada pelo botão.");
+    });
+  });
+
 
 var isOnKWS=false;
 const sensor = new MicrophoneSensor();
