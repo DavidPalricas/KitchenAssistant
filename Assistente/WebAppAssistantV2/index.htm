@@ -400,7 +400,7 @@ InitializeKWS();
     console.log(data);
 
     switch(data.intent.name){
-      case "ask_spefific_recipe":
+      case "ask_spefific_recipe": // ---------------------------------------------------------------------- [ ASK_SPECIFIC_RECIPE]
         var recipe = '';
         for (let i = 0; i < data.entities.length; i++)
         {
@@ -414,7 +414,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "greet":
+      case "greet": // ------------------------------------------------------------------------------------- [ GREET]
         var message = {'intent':'greet'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -422,7 +422,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "goodbye":
+      case "goodbye": // ----------------------------------------------------------------------------------- [ GOODBYE]
         var message = {'intent':'goodbye'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -430,7 +430,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "ask_random_recipe":
+      case "ask_random_recipe": // -------------------------------------------------------------------------- [ ASK_RANDOM_RECIPE]
         var message = {'intent':'ask_random_recipe'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -438,7 +438,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "affirm":
+      case "affirm": // ------------------------------------------------------------------------------------- [ AFFIRM]
         var message = {'intent':'affirm'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -446,7 +446,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "deny":
+      case "deny": // --------------------------------------------------------------------------------------- [ DENY]
         var message = {'intent':'deny'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -454,7 +454,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "ask_repeat_step":
+      case "ask_repeat_step": // ----------------------------------------------------------------------------- [ ASK_REPEAT_STEP]
         var message = {'intent':'ask_repeat_step'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -462,7 +462,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-        case "ask_first_step":
+        case "ask_first_step": // ----------------------------------------------------------------------------- [ ASK_FIRST_STEP]
         var message = {'intent':'ask_first_step'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -470,7 +470,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-        case "ask_next_step":
+        case "ask_next_step": // ----------------------------------------------------------------------------- [ ASK_NEXT_STEP]
         var message = {'intent':'ask_next_step'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -478,7 +478,7 @@ InitializeKWS();
               doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
               setValue(JSON.stringify(result))));
         break;
-      case "joke":
+      case "joke":  // -------------------------------------------------------------------------------------- [ JOKE]
         var message = {'intent':'joke'}
         var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
         var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
