@@ -76,6 +76,23 @@
           text-shadow: 1px 1px 1px white;
           /* offsetX, offsetY, blurRadius, color */
       }
+      h2 {
+          color: black;
+          position: fixed;
+          right: 30%;
+          top: 20%;
+          font-family: 'Florilla Fista', sans-serif;
+          text-shadow: 1px 1px 1px white;
+          /* offsetX, offsetY, blurRadius, color */
+      }
+
+      img {
+        position: fixed;
+        right: 30%;
+        top: 30%;
+        width: 300px;
+        height: 300px;
+      }
 
     </style>
 
@@ -157,12 +174,26 @@
 
       function addElements(recipe_name){
         let container = document.getElementById("conteudo");
-        let name = document.createElement("h1");
+        let name = document.createElement("h2");
         name.textContent = recipe_name;
         container.appendChild(name);
       }
 
-      function getRandRecipe() {
+      function addImage(img_url){
+        let container = document.getElementById("conteudo");
+        let img = document.createElement("img");
+        img.src = img_url;
+        container.appendChild(img);
+      }
+
+      async function getRandRecipe() {
+            const response = await fetch('http://127.0.0.1:5000/recipe/random');
+            const data = await response.json();
+            console.log("DATA INSIDE GET FUNCTION: ", data);
+            return data;
+        }
+
+      /*function getRandRecipe() {
         fetch('http://127.0.0.1:5000/recipe/random')
             .then(response => response.json())
             .then(data => {
@@ -170,7 +201,7 @@
               })
             .catch(error => console.error('Error fetching data:', error));
             
-      }
+      }*/
 
       /*async function getRandRecipe() {
         try {
@@ -186,7 +217,7 @@
         }
     }*/
 
-      function im1MessageHandler(data) {
+      async function im1MessageHandler(data) {
 
         console.log("--------------im1MessageHandler---------------");
 
@@ -220,20 +251,15 @@
                     break;
                   case "ask_random_recipe":
                     //console.log(c.nlu);
-                    (async () => {
-                      var data = await getRandRecipe();
-                      console.log("DATA: " + data);
-                  })();
-                    const data = getRandRecipe().then(data => {
-                      console.log("DATA: " + data);
-                      let recipe_name = data.recipe_name;
-                      addElements(recipe_name);
-                    });
-                    //console.log("DATA: " + data);
-                    //data = JSON.parse(data);
-                    //console.log("DATA PARSING" + data);
-                    //recipe_name = data.recipe_name;
-                    //addElements(recipe_name);
+                  
+                    data = await getRandRecipe()
+                    console.log("DATA: " , data);
+                    console.log("DATA PARSING" + data.recipe_name);
+                    let recipe_name = data.recipe_name;
+                    addElements(recipe_name);
+                    let img_url = data.recipe_img;
+                    console.log("IMG URL: " + img_url);
+                    addImage(img_url);
                     break;
                   case "affirm":
                     break;

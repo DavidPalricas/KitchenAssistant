@@ -198,7 +198,23 @@ def getPreviousInstruction(recipe_id, step):
         cursor.close()
         conn.close()
 
-
+def getImg_url(recipe_id):
+    conn = create_connection()
+    if conn is None:
+        return None
+    query = "SELECT image_url FROM recipe_images WHERE recipe_id = %s"
+    try:
+        cursor = conn.cursor()
+        cursor.execute(query, (recipe_id,))
+        img_url = cursor.fetchone()
+        return img_url[0] if img_url else None
+    except Error as e:
+        print(f"Erro: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
+        
 # Exemplo de como utilizar as funções modificadas
 # recipes = getRecipes()
 # print("Receitas:", recipes)
@@ -232,10 +248,13 @@ def getPreviousInstruction(recipe_id, step):
 # print("\n")
 
 
-# random_recipe_id = getRandomRecipe()
-# random_recipe_name = getRecipeName(random_recipe_id)
-# print("Receita aleatória:", random_recipe_name)
-# print("\n")
+random_recipe_id = getRandomRecipe()
+random_recipe_name = getRecipeName(random_recipe_id)
+print("Receita aleatória:", random_recipe_name)
+print("\n")
+random_recipe_img_url = getImg_url(random_recipe_id)
+print("Imagem:", random_recipe_img_url)
+print("\n")
 # random_recipe_ingredients = getIngredients(random_recipe_id)
 # print("Ingredientes:", random_recipe_ingredients)
 # print("\n")

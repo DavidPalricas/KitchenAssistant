@@ -73,8 +73,9 @@ def fetch_random_recipe():
     recipe_id = db.getRandomRecipe()
     #print("recipe_id", recipe_id)
     recipe_name = db.getRecipeName(recipe_id) if recipe_id else None
+    recipe_img = db.getImg_url(recipe_id) if recipe_id else None
     #print("recipe_name", recipe_name)
-    return jsonify({'recipe_id': recipe_id, 'recipe_name': recipe_name})
+    return jsonify({'recipe_id': recipe_id, 'recipe_name': recipe_name, 'recipe_img': recipe_img})
 
 @app.route('/recipe/<int:recipe_id>/next-instruction/<int:step>', methods=['GET'])
 def fetch_next_instruction(recipe_id, step):
