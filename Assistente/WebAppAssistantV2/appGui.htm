@@ -546,6 +546,8 @@
       }
     
       var recipe_id = 0;
+      var step = 1;
+      var voice;
 
       async function im1MessageHandler(data) {
 
@@ -599,25 +601,45 @@
                     addToolsTable(tools);
                     console.log("TOOLS: ", tools);
                     // THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES
-                    sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . PARA MOSTRAR A PREPARAÇÃO DIGA: VAMOS COMEÇAR COM A RECEITA");
-                    let user_audio = c.nlu.audioReconized;
+                    sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . Quando estiver pronto podemos começar a receita");
+                    voice = c.nlu.audioReconized;
                     openChatBox();
-                    addMsgToChat('Você',': ' + user_audio);
-                    addMsgToChat('Assistente','Para Mostrar a Preparação, diga : Vamos começar com a receita');
+                    addMsgToChat('Você',': ' + voice);
+                    addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                     break;
                   case "ask_first_step":
                     console.log("ASK FIRST STEP -----------------------------");
-                    let instruction = await getActualInstruction(recipe_id, 1);
+                    let instruction = await getActualInstruction(recipe_id, step);
                     console.log("INSTRUCTION: ", instruction.actual_instruction);
-                    let first_step = c.nlu.audioReconized;
-                    openChatBox();
-                    addMsgToChat('Você',': ' + first_step);
+                    voice = c.nlu.audioReconized;
+                    //openChatBox();
+                    addMsgToChat('Você',': ' + voice);
                     addMsgToChat('Assistente', instruction.actual_instruction);
-                    sendToVoice(instruction.actual_instruction);
+                    sendToVoice("A primeira instrução é: "+ instruction.actual_instruction);
+                    addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
                     break;
                   case "ask_repeat_step":
+                    console.log("ASK REPEAT STEP -----------------------------");
+                    let repeat_instruction = await getActualInstruction(recipe_id, step);
+                    console.log("REPEAT INSTRUCTION: ", repeat_instruction.actual_instruction);
+                    voice = c.nlu.audioReconized;
+                    //openChatBox();
+                    addMsgToChat('Você',': ' + voice);
+                    addMsgToChat('Assistente', repeat_instruction.actual_instruction);
+                    sendToVoice("A instrução é: "+ repeat_instruction.actual_instruction);
+                    addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
                     break;
                   case "ask_next_step":
+                    console.log("ASK NEXT STEP -----------------------------");
+                    let next_instruction = await getNextInstruction(recipe_id, step);
+                    step++;
+                    console.log("NEXT INSTRUCTION: ", next_instruction.next_instruction);
+                    voice = c.nlu.audioReconized;
+                    //openChatBox();
+                    addMsgToChat('Você',': ' + voice);
+                    addMsgToChat('Assistente', next_instruction.next_instruction);
+                    sendToVoice("A próxima instrução é: "+next_instruction.next_instruction);
+                    addMsgToChat('Assistente','PROXIMA INSTRUÇÃO : Avança para o próximo passo');
                     break;
                   case "affirm":
                     break;
