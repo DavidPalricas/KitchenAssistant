@@ -271,10 +271,10 @@ def getImg_url(recipe_id):
 # print("\n")
 
 
-random_recipe_id = getRandomRecipe()
-random_recipe_name = getRecipeName(random_recipe_id)
-print("Receita aleatória:", random_recipe_name)
-print("\n")
+#random_recipe_id = getRandomRecipe()
+#random_recipe_name = getRecipeName(random_recipe_id)
+#print("Receita aleatória:", random_recipe_name)
+#print("\n")
 #random_recipe_img_url = getImg_url(random_recipe_id)
 #print("Imagem:", random_recipe_img_url)
 #print("\n")

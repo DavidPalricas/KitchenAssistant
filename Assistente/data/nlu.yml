@@ -12,6 +12,14 @@ nlu:
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
 
+# Ask for help
+- intent: ask_help
+  examples: |
+    - Ajuda
+    - Quais são os comandos disponíveis
+    - Como Funciona
+    - Podes-me ajudar
+
 # Ask for a RANDOM RECIPE
 - intent: ask_random_recipe
   examples: |
