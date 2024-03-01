@@ -29,6 +29,10 @@ function openChatBox() {
 $("#chat-box").removeClass("d-none");
 }
 
+function closeChatBox() {
+    $("#chat-box").addClass("d-none");
+}
+  
 function clearChatMessages() {
 $("#chat-messages").empty();
 }
@@ -39,6 +43,13 @@ let sender = user;
 // Append the message to the chat
 $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
 }
+
+function clearContent() {
+    document.getElementById("title").innerHTML = "";
+    document.getElementById("image-container").innerHTML = "";
+    document.getElementById("table-container").innerHTML = "";
+  }
+  
 
 function addRecipeName(recipe_name) {
 let container = document.getElementById("title");
@@ -374,114 +385,122 @@ if(data != null && data!="RENEW" && data!="OK") {
         //recipe = c.nlu.intent;
         switch(c.nlu.intent){
             case "ask_spefific_recipe":
-            console.log("ASK SPECIFIC RECIPE: ");
-            //console.log("ASK SPECIFIC RECIPE_VALUE: "+c.nlu.recipe);
-            let tag = c.nlu.recipe; // ------------------------------------------------- Get the recipe tag
-            let temp_img = await getRecipesByTag(tag); // ---------------------------------- Get the recipe_id for the specific recipe
-            recipe_id = temp_img.recipe_ids[0]; // ----------------------------------------- Set the recipe_id for the specific recipe
-            console.log("RECIPE_ID: ", recipe_id);
-            step = 1; // --------------------------------------------------------------- Set the step to 1 - to reset the var step
-            let temp_recipe_name = await getRecipeName(recipe_id); // ------------------- Get the recipe name
-            let tag_recipe_name = temp_recipe_name.recipe_name; // ------------------- Get the recipe name
-            console.log("TAG RECIPE NAME: ", tag_recipe_name);
-            addRecipeName(tag_recipe_name); // ----------------------------- Add the recipe name to the page as <h2>
-            let temp_img_url_tag = await getRecipeImage(recipe_id); // ---------------------- Get the recipe image url
-            let img_url_tag = temp_img_url_tag.img_url; // --------------------------- Get the recipe image url
-            addImage(img_url_tag); // -------------------------------------------------- Add the recipe image to the page as <img>
-            let ingredients_tag = await getIngredients(recipe_id); // ------------------ Get the ingredients for the recipe
-            addIngredientsTable(ingredients_tag); // ----------------------------------- Add the ingredients to the page as <table> id = ingredients-table
-            let tools_tag = await getTools(recipe_id); // ------------------------------ Get the tools for the recipe
-            addToolsTable(tools_tag); // ----------------------------------------------- Add the tools to the page as <table> id = tools-table
-            // ------------------------------------------------------------------------- SEND THE VOICE TO THE USER
-            // - THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES -
-            sendToVoice("RECEITA ESCOLHIDA : "+ tag_recipe_name + " . Quando estiver pronto podemos começar a receita");
-            voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
-            openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
-            clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-            addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
-            // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
-            addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
-            break;
-            case "greet":
-            break;
-            case "goodbye":
-            break;
-            case "ask_random_recipe":
-            //console.log(c.nlu);
-            data = await getRandRecipe() // -------------------------------------------- Get the random recipe
-            recipe_id = data.recipe_id; // --------------------------------------------- Set the recipe_id fer the random recipe
-            step = 1; // --------------------------------------------------------------- Set the step to 1 - to reset the var step
-            //console.log("RECIPE_ID : " , recipe_id); 
-            //console.log("DATA: " , data);
-            //console.log("DATA PARSING" + data.recipe_name);
-            let recipe_name = data.recipe_name; // ------------------------------------- Get the recipe name
-            addRecipeName(recipe_name); // --------------------------------------------- Add the recipe name to the page as <h2>
-            let img_url = data.recipe_img; // ------------------------------------------ Get the recipe image url
-            console.log("IMG URL: " + img_url);
-            addImage(img_url); // ------------------------------------------------------ Add the recipe image to the page as <img>
-            let ingredients = await getIngredients(data.recipe_id); // ----------------- Get the ingredients for the recipe
-            addIngredientsTable(ingredients); // --------------------------------------- Add the ingredients to the page as <table> id = ingredients-table
-            //console.log("INGREDIENTS: ", ingredients);
-            let tools = await getTools(data.recipe_id); // ----------------------------- Get the tools for the recipe
-            addToolsTable(tools); // --------------------------------------------------- Add the tools to the page as <table> id = tools-table
-            //console.log("TOOLS: ", tools);
-            // ------------------------------------------------------------------------- SEND THE VOICE TO THE USER
-            // - THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES -
-            sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . Quando estiver pronto podemos começar a receita");
-            voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
-            openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
-            clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-            addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
-            // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
-            addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
-            break;
-            case "ask_first_step":
-            //console.log("ASK FIRST STEP -----------------------------");
-            let instruction = await getActualInstruction(recipe_id, step); // ---------- Get the first instruction for the recipe
-            //console.log("INSTRUCTION: ", instruction.actual_instruction); 
-            voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
-            //openChatBox();
-            addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
-            addMsgToChat('Assistente', instruction.actual_instruction); // ------------- Add the first instruction to the chat
-            // ------------------------------------------------------------------------- SEND THE VOICE THE FIRST INSTRUCTION
-            sendToVoice("A primeira instrução é: "+ instruction.actual_instruction);
-            // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
-            addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
-            break;
-            case "ask_repeat_step":
-            //console.log("ASK REPEAT STEP -----------------------------");
-            let repeat_instruction = await getActualInstruction(recipe_id, step); // --- Get the actual instruction for the recipe
-            //console.log("REPEAT INSTRUCTION: ", repeat_instruction.actual_instruction);
-            voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
-            //openChatBox();
-            addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
-            addMsgToChat('Assistente', repeat_instruction.actual_instruction); // ------ Add the actual instruction to the chat
-            sendToVoice("A instrução é: "+ repeat_instruction.actual_instruction); // -- SEND THE VOICE THE ACTUAL INSTRUCTION
-            // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
-            addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
-            break;
-            case "ask_next_step":
-            //console.log("ASK NEXT STEP -----------------------------");
-            let next_instruction = await getNextInstruction(recipe_id, step); // ------- Get the next instruction for the recipe
-            voice = c.nlu.audioReconized;
-            if (next_instruction == null) { // ----------------------------------------- If there are NO MORE instructions
-                //console.log("NO MORE INSTRUCTIONS");
-                //openChatBox();
-                addMsgToChat('Você',': ' + voice);
-                addMsgToChat('Assistente','FIM DA RECEITA : A receita terminou');
-                sendToVoice("A receita terminou");
+                console.log("ASK SPECIFIC RECIPE: ");
+                //console.log("ASK SPECIFIC RECIPE_VALUE: "+c.nlu.recipe);
+                let tag = c.nlu.recipe; // ------------------------------------------------- Get the recipe tag
+                let temp_img = await getRecipesByTag(tag); // ---------------------------------- Get the recipe_id for the specific recipe
+                recipe_id = temp_img.recipe_ids[0]; // ----------------------------------------- Set the recipe_id for the specific recipe
+                console.log("RECIPE_ID: ", recipe_id);
+                step = 1; // --------------------------------------------------------------- Set the step to 1 - to reset the var step
+                let temp_recipe_name = await getRecipeName(recipe_id); // ------------------- Get the recipe name
+                let tag_recipe_name = temp_recipe_name.recipe_name; // ------------------- Get the recipe name
+                console.log("TAG RECIPE NAME: ", tag_recipe_name);
+                addRecipeName(tag_recipe_name); // ----------------------------- Add the recipe name to the page as <h2>
+                let temp_img_url_tag = await getRecipeImage(recipe_id); // ---------------------- Get the recipe image url
+                let img_url_tag = temp_img_url_tag.img_url; // --------------------------- Get the recipe image url
+                addImage(img_url_tag); // -------------------------------------------------- Add the recipe image to the page as <img>
+                let ingredients_tag = await getIngredients(recipe_id); // ------------------ Get the ingredients for the recipe
+                addIngredientsTable(ingredients_tag); // ----------------------------------- Add the ingredients to the page as <table> id = ingredients-table
+                let tools_tag = await getTools(recipe_id); // ------------------------------ Get the tools for the recipe
+                addToolsTable(tools_tag); // ----------------------------------------------- Add the tools to the page as <table> id = tools-table
+                // ------------------------------------------------------------------------- SEND THE VOICE TO THE USER
+                // - THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES -
+                sendToVoice("RECEITA ESCOLHIDA : "+ tag_recipe_name + " . Quando estiver pronto podemos começar a receita");
+                voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
+                openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
+                clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
+                addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
+                addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                 break;
-            }else{ // ------------------------------------------------------------------- If there are MORE instructions
-                step++; // ---------------------------------------------------------------- Increment the step
-                //console.log("NEXT INSTRUCTION: ", next_instruction.next_instruction);
+            case "greet":
+                console.log("GREET -----------------------------");
+                openChatBox(); // ---------------------------------------------------------- Open the chat box
+                addMsgToChat('Assistente','Olá, posso ajudar?'); // ------------------------ Add the Assistent message to the chat
+                sendToVoice("Olá, posso ajudar?"); // -------------------------------------- Send the voice to the user saying "Olá, posso ajudar?"
+                break;
+                case "goodbye":
+                clearChatMessages(); // ---------------------------------------------------- Clear the chat messages
+                closeChatBox(); // --------------------------------------------------------- Close the chat box
+                clearContent(); // --------------------------------------------------------- Clear the content from "conteudo" div
+                sendToVoice("Até à próxima"); // ------------------------------------------- Send the voice to the user saying "Até à próxima"
+                break;
+            case "ask_random_recipe":
+                //console.log(c.nlu);
+                data = await getRandRecipe() // -------------------------------------------- Get the random recipe
+                recipe_id = data.recipe_id; // --------------------------------------------- Set the recipe_id fer the random recipe
+                step = 1; // --------------------------------------------------------------- Set the step to 1 - to reset the var step
+                //console.log("RECIPE_ID : " , recipe_id); 
+                //console.log("DATA: " , data);
+                //console.log("DATA PARSING" + data.recipe_name);
+                let recipe_name = data.recipe_name; // ------------------------------------- Get the recipe name
+                addRecipeName(recipe_name); // --------------------------------------------- Add the recipe name to the page as <h2>
+                let img_url = data.recipe_img; // ------------------------------------------ Get the recipe image url
+                console.log("IMG URL: " + img_url);
+                addImage(img_url); // ------------------------------------------------------ Add the recipe image to the page as <img>
+                let ingredients = await getIngredients(data.recipe_id); // ----------------- Get the ingredients for the recipe
+                addIngredientsTable(ingredients); // --------------------------------------- Add the ingredients to the page as <table> id = ingredients-table
+                //console.log("INGREDIENTS: ", ingredients);
+                let tools = await getTools(data.recipe_id); // ----------------------------- Get the tools for the recipe
+                addToolsTable(tools); // --------------------------------------------------- Add the tools to the page as <table> id = tools-table
+                //console.log("TOOLS: ", tools);
+                // ------------------------------------------------------------------------- SEND THE VOICE TO THE USER
+                // - THE PUNCTUATION AFFECTS THE TIME BETWEEN THE TWO SENTENCES -
+                sendToVoice("RECEITA ESCOLHIDA : "+ recipe_name + " . Quando estiver pronto podemos começar a receita");
+                voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
+                openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
+                clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
+                addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
+                addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
+                break;
+                case "ask_first_step":
+                //console.log("ASK FIRST STEP -----------------------------");
+                let instruction = await getActualInstruction(recipe_id, step); // ---------- Get the first instruction for the recipe
+                //console.log("INSTRUCTION: ", instruction.actual_instruction); 
+                voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
                 //openChatBox();
-                addMsgToChat('Você',': ' + voice); // ------------------------------------- Add the voice to the chat
-                addMsgToChat('Assistente', next_instruction.next_instruction); // --------- Add the next instruction to the chat
-                // ------------------------------------------------------------------------ SEND THE VOICE THE NEXT INSTRUCTION
-                sendToVoice("A próxima instrução é: "+next_instruction.next_instruction); 
-                // ------------------------------------------------------------------------ Add the Assistent message to the chat (hint for the user) 
-                addMsgToChat('Assistente','PROXIMA INSTRUÇÃO : Avança para o próximo passo');
-            }
+                addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                addMsgToChat('Assistente', instruction.actual_instruction); // ------------- Add the first instruction to the chat
+                // ------------------------------------------------------------------------- SEND THE VOICE THE FIRST INSTRUCTION
+                sendToVoice("A primeira instrução é: "+ instruction.actual_instruction);
+                // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
+                addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
+                break;
+            case "ask_repeat_step":
+                //console.log("ASK REPEAT STEP -----------------------------");
+                let repeat_instruction = await getActualInstruction(recipe_id, step); // --- Get the actual instruction for the recipe
+                //console.log("REPEAT INSTRUCTION: ", repeat_instruction.actual_instruction);
+                voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
+                //openChatBox();
+                addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                addMsgToChat('Assistente', repeat_instruction.actual_instruction); // ------ Add the actual instruction to the chat
+                sendToVoice("A instrução é: "+ repeat_instruction.actual_instruction); // -- SEND THE VOICE THE ACTUAL INSTRUCTION
+                // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
+                addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
+                break;
+            case "ask_next_step":
+                //console.log("ASK NEXT STEP -----------------------------");
+                let next_instruction = await getNextInstruction(recipe_id, step); // ------- Get the next instruction for the recipe
+                voice = c.nlu.audioReconized;
+                if (next_instruction == null) { // ----------------------------------------- If there are NO MORE instructions
+                    //console.log("NO MORE INSTRUCTIONS");
+                    //openChatBox();
+                    addMsgToChat('Você',': ' + voice);
+                    addMsgToChat('Assistente','FIM DA RECEITA : A receita terminou');
+                    sendToVoice("A receita terminou");
+                    break;
+                }else{ // ------------------------------------------------------------------- If there are MORE instructions
+                    step++; // ---------------------------------------------------------------- Increment the step
+                    //console.log("NEXT INSTRUCTION: ", next_instruction.next_instruction);
+                    //openChatBox();
+                    addMsgToChat('Você',': ' + voice); // ------------------------------------- Add the voice to the chat
+                    addMsgToChat('Assistente', next_instruction.next_instruction); // --------- Add the next instruction to the chat
+                    // ------------------------------------------------------------------------ SEND THE VOICE THE NEXT INSTRUCTION
+                    sendToVoice("A próxima instrução é: "+next_instruction.next_instruction); 
+                    // ------------------------------------------------------------------------ Add the Assistent message to the chat (hint for the user) 
+                    addMsgToChat('Assistente','PROXIMA INSTRUÇÃO : Avança para o próximo passo');
+                }
             break;
             case "affirm":
             break;
