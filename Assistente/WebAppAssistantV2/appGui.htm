@@ -50,14 +50,25 @@
       .recognized{
         font-size:x-large;
       }
-      #chat-button {
-        position: center;
-        width: 75px;
-        height: 75px;
+      
+
+      .card-head.bg-primary {
+        background-color: burlywood !important; /* Sobrescreve o azul primário */
+      }
+      
+      .card-head.text-white {
+          color: #4F5D73 !important; /* Sobrescreve o texto branco */
+          text-align: center;
       }
     
       #chat-box {
-          max-height: 400px;
+          position : fixed;
+          bottom: 100px;
+          left : 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          max-width: 500px;
+          max-height: 1000px;
           overflow-y: auto;
           /* Permite Scroll Vertical */
       }
@@ -65,7 +76,26 @@
       #chat-messages {
           margin-right: 15px;
       }
-      
+
+      #chat-button {
+        width: 75px;
+        height: 75px;
+        position: fixed; /* Mantém o botão fixo na tela */
+        bottom: 20px; /* Posiciona o botão 20px acima da parte inferior da tela */
+        left: 50%; /* Inicia o botão na metade da largura da tela */
+        transform: translateX(-50%); /* Desloca o botão para esquerda em 50% de sua própria largura, centralizando-o horizontalmente */
+        z-index: 1000; /* Garante que o botão fique acima de outros elementos da página */
+        background-color: #4F5D73;
+      }
+
+      #chat-button .fa-message {
+        color:burlywood !important; /* Força a cor, mesmo se outras regras de CSS estiverem tentando definir uma cor diferente */
+      }
+        
+      #chat-button:hover {
+          background-color:burlywood;
+      }
+
       #conteudo {
         display: flex;
         flex-direction: column;
@@ -170,7 +200,7 @@
       </div>
 
       <!--ChatBox-->
-      <div id="chat-box" class="card position-fixed shadow d-none" style="bottom: 100px; right: 35%;width: 400px;">
+      <div id="chat-box" class="card position-fixed shadow d-none">
           <div class="card-head bg-primary text-white">
               KitchenAssistant
               <!-- <button id="close" type="button" class="btn-close float-end" aria-label="Close"></button> -->
@@ -191,7 +221,7 @@
   
       </div>
 
-      <button id="chat-button" type="button" class="btn btn-primary rounded-circle position-fixed chat-sign-button" style="bottom: 20px;right: 50%;">
+      <button id="chat-button" type="button" class="btn btn-primary rounded-circle position-fixed chat-sign-button">
         <i class="fa-regular fa-message fa-2x"></i>
       </button>
   
