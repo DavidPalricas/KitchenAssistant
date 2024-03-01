@@ -353,7 +353,7 @@ console.log("--------------im1MessageHandler---------------");
 if(data != null && data!="RENEW" && data!="OK") {
     console.log(data);
     var content = $(data).find("emma\\:interpretation").first().text().trim();
-    console.log("CONTENTE ------> "+content);
+    //console.log("CONTENTE ------> "+content);
     if (typeof content == 'string') {
     try {
         // Try to parse XML
@@ -362,14 +362,15 @@ if(data != null && data!="RENEW" && data!="OK") {
         //$("#response").html(content);
         //$("#response").addClass("container");
         //$("#response").addClass("responseText");
-
+        console.log("CONTENT: ", content.intent);
         // Parse JSON from XML content index.htm
         let c = JSON.parse(content);
         //let recipe;
         
-
+        console.log("C : ", c);
 
         if(c.hasOwnProperty("nlu")){
+            console.log("NLU: ", c.nlu);
         //recipe = c.nlu.intent;
         switch(c.nlu.intent){
             case "ask_spefific_recipe":
@@ -491,6 +492,9 @@ if(data != null && data!="RENEW" && data!="OK") {
             case "confirm_step":
             break;
             case "joke":
+                console.log("JOKES");
+                openChatBox();
+                sendToVoice("Legumes? É isso que minha comida come.");
             break;
             case "default":
             break;
