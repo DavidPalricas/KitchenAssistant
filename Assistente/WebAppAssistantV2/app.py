@@ -104,6 +104,24 @@ def fetch_actual_instruction(recipe_id, step):
     actual_instruction = db.getActualInstruction(recipe_id, step)
     return jsonify({'actual_instruction': actual_instruction})
 
+@app.route('/recipe/<int:recipe_id>/name', methods=['GET'])
+def fetch_recipe_name(recipe_id):
+    """Fetch the name for a given recipe ID."""
+    recipe_name = db.getRecipeName(recipe_id)
+    if recipe_name:
+        return jsonify({'recipe_name': recipe_name})
+    else:
+        return jsonify({'error': 'Recipe not found'}), 404
+
+@app.route('/recipe/<int:recipe_id>/image', methods=['GET'])
+def fetch_recipe_image(recipe_id):
+    """Fetch the image URL for a given recipe ID."""
+    img_url = db.getImg_url(recipe_id)
+    if img_url:
+        return jsonify({'img_url': img_url})
+    else:
+        return jsonify({'error': 'Image not found for the specified recipe'}), 404
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
     
