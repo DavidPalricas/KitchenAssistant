@@ -97,6 +97,12 @@
       }
 
       #conteudo {
+        background-color: rgb(238, 225, 208);
+        width: 90%;
+        margin: 0 auto; /* This will center the div if the body has no padding or margin */
+        padding: 20px; /* Add some padding inside the div */
+        box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Optional: adds a slight shadow for a card-like effect */
+        border-radius: 15px;;
         display: flex;
         flex-direction: column;
         align-items: center; /* Centraliza os itens horizontalmente se desejar */
@@ -129,6 +135,7 @@
         display: flex;
         justify-content: center; /* Centraliza horizontalmente */
         align-items: flex-start; /* Alinha ao topo */
+        border-radius: 15px;
       }
     
       #table-container {
@@ -147,6 +154,7 @@
       img {
           width: 250px;
           height: 250px;
+          border-radius: 15px;
       }
     
       .sender {
@@ -167,11 +175,16 @@
           border: 1px solid black;
           padding: 8px;
           text-align: left;
+          color: rgb(0, 0, 0);
       }
       
+      table th {
+        color: #FFFFFF; /* Sets the text color of table headers to white */
+      }
+  
       thead {
           background-color: #4F5D73;
-          color: white;
+          color: white !important;
       }
 
     </style>
