@@ -1,52 +1,90 @@
-# KitchenAssistant
-##### Kitchen Assistant for Active Ageing at Home
+<h1>KitchenAssistant</h1>
+<h5>Kitchen Assistant for Active Ageing at Home</h5>
 <img src="/readme/img/kitchenAssistant.jpg" alt="Alt Text"> 
 
----
-### Supervisors: 
+<hr>
 
- **Nuno Almeida (nunoalmeida@ua.pt)** ,  **Ana Patrícia Rocha (aprocha@ua.pt)** , **António Teixeira (ajst@ua.pt)**
+<h3>Supervisors:</h3>
+<ul>
+  <li>Nuno Almeida (nunoalmeida@ua.pt)</li>
+  <li>Ana Patrícia Rocha (aprocha@ua.pt)</li>
+  <li>António Teixeira (ajst@ua.pt)</li>
+</ul>
 
----
-### Context
+<hr>
 
-The population in many countries, including Portugal, is ageing. Also, there is a decrease of human resources in healthcare. It is essential to invest in prevention, creating conditions for older adults to stay longer in their homes and remain active, but at the same time provide some assistance in their daily life tasks.
-This assistance has the potential to help elderly people maintain a dignified life at home, in their space, with more autonomy, and increased safety.
-To serve as a proof-of-concept for this new paradigm, University of Aveiro, in partnership with OLI company,
-Rovisco Pais Rehabilitation Center, and several companies associated with INOVADOMUS, is exploring novel solutions for an older adult smart home. A key part of this project is the construction of a real home (with the main infrastructure already in place).
+<h3>Context</h3>
+<p>The population in many countries, including Portugal, is ageing. Also, there is a decrease of human resources in healthcare. It is essential to invest in prevention, creating conditions for older adults to stay longer in their homes and remain active, but at the same time provide some assistance in their daily life tasks. This assistance has the potential to help elderly people maintain a dignified life at home, in their space, with more autonomy, and increased safety. To serve as a proof-of-concept for this new paradigm, University of Aveiro, in partnership with OLI company, Rovisco Pais Rehabilitation Center, and several companies associated with INOVADOMUS, is exploring novel solutions for an older adult smart home. A key part of this project is the construction of a real home (with the main infrastructure already in place).</p>
 
----
-### Problem
+<hr>
 
-- Challenges faced by the elderly in daily kitchen tasks
-- Lack of intuitive and proactive assistance
-- Need for a unified system to manage groceries, meal preparation, and health information
+<h3>Problem</h3>
+<ul>
+  <li>Challenges faced by the elderly in daily kitchen tasks</li>
+  <li>Lack of intuitive and proactive assistance</li>
+  <li>Need for a unified system to manage groceries, meal preparation, and health information</li>
+</ul>
 
----
-### GOALS/ OBJECTIVES
+<hr>
 
-- Develop a conversational assistant for the kitchen
-- Provide unified, natural, and intuitive interaction
-- Extend capabilities for proactive alerts and information
+<h3>GOALS/ OBJECTIVES</h3>
+<ul>
+  <li>Develop a conversational assistant for the kitchen</li>
+  <li>Provide unified, natural, and intuitive interaction</li>
+  <li>Extend capabilities for proactive alerts and information</li>
+</ul>
 
----
-### EXPECTED RESULTS
+<hr>
 
-- A fully functional conversational assistant
-- Improved autonomy and safety for the elderly
-- Integration with existing smart home infrastructure
+  <h3>EXPECTED RESULTS</h3>
+  <ul>
+    <li>A fully functional conversational assistant</li>
+    <li>Improved autonomy and safety for the elderly</li>
+    <li>Integration with existing smart home infrastructure</li>
+  </ul>
+  
+  <hr>
+  
+  <h3>System Architecture</h3>
+  <img src="/readme/img/sys_arc_black.png" alt="Alt Text"> 
+  
+  <hr>
+  
+<h3>WORK TEAM</h3>
 
----
-### System Architecture
-<img src="/readme/img/sys_arc_black.png" alt="Alt Text"> 
-
----
-### WORK TEAM
-
-| | Name          | Email                      | GitHub Page                     |
-|-|---------------|----------------------------|---------------------------------|
-|<img src="/docs/assets/img/RubenMarinho.jpg" alt="Alt Text" width="100" height="100">       | Ruben Marinho | a40115@ua.pt               | [Ruben's Git](https://github.com/RoninDaimyo) |
-|<img src="/docs/assets/img/pedrocarneiro_photo.jpg" alt="Alt Text" width="130" height="100">| Pedro Carneiro| pedrocarneiro@ua.pt        | [Pedro's Git](https://github.com/PedroMiguelTorresCarneiro)  |
-|<img src="/docs/assets/img/inesaguia_photo.jpg" alt="Alt Text" width="100" height="130">    | Inês Águia    | inesaguia@ua.pt            | [Inês's Git](https://github.com/inesaguia)  |
-|<img src="/docs/assets/img/joaorodrigues_photo.jpg" alt="Alt Text" width="100" height="130">| João Rodrigues| rafa.mac@ua.pt             | [João's Git](https://github.com/MacarioRodrigues)  |
-|<img src="/docs/assets/img/davidpalricas_photo.jpg" alt="Alt Text" width="100" height="110">| David Palricas| david.palricas@ua.pt       | [David's Git](https://github.com/DavidPalricas)  |
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>GitHub Page</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ruben Marinho</td>
+            <td>a40115@ua.pt</td>
+            <td><a href="https://github.com/RoninDaimyo">Ruben's Git</a></td>
+        </tr>
+        <tr>
+            <td>Pedro Carneiro</td>
+            <td>pedrocarneiro@ua.pt</td>
+            <td><a href="https://github.com/PedroMiguelTorresCarneiro">Pedro's Git</a></td>
+        </tr>
+        <tr>
+            <td>Inês Águia</td>
+            <td>inesaguia@ua.pt</td>
+            <td><a href="https://github.com/inesaguia">Inês's Git</a></td>
+        </tr>
+        <tr>
+            <td>João Rodrigues</td>
+            <td>rafa.mac@ua.pt</td>
+            <td><a href="https://github.com/MacarioRodrigues">João's Git</a></td>
+        </tr>
+        <tr>
+            <td>David Palricas</td>
+            <td>david.palricas@ua.pt</td>
+            <td><a href="https://github.com/DavidPalricas">David's Git</a></td>
+        </tr>
+    </tbody>
+</table>
