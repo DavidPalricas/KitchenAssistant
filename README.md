@@ -1,7 +1,6 @@
 # KitchenAssistant
 ##### Kitchen Assistant for Active Ageing at Home
-
-![Kitchen Assistant](https://github.com/PedroMiguelTorresCarneiro/KitchenAssistant/readme/img/kitchenAssistant.jpg)
+<img src="/readme/img/kitchenAssistant.jpg" alt="Alt Text"> 
 
 ---
 ### Supervisors: 
@@ -39,8 +38,7 @@ Rovisco Pais Rehabilitation Center, and several companies associated with INOVAD
 
 ---
 ### System Architecture
-
-![System Architecture](https://github.com/PedroMiguelTorresCarneiro/KitchenAssistant/readme/img/sys_arc_black.png)
+<img src="/readme/img/sys_arc_black.png" alt="Alt Text"> 
 
 ---
 ### WORK TEAM
