@@ -11,27 +11,49 @@ nlu:
     - Quero uma receita de [bacalhau](receita)
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
+    - Quero fazer receita de [bolo](receita)
+    - Mostra-me uma receita de [peixe](receita)
+    - Receita de [carne](receita)
 
 # Ask for help
 - intent: ask_help
   examples: |
     - Ajuda
+    - Mostra-me os comandos
+    - Como posso usar
+    - Como posso usar o assistente
+    - Podes ajudar
     - Quais são os comandos disponíveis
     - Como Funciona
     - Podes-me ajudar
+    - O que consegues fazer
+    - O que sabes fazer
+    - O que sabes
 
 # Ask for a RANDOM RECIPE
 - intent: ask_random_recipe
   examples: |
-    - Faz-me uma receita
+    - Da-me uma receita
     - Gostaria de uma sugestão de receita
     - Podes-me fazer uma sugestão de receita
     - Podes-me sugerir uma receita
+    - Quero uma receita
+    - Quero uma sugestão de receita
+    - Quero uma sugestão
+    - Sugere-me uma receita
+    - sugere-me algo
 
 # Ask for REPETE THE STEP (Assuming that we know what step we are)
 - intent: ask_repeat_step
   examples: |
     - Repete por favor
+    - Podes repetir
+    - Não percebi, podes repetir
+    - Não compreendi, repete por favor
+    - Podes, por favor, repetir
+    - Repete o último passo por favor
+    - Seria possivel repetir
+    - Não ouvi, podes repetir
   #  - [Repete](passo), por favor
   #  - Podes [repete](passo) anterior?
   #  - Não te importas de [repete](passo) anterior?
@@ -50,6 +72,11 @@ nlu:
     - Vamos começar com a receita
     - Let's go
     - vamos começar a cozinhar
+    - Quero começar
+    - Quero começar a cozinhar
+    - Quero começar a fazer a receita
+    - Vale, vamos começar
+    - Vamos lá
 
 # Ask to go to the NEXT STEP
 - intent: ask_next_step
@@ -58,6 +85,17 @@ nlu:
     - Podes avançar
     - Acabei este passo da-me o proximo
     - Passa para o proximo passo
+    - Quero avançar
+    - Quero o próximo passo
+    - Quero o passo seguinte
+    - Já fiz este passo, quero o próximo
+    - Já fiz este passo, quero avançar
+    - Já está
+    - Já fiz
+    - Pronto
+    - Feito
+    - Avança
+    - Done
   #  - Avança [passo](avanca) por favor
   #  - Podes [passo](avanca)
   #  - Comprendi, podes [passo](avanca)
@@ -65,6 +103,7 @@ nlu:
   #  - Certo, podes [passo](avanca)
   #  - Feito, podes [passo](avanca)
 
+# Greet the assistant
 - intent: greet
   examples: |
     - oi Assistente
@@ -79,6 +118,7 @@ nlu:
     - saudações, assistente
     - hey, assistente
 
+# Say goodbye to the assistant
 - intent: goodbye
   examples: |
     - xau, Assistente
@@ -88,6 +128,15 @@ nlu:
     - até breve, assistente
     - até já, assistente
     - até á próxima, assistente
+    - adeus
+    - xau
+
+# Ask for ingredients on the pantry
+- intent: ask_pantry
+  examples: |
+    - O que tenho na despensa
+    - O que tenho para cozinhar
+    - O que tenho para fazer uma receita
 
 - intent: affirm
   examples: |
