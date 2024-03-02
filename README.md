@@ -37,13 +37,10 @@ Rovisco Pais Rehabilitation Center, and several companies associated with INOVAD
 - Improved autonomy and safety for the elderly
 - Integration with existing smart home infrastructure
 
-
 ---
-### WORKPLAN
+### System Architecture
 
-<img src="/docs/assets/img/workplan_photo.png" alt="Alt Text" width="1000" height="320"> 
-
-
+![System Architecture](readme/img/sys_arc_black.png)
 
 ---
 ### WORK TEAM
