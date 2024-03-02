@@ -430,6 +430,22 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
+            case "ask_help": // ----------------------------------------------------------------------------------- [ ASK_HELP]
+              var message = {'intent':'ask_help', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "ask_pantry": // --------------------------------------------------------------------------------- [ ASK_PANTRY]
+              var message = {'intent':'ask_pantry', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
             case "greet": // ------------------------------------------------------------------------------------- [ GREET]
               var message = {'intent':'greet', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
