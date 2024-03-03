@@ -14,19 +14,19 @@ TOOLS = ['Forma de pudim', 'Tacho', 'Colher', 'Vara de arames', 'Tigela', 'Bated
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Num tachinho leve ao lume o leite e o café. Mexa com uma vara de arames até que o leite fique morno. Depois do leite morno, retire do lume e misture o whisky.',
+        'description': 'Num tachinho leve ao lume o leite e o café.  Mexa com uma vara de arames, até que o leite fique morno.  Depois do leite morno, retire do lume e misture o whisky.',
         'tools': ['Tacho', 'Vara de arames']
     },
     2: {
-        'description': 'Numa tigela coloque o leite condensado, os ovos partidos e as natas. Bata um pouco e aos poucos adicione o leite com o café. Bata até que tudo fique bem misturado.',
+        'description': 'Numa tigela coloque o leite condensado, os ovos partidos e as natas.  Bata ligeiramente, e aos poucos adicione o leite com o café.  Bata até que tudo fique bem misturado.',
         'tools': ['Tigela', 'Batedeira']
     },
     3: {
-        'description': 'Forre a forma com o caramelo líquido. Com cuidado, verta o líquido para dentro da forma. Tape a forma e coloque-a dentro de um tacho largo. Verta a água para dentro do tacho sem ultrapassar a forma do pudim.',
+        'description': 'Forre a forma com o caramelo líquido.  Com cuidado, verta o líquido para dentro da forma.  Tape a forma e coloque-a dentro de um tacho largo.  Verta a água para dentro do tacho, sem ultrapassar a forma do pudim.',
         'tools': ['Forma de pudim', 'Tacho']
     },
 	4: {
-        'description': 'Leve a cozer ao forno pré-aquecido nos 190ºC, durante 1 hora e 20 minutos. Antes de retirar, verifique se o pudim está cozido com um palito. Depois do pudim cozido, deixe arrefecer até amornar e desenforme. Depois de frio está pronto a servir.',
+        'description': 'Leve a cozer ao forno pré-aquecido nos 190ºC, durante 1 hora e 20 minutos.  Antes de retirar, verifique se o pudim está cozido com um palito.  Depois do pudim cozido, deixe arrefecer até amornar e desenforme.  Depois de frio está pronto a servir.',
         'tools': ['Forno', 'Palito']
     }}
 
@@ -36,4 +36,4 @@ NUMBER_OF_SERVINGS = '8'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Pudim-de-Cafe-SI-1.jpg',
 
-TAGS = ['Sobremesa', 'Pudim', 'Café']
+TAGS = ['sobremesa', 'pudim', 'café', 'doce']

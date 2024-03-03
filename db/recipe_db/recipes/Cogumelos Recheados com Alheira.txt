@@ -1,12 +1,12 @@
 NAME = 'Cogumelos Recheados com Alheira'
 
 INGREDIENTS = {
-	'cogumelos grandes(Paris ou Portobello)': '8 uni',
-	'alheiras pequenas': '2 uni',
-	'queijo mozzarella ralado': '4 colheres-de-sopa',
-	'azeite': '3 colheres-de-sopa',
-	'alho picados': '3 uni',
-	'ingrediFolhas de orégão secasent6': '0 q.b',
+	'Cogumelos grandes(Paris ou Portobello)': '8 uni',
+	'Alheiras pequenas': '2 uni',
+	'Queijo mozzarella ralado': '4 colheres-de-sopa',
+	'Azeite': '3 colheres-de-sopa',
+	'Alho picados': '3 uni',
+	'Folhas de orégão secas': '0 q.b',
 	'Ovos de codorniz': '8 uni',
 	'Sal': '0 q.b', 
 	'Pimenta': '0 q.b'
@@ -16,11 +16,11 @@ TOOLS = ['Faca', 'Assadeira', 'Forno', 'Frigideira', 'Colher', 'Garfo', 'Espátu
 
 INSTRUCTIONS = { 
 	1 : {
-		'description' : 'Começando pelos cogumelos, limpe-os gentilmente com papel absorvente levemente humedecido. Retire-lhe os pés com a ajuda de uma faca. Coloque os cogumelos numa assadeira e tempere-os com sal e pimenta',
+		'description' : 'Começando pelos cogumelos, limpe-os gentilmente com papel absorvente levemente humedecido. Retire-lhe os pés, com a ajuda de uma faca. Coloque os cogumelos numa assadeira, e tempere-os com sal e pimenta.',
 		'tools' : ['Papel Absorvente', 'Faca', 'Assadeira']
 	},
 	2 : {
-		'description' : 'Leve os cogumelos ao forno pré-aquecido a 180ºC e deixe assar entre 10 a 15 minutos, até que larguem água. Após o tempo definido, retire-os do forno e deixe repousar.',
+		'description' : 'Leve os cogumelos ao forno pré-aquecido a 180ºC, e deixe assar entre 10 a 15 minutos, até que larguem água.  Após o tempo definido, retire-os do forno e deixe repousar.',
 		'tools' : ['Forno']
 	},
 	3 : {
@@ -28,23 +28,23 @@ INSTRUCTIONS = {
 		'tools' : ['Faca']
 	},
 	4 : {
-		'description' : 'Coloque uma frigideira ao lume, adicione uma colher de sopa de azeite e o alho. Mexa regularmente enquanto aquece, antes do alho dourar acrescente a alheira previamente pelada e cortada. Esmague com um garfo e permita que a alheira cozinhe bem, antes de desligar pode adicionar os oregãos. ',
+		'description' : 'Coloque uma frigideira ao lume, adicione uma colher de sopa de azeite e o alho.  Mexa regularmente enquanto aquece, antes do alho dourar acrescente a alheira previamente pelada e cortada.  Esmague com um garfo, e permita que a alheira cozinhe bem, antes de desligar pode adicionar os oregãos. ',
 		'tools' : ['Frigideira', 'Colher', 'Garfo']
 	},
 	5 : {
-		'description' : 'Retire o excesso de água que os cogumelos largaram e recheie-os com a alheira. Tempere com um pouco de pimenta e coloque queijo sobre cada um dos cogumelos recheados. Polvilhe com orégãos',
+		'description' : 'Retire o excesso de água que os cogumelos largaram, e recheie-os com a alheira.  Tempere com um pouco de pimenta, e coloque queijo sobre cada um dos cogumelos recheados.  Polvilhe com orégãos',
 		'tools' : ['Colher']
 	},
 	6 : {
-		'description' : 'Coloque novamente a assadeira no forno a 180ºC durante 30 minutos',
+		'description' : 'Coloque novamente a assadeira no forno a 180ºC, durante 30 minutos',
 		'tools' : ['Assadeira', 'forno']
 	},
 	7 : {
-		'description' : 'Entretanto, coloque uma frigideira ao lume com o restante azeite e frite os ovos de codorniz um a um. Retire-os para um prato, forrado com papel absorvente, com a ajuda de uma espátula.',
+		'description' : 'Entretanto, coloque uma frigideira ao lume com o restante azeite e frite os ovos de codorniz um a um.  Retire-os para um prato, forrado com papel absorvente, com a ajuda de uma espátula.',
 		'tools' : ['Frigideira', 'prato', 'papel absorvente', 'Espátula']
 	},
 	8 : {
-		'description' : 'Assim que os cogumelos estiverem prontos retire a assadeira do forno e coloque um ovo em cada um dos cogumelos. E está pronto!',
+		'description' : 'Assim que os cogumelos estiverem prontos, retire a assadeira do forno, e coloque um ovo em cada um dos cogumelos. E está pronto!',
 		'tools' : ['Assadeira', 'Forno']
 	}}
 
@@ -55,7 +55,7 @@ NUMBER_OF_SERVINGS = '8'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Cogumelos-Recheados-Alheira-SI-1.jpg',
 
-TAGS = ['Entrada']
+TAGS = ['entrada', 'cogumelos', 'alheira', 'fácil', 'fácil']
 
 
 

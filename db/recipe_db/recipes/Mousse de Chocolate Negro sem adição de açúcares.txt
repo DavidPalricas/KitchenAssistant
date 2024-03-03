@@ -10,15 +10,15 @@ TOOLS = ['Tacho', 'Recipiente', 'Colher', 'Batedeira', 'Taças']
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Em banho-maria leve ao lume o óleo de coco e o chocolate partido em pedaços. Deixe derreter em lume brando. Depois do chocolate totalmente derretido, mexa e retire do lume.',
+        'description': 'Em banho-maria leve ao lume o óleo de coco e o chocolate partido em pedaços.  Deixe derreter em lume brando. Depois do chocolate totalmente derretido, mexa e retire do lume.',
         'tools': ['Tacho', 'Recipiente', 'Colher']
     },
     2: {
-        'description': 'Parta os ovos e separe as gemas das claras. Bata as claras em castelo bem firmes.',
+        'description': 'Parta os ovos e separe as gemas das claras.  Bata as claras em castelo bem firmes.',
         'tools': ['Recipiente', 'Batedeira']
     },
     3: {
-        'description': 'Bata as gemas até que fiquem fofas. Na velocidade mínima e enquanto bate, junte o chocolate. Logo que o chocolate comece a engrossar, pare de bater e misture ¼ das claras. Mexa até que tudo fique homogêneo. Depois, adicione as restantes claras e envolva cuidadosamente para que a mousse fique cremosa.',
+        'description': 'Bata as gemas até que fiquem fofas.  Na velocidade mínima e enquanto bate, junte o chocolate.  Logo que o chocolate comece a engrossar, pare de bater e misture ¼ das claras.  Mexa até que tudo fique homogêneo.  Depois, adicione as restantes claras e envolva cuidadosamente para que a mousse fique cremosa.',
         'tools': ['Recipiente', 'Batedeira', 'Colher']
     },
 	4: {
@@ -32,4 +32,4 @@ NUMBER_OF_SERVINGS = '6'
 
 IMAGE_URL = 'https://www.saborintenso.com/attachments/videos-doces/74502d1680351205-mousse-chocolate-preto-sem-adicao-acucar-mousse-chocolate-preto-1.jpg',
 
-TAGS = ['Sobremesa', 'Mousse', 'Chocolate', 'Saudável', 'Menos de 30 minutos']
+TAGS = ['sobremesa', 'mousse', 'chocolate', 'saudável', 'menos de 30 minutos', 'doce']

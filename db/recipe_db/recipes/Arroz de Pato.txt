@@ -19,27 +19,27 @@ TOOLS = ['Panela grande', 'Escumadeira', 'Prato', 'Coador', 'Medidor', 'Tábua',
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Numa panela grande coloque 3 litros e meio de água a ferver, quando começar a ferver, coloque sal e pimenta a gosto, o cravinho, o raminho de salsa, o louro, os alhos, a cebola, as cenouras, o bacon e um chouriço. Tape e deixe ferver',
+        'description': 'Numa panela grande coloque 3 litros e meio de água a ferver, quando começar a ferver, coloque sal e pimenta a gosto, o cravinho, o raminho de salsa, o louro, os alhos, a cebola, as cenouras, o bacon e um chouriço.  Tape e deixe ferver',
         'tools': ['Panela grande']
     },
     2: {
-        'description': 'Após 5 minutos do caldo estar a ferver introduza os pedaços de pato. Sem tapar totalmente, deixe cozinhar por aproximadamente 1 hora e meia. Quando a carne se começar a soltar dos ossos está cozida, nesse instante retire os pedaços para um prato com a ajuda de uma escumadeira.',
+        'description': 'Após 5 minutos do caldo estar a ferver, introduza os pedaços de pato.  Sem tapar totalmente, deixe cozinhar por aproximadamente 1 hora e meia.  Quando a carne se começar a soltar dos ossos está cozida, nesse instante retire os pedaços para um prato com a ajuda de uma escumadeira.',
         'tools': ['Panela Grande', 'Escumadeira', 'Prato']
     },
     3: {
-        'description': 'Coe o caldo e meça a quantidade que sobrou. Coloque novamente na panela o caldo e adicione água suficiente para completar 2 litros de caldo. Deixe ferver.',
+        'description': 'Coe o caldo, e meça a quantidade que sobrou.  Coloque novamente na panela o caldo, e adicione água suficiente para completar 2 litros de caldo.  Deixe ferver.',
         'tools': ['Panela grande', 'Coador', 'Medidor']
     },
     4: {
-        'description': 'Quando começar a ferver, adicione o arroz lavado, mexa e deixe cozinhar em lume médio forte, aproximadamente 17 minutos. Quando o arroz estiver cozido e seco, apague o lume.',
+        'description': 'Quando começar a ferver, adicione o arroz lavado, mexa e deixe cozinhar em lume médio forte, aproximadamente 17 minutos.  Quando o arroz estiver cozido e seco, apague o lume.',
         'tools': ['Panela grande', 'Coador', 'Medidor']
     },
     5: {
-        'description': 'Após a carne arrefecer, retire as peles e os ossos e desfie. Corte as cenouras em pedacinhos e adicione ao pato desfiado. Corte também o bacon e o chouriço em cubos e adicione ao pato. Corte em rodelas grossas o chouriço que não foi cozido e reserve.',
+        'description': 'Após a carne arrefecer, retire as peles e os ossos e desfie.  Corte as cenouras em pedacinhos e adicione ao pato desfiado. Corte também o bacon e o chouriço em cubos e adicione ao pato.  Corte em rodelas grossas o chouriço que não foi cozido e reserve.',
         'tools': ['Prato', 'Tábua', 'Faca', 'Recipiente']
     },
     6: {
-        'description': 'Num tabuleiro que possa ir ao forno espalhe metade do arroz, de seguida o pato desfiado com a cenoura, o chouriço e o bacon. Cubra com o restante arroz, com a ajuda de uma espátula alise a superfície. Decore com as rodelas de chouriço cortadas.',
+        'description': 'Num tabuleiro que possa ir ao forno, espalhe metade do arroz, de seguida o pato desfiado com a cenoura, o chouriço e o bacon.  Cubra com o restante arroz, com a ajuda de uma espátula alise a superfície.',
         'tools': ['Tabuleiro', 'Espátula']
     },
     7: {
@@ -47,7 +47,7 @@ INSTRUCTIONS = {
         'tools': ['Tabuleiro']
     },
 	8: {
-        'description': 'Leve ao forno pré-aquecido a 180ºC e deixe tostar entre 30 a 40 minutos. Depois do arroz douradinho é só retirar e servir.',
+        'description': 'Leve ao forno pré-aquecido a 180ºC, e deixe tostar entre 30 a 40 minutos.  Depois do arroz douradinho, é só retirar e servir.',
         'tools': ['Tabuleiro', 'Colher']
 }}
 
@@ -57,4 +57,4 @@ NUMBER_OF_SERVINGS = '10'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/arroz-de-pato-si-2.jpg',
 
-TAGS = ['Principal', 'Arroz', 'Pato', 'Carne']
+TAGS = ['principal', 'arroz', 'pato', 'carne', 'chouriço', 'tradicional']

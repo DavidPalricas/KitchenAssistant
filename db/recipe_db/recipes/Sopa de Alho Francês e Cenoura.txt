@@ -15,19 +15,19 @@ TOOLS = ['Panela', 'Colher', 'Frigideira', 'Varinha mágica']
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Numa panela com 3 litros de água, adicione as batatas, o alho francês cortado em pedaços, a cenoura, a cebola e o cubo de caldo de galinha (opcional). Tempere com sal, mexa, tape e deixe cozinhar por 30 minutos.',
+        'description': 'Numa panela com 3 litros de água, adicione as batatas, o alho francês cortado em pedaços, a cenoura, a cebola e o cubo de caldo de galinha, que é opcional.  Tempere com sal, mexa, tape e deixe cozinhar por 30 minutos.',
         'tools': ['Panela', 'Colher']
     },
     2: {
-        'description': 'Entretanto, numa frigideira, leve ao lume o azeite e o alho francês cortado às rodelas. Mexa e deixe refogar durante 10 minutos em lume médio.',
+        'description': 'Entretanto, numa frigideira, leve ao lume o azeite e o alho francês cortado às rodelas.  Mexa e deixe refogar durante 10 minutos em lume médio.',
         'tools': ['Frigideira', 'Colher']
     },
     3: {
-        'description': 'Depois dos legumes cozidos, passe a sopa com a varinha mágica. Caso a sopa esteja muito espessa adicione um pouco mais de água.',
+        'description': 'Depois dos legumes cozidos, passe a sopa com a varinha mágica.  Caso a sopa esteja muito espessa, adicione um pouco mais de água.',
         'tools': ['Panela', 'Colher', 'Varinha mágica']
     },
 	4: {
-        'description': 'Junte o alho francês ao creme. Envolva e deixe Cozinhar por 5 minutos, após esse período está pronta a servir.',
+        'description': 'Junte o alho francês ao creme.  Envolva e deixe Cozinhar por 5 minutos, após esse período está pronta a servir.',
         'tools': ['Panela', 'Colher']
     }}
 
@@ -37,4 +37,4 @@ NUMBER_OF_SERVINGS = '10'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Sopa-de-Alho-Frances-e-Cenoura-SI-2.jpg',
 
-TAGS = ['Sopa', 'Alho Francês', 'Cenoura', 'Batata', 'Saudável']
+TAGS = ['sopa', 'alho Francês', 'cenoura', 'batata', 'saudável']

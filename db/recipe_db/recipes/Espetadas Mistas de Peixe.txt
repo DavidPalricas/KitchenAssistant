@@ -18,8 +18,7 @@ TOOLS = ['Tábua', 'Faca', 'Recipiente', 'Espetos', 'Prato', 'Grelhador', 'Tenaz
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Comece por lavar e limpar os peixes, os camarões e as lulas.
-De seguida corte os ingredientes, os peixes em cubos, as lulas, os camarões, o pimento e a cebola em pedaços.',
+        'description': 'Comece por lavar e limpar os peixes, os camarões e as lulas.  De seguida corte os ingredientes, os peixes em cubos, as lulas, os camarões, o pimento e a cebola em pedaços.',
         'tools': ['Tábua', 'Faca', 'Recipiente']
     },
     2: {
@@ -27,12 +26,11 @@ De seguida corte os ingredientes, os peixes em cubos, as lulas, os camarões, o 
         'tools': ['Espetos', 'Prato']
     },
     3: {
-        'description': 'Grelhe as espetadas de ambos os lados durante 7 minutos, num grelhador quente e previamente untado com azeite. Depois das espetadas grelhadas, retire-as para uma travessa.',
+        'description': 'Grelhe as espetadas de ambos os lados durante 7 minutos, num grelhador quente e previamente untado com azeite.  Depois das espetadas grelhadas, retire-as para uma travessa.',
         'tools': ['Grelhador', 'Tenaz', 'Travessa']
     },
 	4: {
-        'description': 'Numa tigela misture a manteiga com sumo de 1/2 limão e salsa picada.
-Sirva a espetada com o molho por cima ou à parte, acompanhada de legumes e salada.',
+        'description': 'Numa tigela misture a manteiga com sumo de 1/2 limão e salsa picada.  Sirva a espetada com o molho por cima ou à parte, acompanhada de legumes e salada.',
         'tools': ['Tigela', 'Colher', 'Travessa']
     }}
 
@@ -42,4 +40,4 @@ NUMBER_OF_SERVINGS = '4'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Espetadas-Mistas-de-Peixe-SI-1.jpg',
 
-TAGS = ['Principal', 'Peixe', 'Salmão', 'Camarão', 'Menos de 30 minutos']
+TAGS = ['principal', 'peixe', 'salmão', 'camarão', 'menos de 30 minutos']

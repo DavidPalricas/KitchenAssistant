@@ -32,27 +32,27 @@ TOOLS = ['Panela', 'Tenaz', 'Coador', 'Recipiente', 'tool1', 'tool2', 'tool3']
 
 INSTRUCTIONS = { 
     1: {
-        'description': 'Numa panela com água, coloque sal, pimenta, o dente de alho, uma folha de louro, a cenoura e os talos do manjericão. Leve ao lume e deixe ferver. Quando o caldo começar a ferver, adicione o frango, tape e deixe cozer durante 25 minutos. Depois desse tempo decorrido retire o frango para um prato. Coe e reserve o caldo.',
+        'description': 'Numa panela com água, coloque sal, pimenta, o dente de alho, uma folha de louro, a cenoura e os talos do manjericão.  Leve ao lume e deixe ferver.  Quando o caldo começar a ferver, adicione o frango, tape e deixe cozer durante 25 minutos. Depois desse tempo decorrido, retire o frango para um prato.  Coe e reserve o caldo.',
         'tools': ['Panela', 'Tenaz', 'Coador', 'Recipiente']
     },
     2: {
-        'description': 'Num tacho, leve ao lume a manteiga e 1/3 da cebola. Mexa e deixe refogar sem deixar alourar, junte a farinha e misture muito bem. Aos poucos e enquanto mexe, adicione meio litro de caldo de cozer o frango. De seguida, aos poucos e enquanto continua a mexer, junte o leite e as natas.',
+        'description': 'Num tacho, leve ao lume a manteiga e 1/3 da cebola.  Mexa e deixe refogar sem deixar alourar, junte a farinha e misture muito bem.  Aos poucos e enquanto mexe, adicione meio litro de caldo de cozer o frango.  De seguida, aos poucos e enquanto continua a mexer, junte o leite e as natas.',
         'tools': ['Tacho', 'Colher', 'Recipiente']
     },
     3: {
-        'description': 'Tempere o molho com noz-moscada. Retifique o tempero de sal e pimenta e adicione umas gotas de limão. Mexa novamente até o creme borbulhar.',
+        'description': 'Tempere o molho com noz-moscada.  Retifique o tempero de sal e pimenta, e adicione umas gotas de limão.  Mexa novamente até o creme borbulhar.',
         'tools': ['Tacho', 'Colher', 'Recipiente']
     },
     4: {
-        'description': 'Limpe o frango descartando peles e ossos. Desfie o frango.',
+        'description': 'Limpe o frango, descartando peles e ossos.  Desfie o frango.',
         'tools': ['Recipiente']
     },
     5: {
-        'description': 'Num tacho largo, leve ao lume o azeite, a restante cebola, o restante louro, os alhos picados e o bacon. Mexa e deixe refogar, junte os cogumelos. Tempere com sal e pimenta.',
+        'description': 'Num tacho largo, leve ao lume o azeite, a restante cebola, o restante louro, os alhos picados e o bacon.  Mexa e deixe refogar, junte os cogumelos.  Tempere com sal e pimenta.',
         'tools': ['Tacho', 'Colher', 'Recipiente']
     },
     6: {
-        'description': 'Mexa e deixe saltear até que os cogumelos percam a água. Junte a polpa de tomate, o vinho branco e 125 ml de caldo de cozer o frango. Deixe ferver durante 2 minutos até que o álcool evapore.',
+        'description': 'Mexa e deixe saltear até que os cogumelos percam a água.  Junte a polpa de tomate, o vinho branco e 125 ml de caldo de cozer o frango.  Deixe ferver durante 2 minutos, até que o álcool evapore.',
         'tools': ['Tacho', 'Colher', 'Recipiente']
     },
     7: {
@@ -64,11 +64,11 @@ INSTRUCTIONS = {
         'tools': ['Colher', 'Recipiente']
     },
      9: {
-        'description': 'Num tabuleiro de ir ao forno, coloque camadas alternadas da carne, um pouco de queijo ralado e a massa da lasanha. Cubra as placas de massa com o restante molho. Alise e por fim, polvilhe a lasanha com o restante queijo ralado.',
+        'description': 'Num tabuleiro de ir ao forno, coloque camadas alternadas da carne, um pouco de queijo ralado e a massa da lasanha.  Cubra as placas de massa com o restante molho.  Alise e por fim, polvilhe a lasanha com o restante queijo ralado.',
         'tools': ['Tabuleiro', 'Colher']
     },
      10: {
-        'description': 'Leve ao forno pré-aquecido nos 180 °C com a grelha de baixo e o ventilador ligados. Deixe gratinar aproximadamente 40 minutos até que a lasanha fique douradinha. Retire e sirva.',
+        'description': 'Leve ao forno pré-aquecido nos 180 °C, com a grelha de baixo e o ventilador ligados.  Deixe gratinar, aproximadamente 40 minutos, até que a lasanha fique douradinha.  Retire e sirva.',
         'tools': ['Tabuleiro', 'Forno']
     }}
 
@@ -78,4 +78,4 @@ NUMBER_OF_SERVINGS = '8'
 
 IMAGE_URL = 'https://www.saborintenso.com/images/receitas/Lasanha-Frango-Cogumelos-SI-2.jpg',
 
-TAGS = ['Principal', 'Carne', 'Frango', 'Cogumelos']
+TAGS = ['principal', 'carne', 'frango', 'cogumelos', 'lasanha']
