@@ -494,7 +494,7 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
-              case "ask_first_step": // ----------------------------------------------------------------------------- [ ASK_FIRST_STEP]
+            case "ask_first_step": // ----------------------------------------------------------------------------- [ ASK_FIRST_STEP]
               var message = {'intent':'ask_first_step', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -502,7 +502,7 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
-              case "ask_next_step": // ----------------------------------------------------------------------------- [ ASK_NEXT_STEP]
+            case "ask_next_step": // ----------------------------------------------------------------------------- [ ASK_NEXT_STEP]
               var message = {'intent':'ask_next_step', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };

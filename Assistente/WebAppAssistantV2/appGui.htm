@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/help.js"></script>
     
     <style>
       body {
@@ -194,13 +195,134 @@
           color: white !important;
       }
 
+      #help-box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 500px;
+        max-height: 800px; /* Adjust height as needed */
+        overflow-y: auto;
+      }
+      
+      .card-body strong {
+          color: #4F5D73; /* Sets the color of <strong> elements within .card-body */
+      }
+
+      .card-body li {
+          color: black; /* Ensures that <li> elements within .card-body are black */
+      }
+
+      #help-button {
+        width: 40px;
+        height: 40px;
+        position: fixed; /* Mantém o botão fixo na tela */
+        bottom: 96%; /* Posiciona o botão 20px acima da parte inferior da tela */
+        left: 98%; /* Inicia o botão na metade da largura da tela */
+        transform: translateX(-50%); /* Desloca o botão para esquerda em 50% de sua própria largura, centralizando-o horizontalmente */
+        z-index: 1000; /* Garante que o botão fique acima de outros elementos da página */
+        background-color: burlywood;
+        color: #4F5D73;
+        border: none;
+        cursor: pointer;
+        border-radius: 10%;
+      }
+
+      #help-button:hover {
+        background-color:#4F5D73;
+        border: 2px solid burlywood !important;
+        color: burlywood !important;
+      }
+
+      #help-button:hover .fa-message{
+        color: burlywood !important;
+      }
+      
     </style>
 
   </head>
   <body>
     <h1 style="background-color: #4F5D73; margin: 0;">CASA VIVA + APP GUI</h1>
-
     
+    <!-- Help Button -->
+    <button id="help-button" type="button" class="bi bi-app">
+      <i class="fa fa-info fa-2x"></i>
+    </button>
+    
+    <!-- Help Pop-up Window -->
+    <div id="help-box" class="card position-fixed shadow d-none">
+      <div class="card-head bg-primary text-white">
+        Instruções de Uso Básicas
+          <button id="help-close" type="button" class="btn-close float-end" aria-label="Close"></button>
+      </div>
+        <div class="card-body">
+          <!-- Help instructions -->
+          <ol>
+              <li><strong>Ativação do Assistente:</strong>
+                  <ul>
+                      <li>Viva</li>
+                      <li>Olá, Assistente</li>
+                      <li>Mais exemplos de cumprimentos em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>Solicitação de Receitas:</strong>
+                  <ul>
+                      <li><strong>SUGESTÃO:</strong>
+                          <ul>
+                              <li>Quero um sugestão de receita</li>
+                              <li>Sugere-me algo</li>
+                          </ul>
+                      </li>
+                      <li><strong>Por tag:</strong>
+                          <ul>
+                              <li>Quero uma receita de [bacalhau]</li>
+                              <li>Mostra-me uma receita de [peixe]</li>
+                          </ul>
+                      </li>
+                      <li>Mais exemplos de solicitação em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>Iniciar a preparação da Receita (previamente escolhida):</strong>
+                  <ul>
+                      <li>Vamos começar a cozinhar</li>
+                      <li>Vamos começar com a receita</li>
+                      <li>Mais exemplos de Iniciar em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>Prosseguir para o próximo passo:</strong>
+                  <ul>
+                      <li>Avança para o próximo passo</li>
+                      <li>Acabei este passo dá-me o próximo</li>
+                      <li>Mais exemplos de Avançar em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>Repetir um passo:</strong>
+                  <ul>
+                      <li>Repete por favor</li>
+                      <li>Não percebi, podes repetir</li>
+                      <li>Mais exemplos de Repetir em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>Desativação do Assistente:</strong>
+                  <ul>
+                      <li>Adeus assistente</li>
+                      <li>tchau assistente</li>
+                      <li>Mais exemplos de Despedida em linguagem natural aceites</li>
+                  </ul>
+              </li>
+              <li><strong>BONUS : PIADAS</strong>
+                  <ul>
+                      <li>Conta-me um piada</li>
+                      <li>Conta-me uma anedota</li>
+                      <li>Mas exemplos de Pedido de Piadas em linguagem natural aceites</li>
+                  </ul>
+              </li>
+          </ol>
+        </div>
+    
+    </div>
+
     <div>
       
       <div id = "conteudo">
@@ -236,15 +358,11 @@
               <input id="chat-input" type="text" class="form-control" placeholder="Digite sua mensagem">
   
           </div>
-
-
-  
       </div>
 
       <button id="chat-button" type="button" class="btn btn-primary rounded-circle position-fixed chat-sign-button">
         <i class="fa-regular fa-message fa-2x"></i>
       </button>
-  
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@latest/dist/svg.min.js"></script>
@@ -281,6 +399,14 @@
       square.animate().attr({fill:'#ccc'});
       triangle.animate().attr({fill:'#ccc'});
       */
+
+      function openHelpBox() {
+      $("#help-box").removeClass("d-none");
+      }
+
+      function closeHelpBox() {
+      $("#help-box").addClass("d-none");
+      }
 
       function openChatBox() {
       $("#chat-box").removeClass("d-none");
@@ -636,12 +762,13 @@
               //let recipe;
               
               console.log("C : ", c);
-
+              closeHelpBox(); // -------------------------------------------------------- Close the help box
               if(c.hasOwnProperty("nlu")){
                   console.log("NLU: ", c.nlu);
               //recipe = c.nlu.intent;
               switch(c.nlu.intent){
                   case "ask_spefific_recipe":
+                      closeHelpBox(); // -------------------------------------------------------- Close the help box
                       console.log("ASK SPECIFIC RECIPE: ");
                       //console.log("ASK SPECIFIC RECIPE_VALUE: "+c.nlu.recipe);
                       let tag = c.nlu.recipe; // ------------------------------------------------- Get the recipe tag
@@ -671,18 +798,21 @@
                       addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                       break;
                   case "greet":
+                      closeHelpBox(); // -------------------------------------------------------- Close the help box
                       console.log("GREET -----------------------------");
                       openChatBox(); // ---------------------------------------------------------- Open the chat box
                       addMsgToChat('Assistente','Olá, posso ajudar?'); // ------------------------ Add the Assistent message to the chat
                       sendToVoice("Olá, posso ajudar?"); // -------------------------------------- Send the voice to the user saying "Olá, posso ajudar?"
                       break;
                   case "goodbye":
+                      closeHelpBox(); // -------------------------------------------------------- Close the help box
                       clearChatMessages(); // ---------------------------------------------------- Clear the chat messages
                       closeChatBox(); // --------------------------------------------------------- Close the chat box
                       clearContent(); // --------------------------------------------------------- Clear the content from "conteudo" div
                       sendToVoice("Até à próxima"); // ------------------------------------------- Send the voice to the user saying "Até à próxima"
                       break;
                   case "ask_random_recipe":
+                      closeHelpBox(); // -------------------------------------------------------- Close the help box
                       //console.log(c.nlu);
                       data = await getRandRecipe() // -------------------------------------------- Get the random recipe
                       recipe_id = data.recipe_id; // --------------------------------------------- Set the recipe_id fer the random recipe
@@ -711,7 +841,7 @@
                       // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
                       addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                       break;
-                      case "ask_first_step":
+                  case "ask_first_step":
                       //console.log("ASK FIRST STEP -----------------------------");
                       let instruction = await getActualInstruction(recipe_id, step); // ---------- Get the first instruction for the recipe
                       //console.log("INSTRUCTION: ", instruction.actual_instruction); 
@@ -763,14 +893,15 @@
                   break;
                   case "deny":
                   break;
-                  case "repeat_step":
-                  break;
-                  case "confirm_step":
-                  break;
                   case "joke":
                       console.log("JOKES");
                       openChatBox();
-                      sendToVoice("Legumes? É isso que minha comida come.");
+                      addMsgToChat('Assistente','Legumes?!! É isso que minha a comida come.'); // --------- Add the joke to the chat
+                      sendToVoice("Legumes?!! É isso que a minha comida come.");
+                  break;
+                  case "ask_help":
+                      sendToVoice("Segue a lista de comandos aceites para interagir comigo!");
+                      openHelpBox();
                   break;
                   case "default":
                   break;
