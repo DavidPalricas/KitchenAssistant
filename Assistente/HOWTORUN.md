@@ -34,7 +34,14 @@ conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
 rasa run --enable-api --cors="*"
 ```
 
-## Quarto Passo: Correr a APP
+## Quarto Passo: client-side 
+
+```bash
+cd WebAppAssistantV2/APP2
+python app.py
+```
+
+## Quinto Passo: Correr a APP
 
 ```bash
 cd WebAppAssistantV2
