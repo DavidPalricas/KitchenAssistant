@@ -736,9 +736,26 @@
       }
       }
 
+      /* FUNCTION : GET RAMDOM JOKE
+        RETURN: 
+         'joke'*/
+      function getRandJoke() {
+            let joke = jokes[Math.floor(Math.random() * jokes.length)];
+            console.log("Joke: ", joke);
+            return joke;
+      }
+
       var recipe_id = 0;
       var step = 1;
       var voice;
+
+      const jokes = [
+        'Eu gosto tanto de comida que meu super herói preferido é o super mercado.',
+        'O que disse a farinha para o fermento? "Sem ti, a minha vida não cresce."',
+        'Legumes?!! É isso que a minha comida come.',
+        'Porque é que a manteiga não entrou na discoteca? Porque foi barrada.',
+        'Qual o nome do peixe que caiu do vigésimo andar? Aaaaaaaaah, Tum!'
+      ];
 
       async function im1MessageHandler(data) {
 
@@ -809,7 +826,7 @@
                       clearChatMessages(); // ---------------------------------------------------- Clear the chat messages
                       closeChatBox(); // --------------------------------------------------------- Close the chat box
                       clearContent(); // --------------------------------------------------------- Clear the content from "conteudo" div
-                      sendToVoice("Até à próxima"); // ------------------------------------------- Send the voice to the user saying "Até à próxima"
+                      sendToVoice("Espero ter ajudado, até à próxima!!"); // ------------------------------------------- Send the voice to the user saying "Até à próxima"
                       break;
                   case "ask_random_recipe":
                       closeHelpBox(); // -------------------------------------------------------- Close the help box
@@ -896,8 +913,9 @@
                   case "joke":
                       console.log("JOKES");
                       openChatBox();
-                      addMsgToChat('Assistente','Legumes?!! É isso que minha a comida come.'); // --------- Add the joke to the chat
-                      sendToVoice("Legumes?!! É isso que a minha comida come.");
+                      let joke_selected = getRandJoke();
+                      addMsgToChat('Assistente',joke_selected); // --------- Add the joke to the chat
+                      sendToVoice(joke_selected);
                   break;
                   case "ask_help":
                       closeChatBox();
