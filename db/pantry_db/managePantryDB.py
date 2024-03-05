@@ -70,7 +70,34 @@ class ManagePantryDB:
                 print("Failed to delete ingredient.")
             finally:
                 self.closeConnection()
-          
+       
+    def getAllIngredientsDetails(self):
+        if not self.conn or not self.cursor:
+            self.connectDatabase()
+
+        ingredients_details = []
+        if self.conn and self.cursor:
+            try:
+                query = "SELECT name, quantity, unit FROM ingredients ORDER BY name;"
+                self.cursor.execute(query)
+                rows = self.cursor.fetchall()
+                for row in rows:
+                    ingredients_details.append(row)
+                
+                if ingredients_details:
+                    print("All ingredients details (Name, Quantity, Unit):")
+                    for detail in ingredients_details:
+                        print(f"Name: {detail[0]}, Quantity: {detail[1]}, Unit: {detail[2]}")
+                else:
+                    print("No ingredients found in the database.")
+                
+            except Error as e:
+                print(e)
+                print("Failed to retrieve all ingredients details from the database.")
+            finally:
+                self.closeConnection()
+        return ingredients_details   
+    
     # ---------------------------------------------------------------------------------------------- [GROCERY LIST]
                 
     def addIngredientToGroceryList(self, ingredient_id, quantity, unit):
@@ -122,3 +149,35 @@ class ManagePantryDB:
                 print("Failed to delete ingredient from grocery list.")
             finally:
                 self.closeConnection()       
+
+    def getGroceryListIngredientNames(self):
+        if not self.conn or not self.cursor:
+            self.connectDatabase()
+
+        ingredient_names = []
+        if self.conn and self.cursor:
+            try:
+                query = """
+                SELECT i.name 
+                FROM ingredients i
+                JOIN grocerylists g ON i.ingredient_id = g.ingredient_id
+                ORDER BY i.name;
+                """
+                self.cursor.execute(query)
+                rows = self.cursor.fetchall()
+                for row in rows:
+                    ingredient_names.append(row[0])
+                
+                if ingredient_names:
+                    print("Ingredients on the Grocery List:")
+                    for name in ingredient_names:
+                        print(name)
+                else:
+                    print("The grocery list is currently empty.")
+                
+            except Error as e:
+                print(e)
+                print("Failed to retrieve ingredient names from the grocery list.")
+            finally:
+                self.closeConnection()
+        return ingredient_names
