@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS pantry_database;
 
 USE pantry_database;
 
-CREATE TABLE IF NOT EXISTS ingredients (
-    ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS stock (
+    stock_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     quantity DECIMAL(10, 2),
     unit VARCHAR(50), -- (gramas, mililitros, colheres de sopa)
@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS ingredients (
 
 CREATE TABLE IF NOT EXISTS grocerylists (
     grocerylist_id INT AUTO_INCREMENT PRIMARY KEY,
-    ingridient_id INT,
+    stock_id INT,
     quantity DECIMAL(10, 2),
     unit VARCHAR(50),
-    FOREIGN KEY (ingridient_id) REFERENCES ingredients (ingredient_id)
+    FOREIGN KEY (stock_id) REFERENCES stock (stock_id)
 );
