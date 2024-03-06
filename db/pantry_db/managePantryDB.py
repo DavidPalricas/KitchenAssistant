@@ -28,7 +28,7 @@ class ManagePantryDB:
             self.conn.close()
         print("Database connection closed")
 
-    # ---------------------------------------------------------------------------------------------- [stockS STOCK]
+    # ---------------------------------------------------------------------------------------------- [STOCK List]
 
     def insertstock(self, name, quantity, unit, calories, source_url):
         if not self.conn or not self.cursor:
