@@ -5,15 +5,91 @@ nlu:
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*)
 
+# ---------------------------------------------------------------------------------------------- [RECIPE]
+
+# Ask for all recipes
+- intent: ask_all_recipes
+  examples: |
+    - Quais são as receitas disponíveis
+    - Mostra-me as receitas disponíveis
+    - Quais são as receitas
+    - Quais são as receitas que tens
+    - Quais são as receitas que sabes
+    - Quais são as receitas que conheces
+    - Quais são as receitas que tens disponíveis
+    - Quais são as receitas que sabes fazer
+    - Quais são as receitas que tens para me sugerir
+    - Quais são as receitas que tens para me fazer
+    - Quais são as receitas que tens para me mostrar
+    - Quais são as receitas que tens para me dar
+    - Quais são as receitas que tens para me ensinar
+    - Quais são as receitas que tens para me ajudar
+    - Quais são as receitas que tens para me indicar
+    - Quais são as receitas que tens para me recomendar
+    - Quais são as receitas que tens para me oferecer
+    - Quais são as receitas que tens para me apresentar
+    - Quais são as receitas que tens para me sugerir
+    - Quais são as receitas que tens para me mostrar
+    - Quais são as receitas que tens para me dar
+    - Quais são as receitas que tens para me ensinar
+    - Quais são as receitas que tens para me ajudar
+    - Quais são as receitas que tens para me indicar
+    - Quais são as receitas que tens para me recomendar
+    - Quais são as receitas que tens para me oferecer
+    - Quais são as receitas que tens para me apresentar
+    - Quais são as receitas que tens para me sugerir
+    - Quais são as receitas que tens para me mostrar
+    - Quais são as receitas que tens para me dar
+    - Quais são as receitas que tens para me ensinar
+    - Quais são as receitas que tens para me ajudar
+    - Quais são as receitas que tens para me indicar
+    - Quais são as receitas que tens para me recomendar
+
+# Ask for the tools
+- intent: ask_for_tools
+  examples: |
+    - Mostra-me os utensílios precisos
+    - Quais são os utensílios necessários para esta receita
+    - Quais são os utensílios necessários
+    - Quais são os utensílios que preciso
+    - Quais são os utensílios que preciso para esta receita
+    - Quais são os utensílios que preciso para fazer esta receita
+    - Quais são os utensílios que preciso para fazer esta receita
+    - Mostre-me os utensílios necessários
+    - Mostre-me os utensílios necessários para esta receita
+    - Mostre-me os utensílios que preciso
+    - Mostre-me os utensílios que preciso para esta receita
+    - Mostre-me os utensílios que preciso para fazer esta receita
+    - Mostre-me os utensílios que preciso para fazer esta receita
+
+# Ask for the ingredients
+- intent: ask_for_ingredients
+  examples: |
+    - Mostra-me os ingredientes
+    - Quais são os ingredientes necessários para esta receita
+    - Quais são os ingredientes necessários
+    - Quais são os ingredientes que preciso
+    - Quais são os ingredientes que preciso para esta receita
+    - Quais são os ingredientes que preciso para fazer esta receita
+    - Mostra-me os ingredientes necessários
+    - Mostra-me os ingredientes necessários para esta receita
+    - Mostra-me os ingredientes que preciso
+    - Mostra-me os ingredientes que preciso para esta receita
+    - Mostra-me os ingredientes que preciso para fazer esta receita
+    - Mostre-me os ingredientes necessários
+    - Mostre-me os ingredientes necessários para esta receita
+    - Mostre-me os ingredientes que preciso
+    - Mostre-me os ingredientes que preciso para esta receita
+    
 # Ask for a SPECIFIC RECIPE [recipe_tag](receita)
 - intent: ask_specific_recipe
   examples: |
     - Quero uma receita de [bacalhau](receita)
+    - Da-me uma receita de [lasanha](receita)
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
     - Quero fazer receita de [bolo](receita)
     - Mostra-me uma receita de [peixe](receita)
-    - Receita de [carne](receita)
 
 # Ask for help
 - intent: ask_help
@@ -103,6 +179,111 @@ nlu:
   #  - Certo, podes [passo](avanca)
   #  - Feito, podes [passo](avanca)
 
+
+# ---------------------------------------------------------------------------------------------- [PANTRY]
+
+# Ask for ingredients on the pantry
+- intent: ask_pantry
+  examples: |
+    - O que tenho na despensa
+    - O que tenho para cozinhar
+    - O que tenho para fazer uma receita
+    - Mostra-me o que tenho
+    - Mostra-me o que tenho na despensa
+    - Mostra-me o que tenho para cozinhar
+    - Mostra-me o que tenho para fazer uma receita
+    - Quais são os ingredientes que tenho
+    - Quais são os ingredientes que tenho na despensa
+    - Quais são os ingredientes que tenho para cozinhar
+    - Quais são os ingredientes que tenho para fazer uma receita
+    - Diz-me o que tenho
+    - Diz-me o que tenho na despensa
+    - Diz-me o que tenho para cozinhar
+    - Diz-me o que tenho para fazer uma receita
+
+# Add ingredients to the pantry
+- intent: add_pantry
+  examples: |
+    - Adiciona [3](quantidade) [ovos](ingrediente) à despensa
+    - Adiciona [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) à despensa
+    - Adiciona [1](quantidade) [cebola](ingrediente) à despensa
+    - Adiciona [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) à despensa
+    - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à despensa
+    - Adiciona [1](quantidade) [alface](ingrediente) à despensa
+
+# Remove ingredients from the pantry
+- intent: remove_pantry
+  examples: |
+    - Remove [3](quantidade) [ovos](ingrediente) da despensa
+    - Remove [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) da despensa
+    - Remove [1](quantidade) [cebola](ingrediente) da despensa
+    - Remove [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) da despensa
+    - Remove [1](quantidade) [litro](unidade) de [leite](ingrediente) da despensa
+    - Remove [1](quantidade) [alface](ingrediente) da despensa
+    - Usei [3](quantidade) [ovos](ingrediente)
+    - Usei [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente)
+    - Usei [1](quantidade) [cebola](ingrediente)
+    - Usei [250](quantidade) [gramas](unidade) de [açúcar](ingrediente)
+    - Usei [1](quantidade) [litro](unidade) de [leite](ingrediente)
+    - Usei [1](quantidade) [alface](ingrediente)
+    - Comi [3](quantidade) [ovos](ingrediente)
+    - Comi [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente)
+    - Comi [1](quantidade) [cebola](ingrediente)
+    - Comi [250](quantidade) [gramas](unidade) de [açúcar](ingrediente)
+    - Comi [3](quantidade) [maçãs](ingrediente)
+
+# add ingredients to the shopping list
+- intent: add_shopping_list
+  examples: |
+    - Adiciona [3](quantidade) [ovos](ingrediente) à lista de compras
+    - Adiciona [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) à lista de compras
+    - Adiciona [1](quantidade) [cebola](ingrediente) à lista de compras
+    - Adiciona [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) à lista de compras
+    - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à lista de compras
+    - Adiciona [1](quantidade) [alface](ingrediente) à lista de compras
+    - Adiciona [alface](ingrediente) à lista de compras
+    - Adiciona [1](quantidade) [lata](unidade) de [milho](ingrediente) à lista de compras
+
+# add ingridiente that we didnt have to make a recipe to the shopping list
+- intent: add_recipe_ingredients_pantry
+  examples: |
+    - Adiciona os ingredientes que faltam à lista de compras
+    - Adiciona os ingredientes que faltam para a receita à lista de compras
+    - Adiciona os ingredientes que faltam para fazer a receita à lista de compras
+    - Adiciona o que não temos à lista de compras
+    - Adiciona o que falta à lista de compras
+    - Adiciona o que falta para a receita à lista de compras
+    - Adiciona o que falta para fazer a receita à lista de compras
+
+# Ask for the shopping list
+- intent: ask_shopping_list
+  examples: |
+    - O que tenho na lista de compras
+    - O que tenho para comprar
+    - O que tenho para fazer a receita
+    - Mostra-me o que tenho na lista de compras
+    - Mostra-me o que tenho para comprar
+    - Mostra-me o que tenho para fazer a receita
+    - Quais são os ingredientes que tenho na lista de compras
+    - Quais são os ingredientes que tenho para comprar
+    - Quais são os ingredientes que tenho para fazer a receita
+    - Diz-me o que tenho na lista de compras
+    - Diz-me o que tenho para comprar
+    - Diz-me o que tenho para fazer a receita 
+
+# send the shopping list to the email
+- intent: send_shopping_list
+  examples: |
+    - Envia a lista de compras para o meu email
+    - Envia a lista de compras para o email
+    - Envia a lista de compras para o meu email por favor
+    - Envia a lista de compras para o email por favor
+    - Envia a lista de compras para o meu email, por favor
+    - Envia a lista de compras para o email, por favor
+    - Envia a lista de compras para o meu email, por favor
+    
+# ---------------------------------------------------------------------------------------------- [COMMON]
+
 # Greet the assistant
 - intent: greet
   examples: |
@@ -130,13 +311,6 @@ nlu:
     - até á próxima, assistente
     - adeus
     - xau
-
-# Ask for ingredients on the pantry
-- intent: ask_pantry
-  examples: |
-    - O que tenho na despensa
-    - O que tenho para cozinhar
-    - O que tenho para fazer uma receita
 
 - intent: affirm
   examples: |
