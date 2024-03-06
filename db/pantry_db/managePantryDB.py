@@ -30,154 +30,220 @@ class ManagePantryDB:
 
     # ---------------------------------------------------------------------------------------------- [STOCK List]
 
-    def insertstock(self, name, quantity, unit, calories, source_url):
+    # Insert a new stock item type into the stock table.
+    def insertStock(self, name):
         if not self.conn or not self.cursor:
             self.connectDatabase()
         
         if self.conn and self.cursor:
             try:
-                self.cursor.execute("INSERT INTO stocks (name, quantity, unit, calories, source_url) VALUES (%s, %s, %s, %s, %s)", 
-                                    (name, quantity, unit, calories, source_url))
+                self.cursor.execute("INSERT INTO stock (name) VALUES (%s)", 
+                                    (name,))
                 self.conn.commit()
-                print(f"stock '{name}' inserted successfully.")
+                print(f"Stock item '{name}' inserted successfully.")
             except Error as e:
                 print(e)
-                print(f"Failed to insert stock '{name}'")
+                print(f"Failed to insert stock item '{name}'")
             finally:
                 self.closeConnection()
 
-    def deletestock(self, stock_id=None, name=None):
+    # Delete a stock item type from the stock table based on stock_id or name
+    def deleteStock(self, stock_id=None, name=None):
         if not self.conn or not self.cursor:
             self.connectDatabase()
 
         if self.conn and self.cursor:
             try:
                 if stock_id is not None:
-                    self.cursor.execute("DELETE FROM stocks WHERE stock_id = %s", (stock_id,))
+                    self.cursor.execute("DELETE FROM stock WHERE stock_id = %s", (stock_id,))
                 elif name is not None:
-                    self.cursor.execute("DELETE FROM stocks WHERE name = %s", (name,))
+                    self.cursor.execute("DELETE FROM stock WHERE name = %s", (name,))
                 else:
                     print("No valid identifier provided for deletion.")
                     return
 
                 self.conn.commit()
-                if self.cursor.rowcount > 0:
-                    print(f"stock {'with ID ' + str(stock_id) if stock_id else 'named ' + name} deleted successfully.")
-                else:
-                    print("stock not found or already deleted.")
+                print(f"Stock item {'with ID ' + str(stock_id) if stock_id else 'named ' + name} deleted successfully.")
             except Error as e:
                 print(e)
-                print("Failed to delete stock.")
+                print("Failed to delete stock item.")
             finally:
                 self.closeConnection()
-       
-    def getAllstocksDetails(self):
+    
+    # Retrieve details of all stock items, including name, quantity, and unit
+    def getAllStocksDetails(self):
+        
         if not self.conn or not self.cursor:
             self.connectDatabase()
 
         stocks_details = []
         if self.conn and self.cursor:
             try:
-                query = "SELECT name, quantity, unit FROM stocks ORDER BY name;"
+                query = "SELECT name FROM stock ORDER BY name;"
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
                 for row in rows:
-                    stocks_details.append(row)
+                    stocks_details.append(row[0])
                 
                 if stocks_details:
-                    print("All stocks details (Name, Quantity, Unit):")
-                    for detail in stocks_details:
-                        print(f"Name: {detail[0]}, Quantity: {detail[1]}, Unit: {detail[2]}")
+                    print("All stock items:")
+                    for name in stocks_details:
+                        print(f"Name: {name}")
                 else:
-                    print("No stocks found in the database.")
+                    print("No stock items found in the database.")
                 
             except Error as e:
                 print(e)
-                print("Failed to retrieve all stocks details from the database.")
+                print("Failed to retrieve all stock items details from the database.")
             finally:
                 self.closeConnection()
-        return stocks_details   
+        return stocks_details
     
-    # ---------------------------------------------------------------------------------------------- [GROCERY LIST]
-                
-    def addstockToGroceryList(self, stock_id, quantity, unit):
+    # Insert a new stock item detail into the stock_details table
+    def insertStockDetail(self, stock_id, quantity, unit, expiration_date):
+        if not self.conn or not self.cursor:
+            self.connectDatabase()
+        
+        if self.conn and self.cursor:
+            try:
+                self.cursor.execute("INSERT INTO stock_details (stock_id, quantity, unit, expiration_date) VALUES (%s, %s, %s, %s)", 
+                                    (stock_id, quantity, unit, expiration_date))
+                self.conn.commit()
+                print(f"Stock detail for stock_id '{stock_id}' inserted successfully.")
+            except Error as e:
+                print(e)
+                print(f"Failed to insert stock detail for stock_id '{stock_id}'")
+            finally:
+                self.closeConnection()
+    
+    # Retrieve the total quantity of a specific item from stock_details, summed across all expiration dates.
+    def getTotalQuantityOfItem(self, item_name):
+       
         if not self.conn or not self.cursor:
             self.connectDatabase()
 
         if self.conn and self.cursor:
             try:
-                # First, check if the stock exists in the 'stocks' table
-                self.cursor.execute("SELECT stock_id FROM stocks WHERE stock_id = %s", (stock_id,))
-                if not self.cursor.fetchone():
-                    print(f"No stock found with ID {stock_id}. Please add it to the stocks table first.")
-                    return
+                query = """
+                SELECT s.name, SUM(sd.quantity) AS total_quantity, sd.unit
+                FROM stock_details sd
+                JOIN stock s ON sd.stock_id = s.stock_id
+                WHERE s.name = %s
+                GROUP BY s.name, sd.unit;
+                """
+                self.cursor.execute(query, (item_name,))
+                result = self.cursor.fetchone()
                 
-                # If the stock exists, add it to the grocery list
-                self.cursor.execute("INSERT INTO grocerylist (stock_id, quantity, unit) VALUES (%s, %s, %s)",
-                                    (stock_id, quantity, unit))
-                self.conn.commit()
-                print(f"stock with ID {stock_id} added to grocery list.")
+                if result:
+                    print(f"Total quantity for {result[0]}: {result[1]} {result[2]}")
+                else:
+                    print(f"No stock found for '{item_name}' in the database.")
+                
             except Error as e:
                 print(e)
-                print("Failed to add stock to grocery list.")
+                print("Failed to retrieve the total quantity of the item.")
+            finally:
+                self.closeConnection()
+
+    # Retrieve a list of items from stock_details that are nearing expiration within a specified number of days
+    def getItemsNearingExpiration(self, days=30):
+        if not self.conn or not self.cursor:
+            self.connectDatabase()
+
+        if self.conn and self.cursor:
+            try:
+                query = """
+                SELECT s.name, sd.quantity, sd.unit, sd.expiration_date
+                FROM stock_details sd
+                JOIN stock s ON sd.stock_id = s.stock_id
+                WHERE sd.expiration_date <= DATE_ADD(CURDATE(), INTERVAL %s DAY)
+                ORDER BY sd.expiration_date ASC;
+                """
+                self.cursor.execute(query, (days,))
+                rows = self.cursor.fetchall()
+                
+                if rows:
+                    print(f"Items nearing expiration within the next {days} days:")
+                    for row in rows:
+                        print(f"Name: {row[0]}, Quantity: {row[1]}, Unit: {row[2]}, Expiration Date: {row[3]}")
+                else:
+                    print("No items are nearing expiration within the specified timeframe.")
+                
+            except Error as e:
+                print(e)
+                print("Failed to retrieve items nearing expiration.")
+            finally:
+                self.closeConnection()
+
+    # ---------------------------------------------------------------------------------------------- [GROCERY LIST]
+    
+    # Add an item to the grocery list
+    def addIngredientToGroceryList(self, name, quantity, unit):
+        if not self.conn or not self.cursor:
+            self.connectDatabase()
+
+        if self.conn and self.cursor:
+            try:
+                self.cursor.execute("INSERT INTO grocerylist (name, quantity, unit) VALUES (%s, %s, %s)",
+                                    (name, quantity, unit))
+                self.conn.commit()
+                print(f"Ingredient '{name}' added to grocery list.")
+            except Error as e:
+                print(e)
+                print("Failed to add ingredient to grocery list.")
             finally:
                 self.closeConnection()
                 
-    def deletestockFromGroceryList(self, grocerylist_id=None, stock_id=None):
+    # Delete an item from the grocery list either by ID or name
+    def deleteIngredientFromGroceryList(self, grocerylist_id=None, name=None):
         if not self.conn or not self.cursor:
             self.connectDatabase()
 
         if self.conn and self.cursor:
             try:
                 if grocerylist_id is not None:
-                    # Delete by grocerylist_id
                     self.cursor.execute("DELETE FROM grocerylist WHERE grocerylist_id = %s", (grocerylist_id,))
-                elif stock_id is not None:
-                    # Delete all entries for a specific stock_id
-                    self.cursor.execute("DELETE FROM grocerylist WHERE stock_id = %s", (stock_id,))
+                elif name is not None:
+                    self.cursor.execute("DELETE FROM grocerylist WHERE name = %s", (name,))
                 else:
                     print("No valid identifier provided for deletion.")
                     return
 
                 self.conn.commit()
                 if self.cursor.rowcount > 0:
-                    print(f"Grocery list item{'s' if stock_id else ''} {'with ID ' + str(grocerylist_id) if grocerylist_id else 'for stock ID ' + str(stock_id)} deleted successfully.")
+                    print(f"Grocery list item {'with ID ' + str(grocerylist_id) if grocerylist_id else 'named ' + name} deleted successfully.")
                 else:
                     print("Item not found or already deleted from grocery list.")
             except Error as e:
                 print(e)
-                print("Failed to delete stock from grocery list.")
+                print("Failed to delete ingredient from grocery list.")
             finally:
-                self.closeConnection()       
+                self.closeConnection()              
 
-    def getGroceryListstockNames(self):
+    # Retrieve all ingredient names currently on the grocery list
+    def getGroceryListIngredientNames(self):
         if not self.conn or not self.cursor:
             self.connectDatabase()
 
-        stock_names = []
+        ingredient_names = []
         if self.conn and self.cursor:
             try:
-                query = """
-                SELECT i.name 
-                FROM stocks i
-                JOIN grocerylist g ON i.stock_id = g.stock_id
-                ORDER BY i.name;
-                """
+                query = "SELECT name FROM grocerylist ORDER BY name;"
                 self.cursor.execute(query)
                 rows = self.cursor.fetchall()
                 for row in rows:
-                    stock_names.append(row[0])
+                    ingredient_names.append(row[0])
                 
-                if stock_names:
-                    print("stocks on the Grocery List:")
-                    for name in stock_names:
+                if ingredient_names:
+                    print("Ingredients on the Grocery List:")
+                    for name in ingredient_names:
                         print(name)
                 else:
                     print("The grocery list is currently empty.")
                 
             except Error as e:
                 print(e)
-                print("Failed to retrieve stock names from the grocery list.")
+                print("Failed to retrieve ingredient names from the grocery list.")
             finally:
                 self.closeConnection()
-        return stock_names
+        return ingredient_names
