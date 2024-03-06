@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS stock (
     source_url VARCHAR(255) -- URL da fonte original do nutri_score do ingrediente 
 );
 
-CREATE TABLE IF NOT EXISTS grocerylists (
+CREATE TABLE IF NOT EXISTS grocerylist (
     grocerylist_id INT AUTO_INCREMENT PRIMARY KEY,
     stock_id INT,
     quantity DECIMAL(10, 2),

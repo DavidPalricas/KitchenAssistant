@@ -113,7 +113,7 @@ class ManagePantryDB:
                     return
                 
                 # If the stock exists, add it to the grocery list
-                self.cursor.execute("INSERT INTO grocerylists (stock_id, quantity, unit) VALUES (%s, %s, %s)",
+                self.cursor.execute("INSERT INTO grocerylist (stock_id, quantity, unit) VALUES (%s, %s, %s)",
                                     (stock_id, quantity, unit))
                 self.conn.commit()
                 print(f"stock with ID {stock_id} added to grocery list.")
@@ -131,10 +131,10 @@ class ManagePantryDB:
             try:
                 if grocerylist_id is not None:
                     # Delete by grocerylist_id
-                    self.cursor.execute("DELETE FROM grocerylists WHERE grocerylist_id = %s", (grocerylist_id,))
+                    self.cursor.execute("DELETE FROM grocerylist WHERE grocerylist_id = %s", (grocerylist_id,))
                 elif stock_id is not None:
                     # Delete all entries for a specific stock_id
-                    self.cursor.execute("DELETE FROM grocerylists WHERE stock_id = %s", (stock_id,))
+                    self.cursor.execute("DELETE FROM grocerylist WHERE stock_id = %s", (stock_id,))
                 else:
                     print("No valid identifier provided for deletion.")
                     return
@@ -160,7 +160,7 @@ class ManagePantryDB:
                 query = """
                 SELECT i.name 
                 FROM stocks i
-                JOIN grocerylists g ON i.stock_id = g.stock_id
+                JOIN grocerylist g ON i.stock_id = g.stock_id
                 ORDER BY i.name;
                 """
                 self.cursor.execute(query)
