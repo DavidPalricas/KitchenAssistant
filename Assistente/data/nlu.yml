@@ -85,7 +85,6 @@ nlu:
 - intent: ask_specific_recipe
   examples: |
     - Quero uma receita de [bacalhau](receita)
-    - Da-me uma receita de [lasanha](receita)
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
     - Quero fazer receita de [bolo](receita)
@@ -109,11 +108,9 @@ nlu:
 # Ask for a RANDOM RECIPE
 - intent: ask_random_recipe
   examples: |
-    - Da-me uma receita
     - Gostaria de uma sugestão de receita
     - Podes-me fazer uma sugestão de receita
     - Podes-me sugerir uma receita
-    - Quero uma receita
     - Quero uma sugestão de receita
     - Quero uma sugestão
     - Sugere-me uma receita
