@@ -1,4 +1,12 @@
-import cv2
+#   Instalar módulos
+#       pip install opencv-python
+#       - PETRES: python -m pip install opencv-python
+#       pip install pyzbar
+#       - PETERS: conda install pyzbar
+
+
+
+from cv2 import cv2
 from pyzbar.pyzbar import decode
 
 
