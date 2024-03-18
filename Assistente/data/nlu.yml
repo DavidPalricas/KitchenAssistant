@@ -1,10 +1,12 @@
 version: "3.1"
 
 nlu:
-- regex: receita
+- regex: receita # regex to extract the recipe name
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*)
-
+- regex: unidade # regex to extract the unit of the ingredient
+  examples: |
+    - [0-9]+
 # ---------------------------------------------------------------------------------------------- [RECIPE]
 
 # Ask for all recipes
@@ -178,10 +180,77 @@ nlu:
 
 
 # ---------------------------------------------------------------------------------------------- [PANTRY]
-- lookup: quantidade
+# lookup table for the entity "unidade"
+- lookup: unidade
   examples: |
-    - '[0-9]+'
-
+    - litro
+    - litros
+    - mililitro
+    - mililitros
+    - grama
+    - gramas
+    - quilograma
+    - quilogramas
+    - unidade
+    - unidades
+    - pacote
+    - pacotes
+    - caixa
+    - caixas
+    - lata
+    - latas
+    - fatia
+    - fatias
+    - colher de sopa
+    - colheres de sopa
+    - colher de chá
+    - colheres de chá
+    - xícara
+    - xícaras
+    - copo
+    - copos
+    - taça
+    - taças
+    - garrafa
+    - garrafas
+    - saco
+    - sacos
+    - embalagem
+    - embalagens
+    - dose
+    - doses
+    - folha
+    - folhas
+    - ramo
+    - ramos
+    - pote
+    - potes
+    - pedaço
+    - pedaços
+    - tablete
+    - tabletes
+    - porção
+    - porções
+    - pacote
+    - pacotes
+    - garrafa
+    - garrafas
+    - cápsula
+    - cápsulas
+    - saqueta
+    - saquetas
+    - stick
+    - sticks
+    - tigela
+    - tigelas
+    - litro
+    - litros
+    - metro
+    - metros
+    - centímetro
+    - centímetros
+    - milímetro
+    - milímetros
 
 # Ask for ingredients on the pantry
 - intent: ask_pantry
