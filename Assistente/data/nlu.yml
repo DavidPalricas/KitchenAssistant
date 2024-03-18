@@ -269,14 +269,14 @@ nlu:
     - mm
 
 # regex to extract the unit of the ingredient    
-#- regex: quantidade 
-#  examples: |
-#    - [0-9]+
+- regex: quantidade 
+  examples: |
+    - [0-9]+
 
 # regex to extract the ingredient name
-#- regex: ingrediente 
-#  examples: |
-#    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
+- regex: ingrediente 
+  examples: |
+    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
 #    - ((?:\b\w+\b\s?)+)(?=\sà\sdespensa)
 
 # Ask for ingredients on the pantry
@@ -307,12 +307,12 @@ nlu:
     - Adiciona [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) à despensa
     - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à despensa
     - Adiciona [1](quantidade) [alface](ingrediente) à despensa
-- regex: quantidade
-  examples: |
-    - [0-9]+
-- regex: ingrediente
-  examples: |
-    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
+#- regex: quantidade
+#  examples: |
+#    - [0-9]+
+#- regex: ingrediente
+#  examples: |
+#    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
 
 # Remove ingredients from the pantry
 - intent: remove_pantry
