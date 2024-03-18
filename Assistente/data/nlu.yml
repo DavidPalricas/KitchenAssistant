@@ -178,6 +178,10 @@ nlu:
 
 
 # ---------------------------------------------------------------------------------------------- [PANTRY]
+- lookup: quantidade
+  examples: |
+    - '[0-9]+'
+
 
 # Ask for ingredients on the pantry
 - intent: ask_pantry
