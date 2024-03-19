@@ -339,6 +339,11 @@
         <div id="table-container">
 
         </div>
+
+        <div id="webcam-container">
+          <video id="webcam" width="640" height="480" autoplay ></video>
+          <canvas id="canvas" style="display:none;"></canvas>
+        
       </div>
 
       <!--ChatBox-->
@@ -555,6 +560,31 @@
       "recipe_img": ,
       "recipe_name": 
       }*/
+      async function getProduct_scanner(){
+            console.log("GET PRODUCT SCANNER");
+            const response = await fetch('http://127.0.0.1:5000/scanner');
+            const data = await response.json();
+            console.log("DATA INSIDE GET FUNCTION: ", data);
+            return data;
+      }
+
+      function takeSnapshot(){
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.error('Error accessing the webcam: ', err);
+            });
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      }
       async function getRandRecipe() {
           const response = await fetch('http://127.0.0.1:5000/recipe/random');
           const data = await response.json();
@@ -922,6 +952,12 @@
                       sendToVoice("Segue a lista de comandos aceites para interagir comigo!");
                       openHelpBox();
                   break;
+                  case "add_pantry_barcode":
+                        console.log("ADD PANTRY BARCODE");
+                        takeSnapshot();
+                        let barcode = await getProduct_scanner();
+                        sendToVoice("O produto com o código de barras " + barcode + " foi adicionado à despensa");
+                        break;
                   case "ask_all_recipes":
                   break;
                   case "ask_for_tools":

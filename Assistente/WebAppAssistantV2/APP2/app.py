@@ -2,9 +2,14 @@ from flask import Flask, render_template,request, jsonify
 import recipedb_queries as db
 import convert_numbers_to_digit as convert
 from flask_cors import CORS
+import cv2
+import asyncio
+from pyzbar.pyzbar import decode
+
 
 app = Flask(__name__)
 CORS(app)
+
 
 # CODE TO WORK WITH RASA DIRECTLY
 # RASA_API = "http://localhost:5005/webhooks/rest/webhook" # Url da API do Rasa
@@ -32,6 +37,37 @@ CORS(app)
 
 # if __name__ == "__main__":
 #     app.run(debug=True) # Para mostrar os erros no browser
+
+async def scan_barcode():
+    global product_scanned, product_barcode
+    capture_webcam = cv2.VideoCapture(0)
+    while not product_scanned:
+        print("Scanning...")
+        success, frame = capture_webcam.read()
+        barcode = decode(frame)
+
+        frame = cv2.flip(frame, 1)  #Invertendo a imagem como espelho
+        if barcode:
+            for codes in barcode:
+                if codes.data:
+                    product_barcode = codes.data.decode('utf-8')
+                    cv2.putText(frame,f"{product_barcode} Adicionado a dispensa", (0, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0), 2) #Escrevendo o código de barras na tela
+                    product_scanned = True
+                    break
+    capture_webcam.release()
+
+
+@app.route('/scanner', methods=['GET'])
+async def get_product_barcode():
+    global product_scanned, product_barcode
+    product_scanned = False
+    product_barcode = ""
+    asyncio.create_task(scan_barcode())  # Inicia a função de escaneamento em uma tarefa assíncrona
+    while not product_scanned:
+        await asyncio.sleep(0.1)  # Espera um curto período para permitir que outras tarefas sejam executadas
+    return jsonify({"product_barcode": product_barcode})
+
+    
 
 
 # ----------------------------------------------------------------------------------------- ENDPOINT TO FETCH ALL RECIPES
