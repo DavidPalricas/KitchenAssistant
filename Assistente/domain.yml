@@ -16,6 +16,9 @@ entities:
 - avanca
 - receita
 - numeropessoas
+- quantidade
+- ingrediente
+- unidade
 
 slots:
   recipe_id:

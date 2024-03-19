@@ -1,12 +1,11 @@
 version: "3.1"
 
 nlu:
-- regex: receita # regex to extract the recipe name
-  examples: |
-    - (?<=de\s)(\S+(?:\s+\S+)*)
-- regex: unidade # regex to extract the unit of the ingredient
-  examples: |
-    - [0-9]+
+#- regex: receita # regex to extract the recipe name
+#  examples: |
+#    - (?<=de\s)(\S+(?:\s+\S+)*)
+
+
 # ---------------------------------------------------------------------------------------------- [RECIPE]
 
 # Ask for all recipes
@@ -91,6 +90,9 @@ nlu:
     - Quero fazer receita de [pasta](receita)
     - Quero fazer receita de [bolo](receita)
     - Mostra-me uma receita de [peixe](receita)
+- regex: receita
+  examples: |
+    - (?<=de\s)(\S+(?:\s+\S+)*)
 
 # Ask for help
 - intent: ask_help
@@ -185,12 +187,25 @@ nlu:
   examples: |
     - litro
     - litros
+    - l
     - mililitro
     - mililitros
+    - ml
+    - centilitro
+    - centilitros
+    - cl
+    - decilitro
+    - decilitros
+    - dl
     - grama
     - gramas
+    - g
     - quilograma
     - quilogramas
+    - kg
+    - miligrama
+    - miligramas
+    - mg
     - unidade
     - unidades
     - pacote
@@ -243,14 +258,26 @@ nlu:
     - sticks
     - tigela
     - tigelas
-    - litro
-    - litros
     - metro
     - metros
+    - m
     - centímetro
     - centímetros
+    - cm
     - milímetro
     - milímetros
+    - mm
+
+# regex to extract the unit of the ingredient    
+- regex: quantidade 
+  examples: |
+    - [0-9]+
+
+# regex to extract the ingredient name
+- regex: ingrediente 
+  examples: |
+    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
+#    - ((?:\b\w+\b\s?)+)(?=\sà\sdespensa)
 
 # Ask for ingredients on the pantry
 - intent: ask_pantry
@@ -280,6 +307,12 @@ nlu:
     - Adiciona [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) à despensa
     - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à despensa
     - Adiciona [1](quantidade) [alface](ingrediente) à despensa
+#- regex: quantidade
+#  examples: |
+#    - [0-9]+
+#- regex: ingrediente
+#  examples: |
+#    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
 
 
 #Add ingredients to the pantry by scanning the barcode
