@@ -238,6 +238,19 @@
       #help-button:hover .fa-message{
         color: burlywood !important;
       }
+        #video-container {
+        margin: auto;
+        width: 50%;
+    }
+
+    #webcam {
+        transform: scaleX(-1); /* Espelha a imagem horizontalmente */
+    }
+
+    #scanner-text {
+        text-align: center;
+        color:green;
+    }
       
     </style>
 
@@ -339,6 +352,12 @@
         <div id="table-container">
 
         </div>
+
+        <div id="webcam-container">
+          <video id="webcam" width="640" height="480" autoplay ></video>
+          <canvas id="canvas" style="display:none;"></canvas>
+          <h2 id="scanner-text"></h2>
+        
       </div>
 
       <!--ChatBox-->
@@ -603,12 +622,76 @@
       "recipe_img": ,
       "recipe_name": 
       }*/
-      async function getRandRecipe() {
-          const response = await fetch('http://127.0.0.1:5000/recipe/random');
-          const data = await response.json();
-          console.log("DATA INSIDE GET FUNCTION: ", data);
-          return data;
-      }
+      async function getProduct_scanner(frame) {
+        // Remove o prefixo de dados da string base64
+        const frameData = frame.replace(/^data:image\/\w+;base64,/, "");
+
+        const response = await fetch("http://127.0.0.1:5000/scanner", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ frameData })
+        });
+        const data = await response.json();
+        console.log("DATA INSIDE GET FUNCTION: ", data);
+        return data;
+}
+
+
+    async function takeSnapshot() {
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+        const scanner_text = document.getElementById('scanner-text');
+        const context = canvas.getContext('2d');
+
+        let stream;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        } catch (err) {
+            console.error('Error accessing the webcam: ', err);
+            return;
+        }
+
+        return new Promise((resolve, reject) => {
+            video.onloadedmetadata = async function() {
+                while (true) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    const frame = canvas.toDataURL("image/jpeg", 0.8); //O 0.8 é a qualidade da imagem e foi usado o formato jpeg para reduzir o tamanho da imagem
+
+                    let barcode;
+                    try {
+                        barcode = await getProduct_scanner(frame);
+                        scanner_text.innerHTML = "Lendo o côdigo de barras do produto... " 
+                    } catch (err) {
+                        console.error('Error getting product scanner: ', err);
+                        reject(err);
+                        return;
+                    }
+
+                    if (barcode) {
+                        sendToVoice("O produto com o código de barras " + barcode + " foi adicionado à despensa");
+                        resolve(barcode);
+                        return;
+                    }
+
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Delay
+                }
+            };
+        }).finally(() => {
+            if (stream) {
+                stream.getTracks()[0].stop(); //Para o video
+                video.parentElement.removeChild(video); //Remove o video da página html
+                scanner_text.parentElement.removeChild(scanner_text); //Remove o texto da página html
+
+            }
+        });
+}
+
 
       /* FUNCTION : GET ALL RECIPES
       RETURN: 
@@ -970,6 +1053,11 @@
                       sendToVoice("Segue a lista de comandos aceites para interagir comigo!");
                       openHelpBox();
                   break;
+                  case "add_pantry_barcode":
+                        console.log("ADD PANTRY BARCODE");
+                        await takeSnapshot();
+                        console.log("BARCODE: ", barcode);
+                        break;
                   case "ask_all_recipes":
                       console.log("ASK ALL RECIPES -----------------------------");
                       //closeChatBox(); // -------------------------------------------------------- Close the chat box

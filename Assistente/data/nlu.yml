@@ -314,6 +314,16 @@ nlu:
 #  examples: |
 #    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
 
+
+#Add ingredients to the pantry by scanning the barcode
+- intent: add_pantry_barcode
+  examples: |
+    - Lê o código de barras e adiciona à despensa
+    - Lê o código de barras deste produto
+    - Passe este produto
+    - Adiciona este produto à despensa
+   
+
 # Remove ingredients from the pantry
 - intent: remove_pantry
   examples: |

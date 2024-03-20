@@ -552,6 +552,14 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
+            case "add_pantry_barcode":
+                var message = {'intent':'add_pantry_barcode', 'audioReconized': final_transcript }
+                var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+                var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+                mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                      doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                      setValue(JSON.stringify(result))));
+                break;
             case "remove_pantry": // ----------------------------------------------------------------------------- [ REMOVE_PANTRY] - FOR REVISING
               var message = {'intent':'remove_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["unidade"], 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
@@ -592,6 +600,7 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
+            
             case "default":
               break;
           }
