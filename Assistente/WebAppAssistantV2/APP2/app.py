@@ -5,6 +5,8 @@ from flask_cors import CORS
 import cv2
 import asyncio
 from pyzbar.pyzbar import decode
+import numpy as np
+import base64
 
 
 app = Flask(__name__)
@@ -38,34 +40,34 @@ CORS(app)
 # if __name__ == "__main__":
 #     app.run(debug=True) # Para mostrar os erros no browser
 
-async def scan_barcode():
-    global product_scanned, product_barcode
-    capture_webcam = cv2.VideoCapture(0)
-    while not product_scanned:
-        print("Scanning...")
-        success, frame = capture_webcam.read()
-        barcode = decode(frame)
 
-        frame = cv2.flip(frame, 1)  #Invertendo a imagem como espelho
+
+
+@app.route('/scanner', methods=['POST'])
+def get_product_barcode():
+    frame = request.json.get('frameData')
+    product_barcode = None
+
+    # Decodifique a string base64 para bytes
+    frame_bytes = base64.b64decode(frame)
+
+    # Converta os bytes em um array numpy
+    frame_array = np.fromstring(frame_bytes, np.uint8)
+
+    # Decodifique o array numpy usando cv2.imdecode()
+    frame_image = cv2.imdecode(frame_array, cv2.IMREAD_COLOR)
+
+    if frame_image is not None:
+        barcode = decode(frame_image)
+
         if barcode:
             for codes in barcode:
                 if codes.data:
                     product_barcode = codes.data.decode('utf-8')
-                    cv2.putText(frame,f"{product_barcode} Adicionado a dispensa", (0, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0), 2) #Escrevendo o código de barras na tela
-                    product_scanned = True
                     break
-    capture_webcam.release()
 
-
-@app.route('/scanner', methods=['GET'])
-async def get_product_barcode():
-    global product_scanned, product_barcode
-    product_scanned = False
-    product_barcode = ""
-    asyncio.create_task(scan_barcode())  # Inicia a função de escaneamento em uma tarefa assíncrona
-    while not product_scanned:
-        await asyncio.sleep(0.1)  # Espera um curto período para permitir que outras tarefas sejam executadas
-    return jsonify({"product_barcode": product_barcode})
+    return jsonify(product_barcode)
+    
 
     
 
