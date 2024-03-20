@@ -408,6 +408,7 @@
           var recipe ;
           obj.text = final_transcript;
           console.log("FINAL TRANSCRIPT: "+final_transcript);
+
           $.post( "http://localhost:5005/model/parse", JSON.stringify(obj), function( data ) {
           console.log(data);
           //console.log("INTENT: "+data.intent.name);
@@ -511,6 +512,7 @@
                     setValue(JSON.stringify(result))));
               break;
             case "ask_all_recipes": // --------------------------------------------------------------------------- [ ASK_ALL_RECIPES] - FOR REVISING
+              console.log("ENTROU NO ASK_ALL_RECIPES");
               var message = {'intent':'ask_all_recipes', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
@@ -543,7 +545,7 @@
                     setValue(JSON.stringify(result))));
               break;
             case "add_pantry": // -------------------------------------------------------------------------------- [ ADD_PANTRY] - FOR REVISING
-              var message = {'intent':'add_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["unidade"], 'audioReconized': final_transcript }
+              var message = {'intent':'add_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["ingredient"], 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
               mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").

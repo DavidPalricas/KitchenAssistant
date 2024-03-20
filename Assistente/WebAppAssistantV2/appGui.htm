@@ -433,7 +433,6 @@
           document.getElementById("table-container").innerHTML = "";
         }
         
-
       function addRecipeName(recipe_name) {
       let container = document.getElementById("title");
       // Verifica se já existe um elemento h2 dentro do contêiner
@@ -547,6 +546,55 @@
       table.appendChild(tbody);
       container.appendChild(table);
       }
+
+      function addRecipesTable(recipes) {
+        let container = document.getElementById("table-container");
+        // Verifica e remove a tabela existente de receitas
+        let existingTable = container.querySelector("#recipes-table");
+        if (existingTable) {
+            container.removeChild(existingTable);
+        }
+    
+        // Cria a nova tabela de receitas
+        let table = document.createElement("table");
+        table.id = "recipes-table"; // Adiciona um ID único
+        let thead = document.createElement("thead");
+        let tbody = document.createElement("tbody");
+        let rowHead = document.createElement("tr");
+    
+        // Define os títulos das colunas
+        let headers = ["Receita", "Serviços", "Tempo de Preparação"];
+        headers.forEach(headerText => {
+            let header = document.createElement("th");
+            header.textContent = headerText;
+            rowHead.appendChild(header);
+        });
+    
+        thead.appendChild(rowHead);
+        table.appendChild(thead);
+    
+        // Adiciona os dados das receitas no corpo da tabela
+        recipes.forEach(recipe => {
+            let row = document.createElement("tr");
+            
+            let nameCell = document.createElement("td");
+            nameCell.textContent = recipe.recipe_name;
+            row.appendChild(nameCell);
+            
+            let servingsCell = document.createElement("td");
+            servingsCell.textContent = recipe.recipe_servings;
+            row.appendChild(servingsCell);
+            
+            let timeCell = document.createElement("td");
+            timeCell.textContent = recipe.recipe_time + ' min';
+            row.appendChild(timeCell);
+            
+            tbody.appendChild(row);
+        });
+    
+        table.appendChild(tbody);
+        container.appendChild(table);
+    }
 
       /* FUNCTION : GET RANDOM RECIPE
       RETURN: 
@@ -764,7 +812,7 @@
       if(data != null && data!="RENEW" && data!="OK") {
           console.log(data);
           var content = $(data).find("emma\\:interpretation").first().text().trim();
-          //console.log("CONTENTE ------> "+content);
+          console.log("CONTENTE ------> "+content);
           if (typeof content == 'string') {
           try {
               // Try to parse XML
@@ -923,6 +971,17 @@
                       openHelpBox();
                   break;
                   case "ask_all_recipes":
+                      console.log("ASK ALL RECIPES -----------------------------");
+                      //closeChatBox(); // -------------------------------------------------------- Close the chat box
+                      //let recipes = await getAllRecipes(); // ---------------------------------------- Get all the recipes
+                      //printRecipes("RECEITAS ", recipes); // --------------------------------------------------- Print the recipes
+                      //addRecipesTable(recipes); // ----------------------------------------------- Add the recipes to the page as <table> id = recipes-table
+                      //sendToVoice("Segue a lista de todas as receitas disponíveis!"); // --------- SEND THE VOICE TO THE USER
+                      //voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
+                      //openChatBox(); // ---------------------------------------------------------- Open the chat box
+                      //clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
+                      //addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                      //addMsgToChat('Assistente','Escolha uma receita para começar a preparação'); // - Add the Assistent message to the chat
                   break;
                   case "ask_for_tools":
                   break;
