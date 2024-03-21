@@ -695,7 +695,19 @@
         }
 
 
+        // como comunicar inversamente com o APPGUI
+        var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
+        var mmiCli_Out1 = null;
+        mmiCli_Out1 = new MMIClientSocket(mmiCli_Out_add + "SPEECHINCONTROL");
+        mmiCli_Out1.onMessage.on(im1MessageHandler1);
+        mmiCli_Out1.onOpen.on(socketOpenHandler);
+        mmiCli_Out1.openSocket();
 
+        
+
+        function im1MessageHandler1(data){
+            console.log("--------------im1MessageHandlerbbb1---------------");
+        }
     </script>
 
 

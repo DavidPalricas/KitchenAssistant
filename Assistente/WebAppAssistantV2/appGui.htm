@@ -1194,12 +1194,17 @@
       let speak = `<speak version="1.1" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/TR/speech-synthesis11/synthesis.xsd" xml:lang="pt-PT"><p>${texto}</p></speak>`;
 
       var result = speak;
-          mmiCli_1.sendToIM(new LifeCycleEvent("APPSPEECH", "IM", "text-1", "ctx-1").
-              doStartRequest(new EMMA("text-", "text", "command", 1, 0).
-              setValue(JSON.stringify(result))));
+      mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/APPSPEECH");
       }
             
 
+      // code to send a message to the IM ------------------------------------------------
+      mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/SPEECHCONTROL");
+
+
+      mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHCONTROL", "IM", "text-1", "ctx-1").
+              doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+              setValue(JSON.stringify({text: "Olá, posso ajudar?"}))));
     </script>
   </body>
 </html>
