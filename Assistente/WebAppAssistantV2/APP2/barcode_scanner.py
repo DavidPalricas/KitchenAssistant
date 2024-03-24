@@ -3,6 +3,7 @@ from pyzbar.pyzbar import decode
 import numpy as np
 import base64
 
+
 def barcode_scanner(frame):
     product_barcode = None
 
@@ -18,9 +19,12 @@ def barcode_scanner(frame):
     if frame_image is not None:
         barcode = decode(frame_image)
 
+        print(f"Código de barras do produto: {barcode}")
+
         if barcode:
             for codes in barcode:
                 if codes.data:
                     product_barcode = codes.data.decode('utf-8')
                     break
+           
     return product_barcode

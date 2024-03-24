@@ -640,6 +640,7 @@
 
 
     async function takeSnapshot() {
+        let product_info;
         const video = document.getElementById('webcam');
         const canvas = document.getElementById('canvas');
         const scanner_text = document.getElementById('scanner-text');
@@ -661,11 +662,11 @@
                     canvas.height = video.videoHeight;
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                    const frame = canvas.toDataURL("image/jpeg", 0.8); //O 0.8 é a qualidade da imagem e foi usado o formato jpeg para reduzir o tamanho da imagem
+                    const frame = canvas.toDataURL("image/jpeg", 1); //O 0.8 é a qualidade da imagem e foi usado o formato jpeg para reduzir o tamanho da imagem
 
-                    let barcode;
+          
                     try {
-                        barcode = await getProduct_scanner(frame);
+                        product_info= await getProduct_scanner(frame);
                         scanner_text.innerHTML = "Lendo o côdigo de barras do produto... " 
                     } catch (err) {
                         console.error('Error getting product scanner: ', err);
@@ -673,9 +674,9 @@
                         return;
                     }
 
-                    if (barcode) {
-                        sendToVoice("O produto com o código de barras " + barcode + " foi adicionado à despensa");
-                        resolve(barcode);
+                    if (product_info) {
+                        sendToVoice("O produto" + product_info[0]+" com a quantidade " + product_info[1]+ " à despensa");
+                        resolve(product_info);
                         return;
                     }
 
@@ -686,7 +687,9 @@
             if (stream) {
                 stream.getTracks()[0].stop(); //Para o video
                 video.parentElement.removeChild(video); //Remove o video da página html
-                scanner_text.parentElement.removeChild(scanner_text); //Remove o texto da página html
+                scanner_text.innerHTML = "O produto " + product_info[0]+" com a quantidade " + product_info[1]+ 
+                                       " foi adicionado à despensa";
+           
 
             }
         });

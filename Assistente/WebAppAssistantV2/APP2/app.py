@@ -3,6 +3,7 @@ import recipedb_queries as db
 import convert_numbers_to_digit as convert
 from flask_cors import CORS
 import barcode_scanner as bs
+import API_OpenFoodFacts as api_op
 
 
 
@@ -45,11 +46,14 @@ def get_product_barcode():
     frame = request.json.get('frameData')
 
     product_barcode = bs.barcode_scanner(frame)
-   
-    return jsonify(product_barcode)
-    
 
-    
+    if product_barcode:
+        prodcut_name,product_quantity = api_op.get_product_name(product_barcode)
+        return jsonify(prodcut_name,product_quantity)
+    else:
+        return jsonify(None)
+
+   
 
 
 # ----------------------------------------------------------------------------------------- ENDPOINT TO FETCH ALL RECIPES
