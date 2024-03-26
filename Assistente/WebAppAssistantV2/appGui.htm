@@ -238,7 +238,7 @@
       #help-button:hover .fa-message{
         color: burlywood !important;
       }
-        #video-container {
+        #webcam-container {
         margin: auto;
         width: 50%;
     }
@@ -354,7 +354,6 @@
         </div>
 
         <div id="webcam-container">
-          <video id="webcam" width="640" height="480" autoplay ></video>
           <canvas id="canvas" style="display:none;"></canvas>
           <h2 id="scanner-text"></h2>
         
@@ -641,10 +640,20 @@
 
     async function takeSnapshot() {
         let product_info;
-        const video = document.getElementById('webcam');
-        const canvas = document.getElementById('canvas');
-        const scanner_text = document.getElementById('scanner-text');
-        const context = canvas.getContext('2d');
+        const webcam_container = document.getElementById("webcam-container");
+        // Criar um elemento de vídeo (webcam)
+        const video = document.createElement("video");
+
+        //Configuração do video
+        video.id = "webcam";
+        video.width = 640;
+        video.height = 480;
+        video.autoplay = true;
+        webcam_container.appendChild(video); //Adiciona o video ao container
+
+        const canvas = document.getElementById("canvas");
+        const scanner_text = document.getElementById("scanner-text");
+        const context = canvas.getContext("2d");
 
         let stream;
         try {
@@ -675,7 +684,10 @@
                     }
 
                     if (product_info) {
-                        sendToVoice("O produto" + product_info[0]+" com a quantidade " + product_info[1]+ " à despensa");
+                        const answer = "O produto " + product_info[0]+" com a quantidade " + product_info[1]+ " à despensa";
+                        sendToVoice(answer);
+                        openChatBox();
+                        addMsgToChat("Assistente", answer);
                         resolve(product_info);
                         return;
                     }

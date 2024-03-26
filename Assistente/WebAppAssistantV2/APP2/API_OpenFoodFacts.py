@@ -3,7 +3,7 @@ import requests
 def get_product_name(barcode):
     product_name = None
     product_quantity = None
-    base_url = "https://world.openfoodfacts.org/api/v0/product/"
+    base_url = "https://pt.openfoodfacts.org/api/v0/product/" # URL base da API de Portugal
     url = f"{base_url}{barcode}.json"
     
     try:
