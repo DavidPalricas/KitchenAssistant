@@ -48,8 +48,8 @@ def get_product_barcode():
     product_barcode = bs.barcode_scanner(frame)
 
     if product_barcode:
-        prodcut_name,product_quantity = api_op.get_product_name(product_barcode)
-        return jsonify(prodcut_name,product_quantity)
+        prodcut_name,product_quantity,product_img_url= api_op.get_product_name(product_barcode)
+        return jsonify(prodcut_name,product_quantity,product_img_url)
     else:
         return jsonify(None)
 

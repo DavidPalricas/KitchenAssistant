@@ -247,10 +247,32 @@
         transform: scaleX(-1); /* Espelha a imagem horizontalmente */
     }
 
+ @keyframes scanner {
+  0% { background-position: -100% 0; } 
+  100% { background-position: 200% 0; }
+
+}
+
     #scanner-text {
         text-align: center;
-        color:green;
+        font-weight: bold;
+        color: green;
+        background: linear-gradient(90deg, transparent,lime, transparent);
+        background-repeat: no-repeat;
+        background-size: 50% 100%;
+        animation: scanner 2s linear infinite;
     }
+
+    #product-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+       
+    }
+
       
     </style>
 
@@ -355,7 +377,6 @@
 
         <div id="webcam-container">
           <canvas id="canvas" style="display:none;"></canvas>
-          <h2 id="scanner-text"></h2>
         
       </div>
 
@@ -417,7 +438,7 @@
       square.animate().attr({fill:'#ccc'});
       triangle.animate().attr({fill:'#ccc'});
       */
-
+    
       function openHelpBox() {
       $("#help-box").removeClass("d-none");
       }
@@ -652,8 +673,19 @@
         webcam_container.appendChild(video); //Adiciona o video ao container
 
         const canvas = document.getElementById("canvas");
-        const scanner_text = document.getElementById("scanner-text");
+        const scanner_text = document.createElement("h2");
+
+        //Configuração do texto do scanner
+        scanner_text.id = "scanner-text";
+        webcam_container.appendChild(scanner_text);
+
+
         const context = canvas.getContext("2d");
+        
+        const product_card = document.createElement("div");
+
+
+
 
         let stream;
         try {
@@ -675,7 +707,7 @@
 
           
                     try {
-                        product_info= await getProduct_scanner(frame);
+                        product_info= await getProduct_scanner(frame); //[product_name, product_quantity, product_image]
                         scanner_text.innerHTML = "Lendo o côdigo de barras do produto... " 
                     } catch (err) {
                         console.error('Error getting product scanner: ', err);
@@ -688,6 +720,20 @@
                         sendToVoice(answer);
                         openChatBox();
                         addMsgToChat("Assistente", answer);
+                        
+                        
+                        //Configuração do card do produto
+                        product_card.id = "product-card";
+                        webcam_container.appendChild(product_card);
+                        
+                        //Adiciona a imagem do produto e o nome do produto ao card
+                        const product_image = document.createElement("img");
+                        const product_name = document.createElement("h2");
+                        product_card.appendChild(product_image);
+                        product_card.appendChild(product_name);
+
+                        product_image.src = product_info[2]; //Adiciona a imagem do produto ao card
+                        product_name.textContent = product_info[0] + " " + product_info[1]; //Adiciona o nome do produto ao card
                         resolve(product_info);
                         return;
                     }
@@ -699,8 +745,8 @@
             if (stream) {
                 stream.getTracks()[0].stop(); //Para o video
                 video.parentElement.removeChild(video); //Remove o video da página html
-                scanner_text.innerHTML = "O produto " + product_info[0]+" com a quantidade " + product_info[1]+ 
-                                       " foi adicionado à despensa";
+                scanner_text.parentElement.removeChild(scanner_text); //Remove o texto do scanner da página html
+                
            
 
             }
@@ -929,6 +975,14 @@
               if(c.hasOwnProperty("nlu")){
                   console.log("NLU: ", c.nlu);
               //recipe = c.nlu.intent;
+
+              const product_card = document.getElementById("product-card");
+                if (product_card) {
+                    product_card.parentElement.removeChild(product_card); //Remove o card do produto da página html
+                    //Isto deve-se ao facto deste elemento ser criado sempre que é lido um código de barras
+                    //E tem de ser removido depois da leitura do código de barras
+                }
+          
               switch(c.nlu.intent){
                   case "ask_spefific_recipe":
                       closeHelpBox(); // -------------------------------------------------------- Close the help box

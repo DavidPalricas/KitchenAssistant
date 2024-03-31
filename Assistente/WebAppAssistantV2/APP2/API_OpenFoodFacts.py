@@ -14,6 +14,7 @@ def get_product_name(barcode):
             product_info = data["product"]
             product_name = product_info.get("product_name", "Nome do produto não encontrado")
             product_quantity = product_info.get("quantity", "Quantidade do produto não encontrada")
+            produtct_image = product_info.get("image_url", "Imagem do produto não encontrada")
 
             
             print(f"Produto: {product_name}")
@@ -22,7 +23,7 @@ def get_product_name(barcode):
             print("Produto não encontrado na base de dados.")
     except requests.RequestException as e:
         print(f"Erro ao fazer a consulta: {e}")
-    return product_name, product_quantity
+    return product_name, product_quantity, produtct_image
 
 
 
