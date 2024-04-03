@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS stock (
 );
 
 
--- His table will store individual entries of food items,including their quantities and expiration dates. 
+-- This table will store individual entries of food items,including their quantities and expiration dates. 
 -- Each entry is linked to an item in the Stock table but allows for tracking different expiration dates and quantities of the same food item.
 CREATE TABLE IF NOT EXISTS stock_details (
     detail_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,3 +28,9 @@ CREATE TABLE IF NOT EXISTS grocerylist (
     quantity DECIMAL(10, 2),
     unit VARCHAR(50)
 );
+
+
+-- Criar um novo usuário e conceder permissões (opcional)
+-- CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin';
+-- GRANT ALL PRIVILEGES ON pantry_database.* TO 'admin'@'localhost';
+-- FLUSH PRIVILEGES;
