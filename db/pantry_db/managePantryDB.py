@@ -29,7 +29,6 @@ class ManagePantryDB:
     #   - 1 liter (l) of water = 1000 milliliters (ml) = 1000 grams (g)
     #   - 1 milliliter (ml) of water = 1 gram (g)
     #   - 1 kilogram (kg) of water = 1000 grams (g) = 1000 milliliters (ml)
-    #   - 
     #
     conversion_factors = {
         # Volume to Weight (assuming density of water)
@@ -53,7 +52,10 @@ class ManagePantryDB:
         'pacote': {'kg': Decimal('1')},
         'saqueta': {'g': Decimal('5')}
     }
-     
+    
+    # ---------------------------------------------------------------------------------------------- [CONVERT MEASURE]
+    
+    # Convert a quantity from one unit to another using a dictionary of conversion factors 
     def convert_measure(self, quantity, from_unit, to_unit, conversion_factors):
         from_unit = from_unit.lower().strip('s')  # Normalize the from_unit name
         to_unit = to_unit.lower().strip('s')  # Normalize the to_unit name
@@ -81,7 +83,6 @@ class ManagePantryDB:
         else:
             raise ValueError("No valid conversion path found from {} to {}".format(from_unit, to_unit))
 
-    
     # ---------------------------------------------------------------------------------------------- [STOCK List]
 
     # [UNUSED] Insert a new type of stock item into the stock table. 
@@ -218,11 +219,52 @@ class ManagePantryDB:
 
     # ---------------------------------------------------------------------------------------------- [GROCERY List]
     
+    # Insert a new Stock item into grocery_list
+    def insertGrocery(self, name):
+        conn, cursor = self.connectDatabase()
+        if conn is not None and cursor is not None:
+            try:
+                cursor.execute("SELECT stock_id FROM stock WHERE name = %s", (name,))
+                stock_id_result = cursor.fetchone()
+                if stock_id_result:
+                    print(f"Stock item '{name}' exists in the database.")
+                else:
+                    print(f"Stock item '{name}' does not exist in the database, inserting it now.")
+                    cursor.execute("INSERT INTO stock (name) VALUES (%s)", (name,))
+                    conn.commit()
+                    print(f"Stock item '{name}' inserted successfully.")
     
+                # Insert into grocery_list
+                cursor.execute("INSERT INTO grocerylist (name) VALUES (%s)", (name,))
+                conn.commit()
+                print(f"Stock item '{name}' inserted successfully in the GROCERY LIST.")
+            except Error as e:
+                print(e)
+                print(f"Failed to insert stock item '{name}'")
+            finally:
+                cursor.close()
+                conn.close()
+                print("Connection closed.")
+        else:
+            print("Failed to connect to the database.")
     
-    
-    
-    
+    # Remove a Stock item from grocery_list
+    def removeGrocery(self, name):
+        conn, cursor = self.connectDatabase()
+        if conn is not None and cursor is not None:
+            try:
+                cursor.execute("DELETE FROM grocerylist WHERE name = %s", (name,))
+                conn.commit()
+                print(f"Stock item '{name}' removed successfully from the GROCERY LIST.")
+            except Error as e:
+                print(e)
+                print(f"Failed to remove stock item '{name}'")
+            finally:
+                cursor.close()
+                conn.close()
+                print("Connection closed.")
+        else:
+            print("Failed to connect to the database.")
     
 if __name__ == "__main__":
         
@@ -256,6 +298,18 @@ if __name__ == "__main__":
     print("\n")
     # Test removing stock item stock item BIGGER than the stock item in the stock_details
     db_manager.removeStock("Apples", 10000, "g")
+    print("----------------------------------------------")
+    print("\n")
+    # Test inserting a item in the grocery list
+    db_manager.insertGrocery("Oranges")
+    print("----------------------------------------------")
+    print("\n")
+    # Test inserting a item in the grocery list
+    db_manager.insertGrocery("Garlic")
+    print("----------------------------------------------")
+    print("\n")
+    # Test removing a item in the grocery list
+    db_manager.removeGrocery("Oranges")
     print("----------------------------------------------")
     print("\n")
     
