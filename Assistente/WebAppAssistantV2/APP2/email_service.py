@@ -31,18 +31,18 @@ def send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, passwo
     except Exception as e:
         return f"Failed to send email: {e}"
 
-# Example usage
-smtp_server = 'smtp-mail.outlook.com'
-smtp_port = 587
+# # Example usage
+# smtp_server = 'smtp-mail.outlook.com'
+# smtp_port = 587
 
-# Email credentials
-email = 'kitchen_assistant@outlook.com'
-password = 'Start123.'  # Replace with the correct password
+# # Email credentials
+# email = 'kitchen_assistant@outlook.com'
+# password = 'Start123.'  # Replace with the correct password
 
-from_addr = email
-to_addr = 'inesaguia@ua.pt'  # Change to the recipient's email
-subject = 'Test Email from Python'
-body = 'Hello, this is a test email sent from Python using SMTP with Outlook.'
+# from_addr = email
+# to_addr = 'inesaguia@ua.pt'  # Change to the recipient's email
+# subject = 'Test Email from Python'
+# body = 'Hello, this is a test email sent from Python using SMTP with Outlook.'
 
-result = send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, password)
-print(result)
+# result = send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, password)
+# print(result)
