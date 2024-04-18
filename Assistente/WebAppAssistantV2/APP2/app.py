@@ -12,6 +12,8 @@ import email_service as es
 # ----------------------------------------------------------------------------------------- MODULE: API_OpenFoodFacts
 import API_OpenFoodFacts as api_op
 
+
+from decimal import Decimal
 from flask_cors import CORS
  
 
@@ -25,46 +27,23 @@ CORS(app)
 # @app.route("/")
 # def index():
 #     return  render_template("index.html")
-
 # @app.route("/webhook", methods=["POST"])
-
 # def webhook(): 
 #     user_message = request.json["message"]
 #     print(f"Messangem do usuário: {user_message}")
-
 #     response = requests.post(RASA_API, json={"message": user_message})
 #     response = response.json()
 #     print(f"Resposta do Rasa: {response}")
-    
 #     rasa_response = ""
 #     for r in response:
 #         rasa_response += r["text"] + "\n\n\n" #Caso a mensagem tenha mais de uma linha
-
-
 #     return jsonify({"response": rasa_response})
-
-
 # if __name__ == "__main__":
 #     app.run(debug=True) # Para mostrar os erros no browser
 
 
 
-
-@app.route('/scanner', methods=['POST'])
-def get_product_barcode():
-    frame = request.json.get('frameData')
-
-    product_barcode = bs.barcode_scanner(frame)
-
-    if product_barcode:
-        prodcut_name,product_quantity,product_img_url= api_op.get_product_name(product_barcode)
-        return jsonify(prodcut_name,product_quantity,product_img_url)
-    else:
-        return jsonify(None)
-
-   
-
-# ----------------------------------- > [RECIPES DATABASE -> ENDPOINTS]
+# ----------------------------------- > [ RECIPES DATABASE -> ENDPOINTS]
 
 # ----------------------------------------------------------------------------------------- > FETCH ALL RECIPES
 @app.route('/recipes', methods=['GET'])
@@ -183,10 +162,119 @@ def convert_text():
         return jsonify({'error': 'Failed to convert text.'}), 500
 
 
-# ----------------------------------- > [RECIPES PANTRY -> ENDPOINTS]
+
+# ----------------------------------- > [ PANTRY DATABASE -> ENDPOINTS]
+
+# ----------------------------------------------------------------------------------------- > INSERT PRODUCT INTO PANTRY
+@app.route('/pantry/insert-stock', methods=['POST'])
+def insert_stock():    
+    data = request.json
+    name = data.get('name')
+    quantity = data.get('quantity')
+    unit = data.get('unit')
+    expiration_date = data.get('expiration_date')
+    
+    # ensure all required fields are present
+    if not all([name, quantity, unit, expiration_date]):
+        return jsonify({'error': 'Missing required fields.'}), 400
+    
+    try:
+        pdb.insertStock(name, quantity, unit, expiration_date)
+        return jsonify({'message': 'Stock inserted successfully.'}), 201
+    except Exception as e:
+        return jsonify({'error': f'Failed to insert stock: {e}'}), 500
+
+# ----------------------------------------------------------------------------------------- > REMOVE PRODUCT FROM PANTRY
+@app.route('/pantry/remove-stock', methods=['POST'])
+def remove_stock():
+    data = request.json
+    name = data.get('name')
+    quantity = data.get('quantity')
+    unit = data.get('unit')
+    
+    if not all([name, quantity, unit]):
+        return jsonify({'error': 'Missing required field: "name".'}), 400
+    
+    try:
+        if not isinstance(quantity, Decimal):
+            quantity = Decimal(quantity)
+            
+        pdb.removeStock(name, quantity, unit)
+        return jsonify({'message': 'Stock removed successfully.'}), 200
+    except Exception as e:
+        return jsonify({'error': f'Failed to remove stock: {e}'}), 500
+
+# ----------------------------------------------------------------------------------------- > FETCH ALL PRODUCTS IN PANTRY
+@app.route('/pantry/stock', methods=['GET'])
+def get_pantry_stock():
+    pantry_list = pdb.getStockDetails()
+    return jsonify(pantry_list)
 
 
-# ----------------------------------- > [EMAIL -> ENDPOINTS]
+
+# ----------------------------------- > [ SHOPPING LIST DATABASE -> ENDPOINTS]
+
+# ----------------------------------------------------------------------------------------- > ADD PRODUCT INTO GROCERY LIST
+@app.route('/pantry/insert-grocery', methods=['POST'])
+def insert_grocery():
+    data = request.json
+    name = data.get('name')
+    
+    if not name:
+        return jsonify({'error': 'Missing required field: "name".'}), 400
+
+    try:
+        result = pdb.insertGrocery(name)
+        if 'already exists in the GROCERY LIST' in result:
+            return jsonify({'message': result}), 409
+        else:
+            return jsonify({'message': result}), 201
+    except Exception as e:
+        return jsonify({'error': f'Failed to insert grocery item: {str(e)}'}), 500
+
+# ----------------------------------------------------------------------------------------- > REMOVE PRODUCT FROM GROCERY LIST
+@app.route('/pantry/remove-grocery', methods=['DELETE'])
+def remove_grocery():
+    data = request.json
+    name = data.get('name')
+    
+    if not name:
+        return jsonify({'error': 'Missing required field: "name".'}), 400
+
+    try:
+        result = pdb.removeGrocery(name)
+        return jsonify({'message': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+ 
+# ----------------------------------------------------------------------------------------- > FETCH ALL GROCERY LIST
+@app.route('/pantry/shopping-list', methods=['GET'])
+def get_grocery_list():
+    grocery_list = pdb.showAllGrocery()
+    return jsonify(grocery_list)
+
+
+
+# ----------------------------------- > [ BARCODE -> ENDPOINTS]
+
+# ----------------------------------------------------------------------------------------- > GET PRODUCT NAME, QUANTITY AND UNIT FROM BARCODE
+@app.route('/scanner', methods=['POST'])
+def get_product_barcode():
+    frame = request.json.get('frameData')
+
+    product_barcode = bs.barcode_scanner(frame)
+
+    if product_barcode:
+        prodcut_name,product_quantity,product_img_url= api_op.get_product_name(product_barcode)
+        return jsonify(prodcut_name,product_quantity,product_img_url)
+    else:
+        return jsonify(None)
+
+
+   
+# ----------------------------------- > [ EMAIL -> ENDPOINTS]
+
+# ----------------------------------------------------------------------------------------- > SEND EMAIL
 @app.route('/send-email', methods=['POST'])
 def send_email():
     data = request.json  # Get data from POST request
@@ -212,3 +300,5 @@ def send_email():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+    
+    
