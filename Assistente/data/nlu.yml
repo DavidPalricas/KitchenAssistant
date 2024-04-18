@@ -238,6 +238,11 @@ nlu:
     - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ despensa)
 #    - ((?:\b\w+\b\s?)+)(?=\sà\sdespensa)
 
+# regex to extract the expiration date - simplistic way only validating the number of digits
+- regex: data
+  examples: |
+    - \d{2}/\d{2}/\d{4}
+
 # Ask for ingredients on the pantry
 - intent: ask_pantry
   examples: |
@@ -266,6 +271,9 @@ nlu:
     - Adiciona [250](quantidade) [gramas](unidade) de [açúcar](ingrediente) à despensa
     - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à despensa
     - Adiciona [1](quantidade) [alface](ingrediente) à despensa
+    - Comprei [ovos](ingrediente)
+    - Trouxe do supermercado [peitos de frango](ingrediente)
+
 #- regex: quantidade
 #  examples: |
 #    - [0-9]+
@@ -282,7 +290,6 @@ nlu:
     - Passe este produto
     - Adiciona este produto à despensa
    
-
 # Remove ingredients from the pantry
 - intent: remove_pantry
   examples: |
@@ -303,6 +310,31 @@ nlu:
     - Comi [1](quantidade) [cebola](ingrediente)
     - Comi [250](quantidade) [gramas](unidade) de [açúcar](ingrediente)
     - Comi [3](quantidade) [maçãs](ingrediente)
+
+# Remove all ingredients from the pantry
+- intent: remove_all_pantry
+  examples: |
+    - Remove todos os ingredientes da despensa
+    - Limpa a despensa
+    - Usei todos os [ovos](ingrediente)
+    - Gastei todos os [peitos de frango](ingrediente)
+    - Comi todas as [cebolas](ingrediente)
+    - Usei o [açúcar](ingrediente) todo
+    - Usei todo o [leite](ingrediente)
+    - Comi toda a [alface](ingrediente)
+    - Usei as [maçãs](ingrediente) todas
+    - Usei a [alface](ingrediente) toda
+
+# Remove all ingredients from the GROCERY LIST
+- intent: remove_all_shopping_list
+  examples: |
+    - Remove todos os ingredientes da lista de compras
+    - Limpa a lista de compras
+    - Fui ao supermercado e comprei tudo o que faltava
+    - Comprei tudo o que faltava
+    - Comprei tudo o que estava na lista de compras
+    - Comprei tudo o que estava na lista
+    - Comprei tudo o que estava na lista de compras
 
 # add ingredients to the shopping list
 - intent: add_shopping_list
@@ -355,6 +387,25 @@ nlu:
     - Envia a lista de compras para o meu email, por favor
     
 # ---------------------------------------------------------------------------------------------- [COMMON]
+# get quantity of an ingredient
+-intent : get_quantity
+  examples: |
+    - Tenho [3](quantidade) [ovos](ingrediente)
+    - [2](quantidade) [kilos](unidade)
+    - [1](quantidade) [cebola](ingrediente)
+    - [250](quantidade) [gramas](unidade)
+
+# get expiration date of an ingredient
+-intent : get_expiration_date
+  examples: |
+    - a data de validade é [12/12/2022](data)
+    - [12/12/2022](data)
+    - [12/12/2022](data) é a data de validade
+    - a data de validade é [12/12/2022](data)
+    - o fim da validade é [12/12/2022](data)
+    - [12/12/2022](data) é o fim da validade
+    - o prazo de validade é [12/12/2022](data)
+    - [12/12/2022](data) é o prazo de validade
 
 # Greet the assistant
 - intent: greet
