@@ -7,14 +7,14 @@ Este documento descreve os passos necessários para executar os componentes do s
 O FusionEngine é um bloco que permite adicionar diferentes módulos.
 
 ```bash
-cd FusionEngine
+cd KitchenAssistant/Assistente/FusionEngine
 java -jar FusionEngine.jar
 ```
 
 ## Segundo Passo: Correr o IM (Interaction Manager)
 
 ```bash
-cd mmiframeworkV2
+cd KitchenAssistant/Assistente/mmiframeworkV2
 java -jar mmiframeworkV2.jar
 ```
 
@@ -25,8 +25,13 @@ O Rasa usa para dar reconhecer as entidades e intents.
 1. Ativar o ambiente virtual do Rasa:
 
 ```bash
+cd KitchenAssistant/Assistente
 conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
 ```
+    Caso tenham sido feitas alterações no nlu 
+    ```bash
+    rasa train
+    ``` 
 
 2. Correr o Rasa:
 
@@ -37,13 +42,13 @@ rasa run --enable-api --cors="*"
 ## Quarto Passo: client-side 
 
 ```bash
-cd WebAppAssistantV2/APP2
+cd KitchenAssistant/Assistente/WebAppAssistantV2/APP2
 python app.py
 ```
 
 ## Quinto Passo: Correr a APP
 
 ```bash
-cd WebAppAssistantV2
+cd KitchenAssistant/Assistente/WebAppAssistantV2
 http-server -p 8082 -S -C cert.pem -K key.pem
 ```
