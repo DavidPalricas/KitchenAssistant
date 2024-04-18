@@ -212,6 +212,33 @@ def removeStock(name, quantity, unit):
     else:
         print("Failed to connect to the database.")
 
+# Get all stock details
+def getStockDetails():
+    conn,cursor = connectDatabase()
+    if conn is not None:
+        try:
+            query = """
+            SELECT s.name, sd.quantity, sd.unit, sd.expiration_date
+            FROM stock_details sd
+            JOIN stock s ON sd.stock_id = s.stock_id
+            ORDER BY s.name, sd.expiration_date ASC
+            """
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = [
+                f"{row[0]} {float(row[1])} {row[2]}, Data de Validade : {row[3].strftime('%Y/%m/%d')}"
+                for row in rows
+            ]
+            return result
+        except Error as e:
+            print(f"Error fetching stock details: {e}")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        return None
+    
 # ---------------------------------------------------------------------------------------------- [GROCERY List]
 
 # Insert a new Stock item into grocery_list
@@ -223,16 +250,28 @@ def insertGrocery(name):
             stock_id_result = cursor.fetchone()
             if stock_id_result:
                 print(f"Stock item '{name}' exists in the database.")
+                message = f"Stock item '{name}' exists in the database."
             else:
                 print(f"Stock item '{name}' does not exist in the database, inserting it now.")
                 cursor.execute("INSERT INTO stock (name) VALUES (%s)", (name,))
                 conn.commit()
                 print(f"Stock item '{name}' inserted successfully.")
+                message = f"Stock item '{name}' inserted successfully."
 
-            # Insert into grocery_list
-            cursor.execute("INSERT INTO grocerylist (name) VALUES (%s)", (name,))
-            conn.commit()
-            print(f"Stock item '{name}' inserted successfully in the GROCERY LIST.")
+            # Check id the stock item already exists in the grocery list
+            cursor.execute("SELECT name FROM grocerylist WHERE name = %s", (name,))
+            existing_grocery = cursor.fetchone()
+            
+            if existing_grocery:
+                print(f"Stock item '{name}' already exists in the GROCERY LIST.")
+                message = f" Stock item '{name}' already exists in the GROCERY LIST."
+            else:
+                # Insert into grocery_list
+                cursor.execute("INSERT INTO grocerylist (name) VALUES (%s)", (name,))
+                conn.commit()
+                print(f"Stock item '{name}' inserted successfully in the GROCERY LIST.")
+                message = f" Stock item '{name}' inserted successfully in the GROCERY LIST."
+            return message
         except Error as e:
             print(e)
             print(f"Failed to insert stock item '{name}'")
@@ -251,6 +290,8 @@ def removeGrocery(name):
             cursor.execute("DELETE FROM grocerylist WHERE name = %s", (name,))
             conn.commit()
             print(f"Stock item '{name}' removed successfully from the GROCERY LIST.")
+            message = f"Stock item '{name}' removed successfully from the GROCERY LIST."
+            return message
         except Error as e:
             print(e)
             print(f"Failed to remove stock item '{name}'")
@@ -261,27 +302,52 @@ def removeGrocery(name):
     else:
         print("Failed to connect to the database.")
 
+# Get all items in the grocery list
+def showAllGrocery():
+    conn, cursor = connectDatabase()
+    if conn is not None and cursor is not None:
+        try:
+            cursor.execute("SELECT name FROM grocerylist")
+            rows = cursor.fetchall()
+            names = [row[0] for row in rows]
+            return names
+        except Error as e:
+            print(e)
+            print(f"Failed to show grocery list")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+            print("Connection closed.")
+    else:
+        print("Failed to connect to the database.")
+
+
 
 # print("\n")
 # # Test inserting a new stock item and its details
-# insertStock("Apples", 10, "kg", "2024-01-01")
-# print("----------------------------------------------")
-# print("\n")
+#insertStock("Azeite", 1, "l", "2024-01-01")
+#print("----------------------------------------------")
+#print("\n")
 # # Test inserting details for an existing stock item
-# insertStock("Apples", 5, "kg", "2024-05-01")
-# print("----------------------------------------------")
-# print("\n")
+#insertStock("Azeite", 6, "l", "2024-05-01")
+#print("----------------------------------------------")
+#print("\n")
 # # Test inserting details for an existing stock item
-# insertStock("Apples", 15, "kg", "2024-08-01")
-# print("----------------------------------------------")
-# print("\n")
+#insertStock("Apples", 15, "kg", "2024-08-01")
+#print("----------------------------------------------")
+#print("\n")
 # # Test inserting a new stock item that does not exist in the stock table
-# insertStock("Oranges", 20, "kg", "2024-02-01")
-# print("----------------------------------------------")
-# print("\n")
+#insertStock("Oranges", 20, "kg", "2024-02-01")
+#print("----------------------------------------------")
+#print("\n")
 
+# Test showing all stock details
+#print(getStockDetails())
+#print("----------------------------------------------")
+#print("\n")
 # # Test removing stock EQUAL to the stock item in the stock_details 
-# removeStock("Apples", 10000, "g")
+# removeStock("Azeite", 50, "ml")
 # print("----------------------------------------------")
 # print("\n")
 # # Test removing stock item stock item SMALLER than the stock item in the stock_details
@@ -293,17 +359,21 @@ def removeGrocery(name):
 # print("----------------------------------------------")
 # print("\n")
 # # Test inserting a item in the grocery list
-# insertGrocery("Oranges")
-# print("----------------------------------------------")
-# print("\n")
+#insertGrocery("Oranges")
+#print("----------------------------------------------")
+#print("\n")
 # # Test inserting a item in the grocery list
-# insertGrocery("Garlic")
+#insertGrocery("azeite")
+#print("----------------------------------------------")
+#print("\n")
+# # Test showing all items in the grocery list
+# print(showAllGrocery())
 # print("----------------------------------------------")
 # print("\n")
 # # Test removing a item in the grocery list
-# removeGrocery("Oranges")
-# print("----------------------------------------------")
-# print("\n")
+#removeGrocery("azeite")
+#print("----------------------------------------------")
+#print("\n")
 
 # CONVERT_MEASURE : Example usage:
 # inicial_quantity = 1
