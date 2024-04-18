@@ -388,7 +388,7 @@ nlu:
     
 # ---------------------------------------------------------------------------------------------- [COMMON]
 # get quantity of an ingredient
--intent : get_quantity
+- intent : get_quantity_ingredient
   examples: |
     - Tenho [3](quantidade) [ovos](ingrediente)
     - [2](quantidade) [kilos](unidade)
@@ -396,7 +396,7 @@ nlu:
     - [250](quantidade) [gramas](unidade)
 
 # get expiration date of an ingredient
--intent : get_expiration_date
+- intent : get_expiration_date
   examples: |
     - a data de validade é [12/12/2022](data)
     - [12/12/2022](data)

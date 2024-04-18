@@ -428,16 +428,6 @@
           return;
       }
       }
-
-      /* UNUSED CODE
-      let circle = SVG.find('.circle');
-      let square = SVG.find('.square');
-      let triangle = SVG.find('.triangle');
-
-      circle.animate().attr({fill:'#ccc'});
-      square.animate().attr({fill:'#ccc'});
-      triangle.animate().attr({fill:'#ccc'});
-      */
     
       function openHelpBox() {
       $("#help-box").removeClass("d-none");
@@ -658,7 +648,6 @@
         return data;
 }
 
-
     async function takeSnapshot() {
         let product_info;
         const webcam_container = document.getElementById("webcam-container");
@@ -752,7 +741,6 @@
             }
         });
 }
-
 
       /* FUNCTION : GET ALL RECIPES
       RETURN: 
@@ -947,6 +935,18 @@
         'Legumes?!! É isso que a minha comida come.',
         'Porque é que a manteiga não entrou na discoteca? Porque foi barrada.',
         'Qual o nome do peixe que caiu do vigésimo andar? Aaaaaaaaah, Tum!'
+      ];
+
+      /* All Tipes of PLANTS products */
+      const plant_products = [
+        '',
+        ''
+      ];
+
+      /* All Tipes of ANIMAL products */
+      const animal_products = [
+        '',
+        ''
       ];
 
       async function im1MessageHandler(data) {

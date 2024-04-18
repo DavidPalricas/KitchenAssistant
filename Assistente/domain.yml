@@ -19,6 +19,7 @@ entities:
 - quantidade
 - ingrediente
 - unidade
+- data
 
 slots:
   recipe_id:
