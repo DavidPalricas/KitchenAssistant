@@ -415,7 +415,32 @@
           //console.log("ENTITY NAME: "+data.entities[0].entity);
           //console.log("ENTITY VALUE: "+data.entities[0].value);
           switch(data.intent.name){
-            case "ask_specific_recipe": // ---------------------------------------------------------------------- [ ASK_SPECIFIC_RECIPE]+
+            case "ask_all_recipes": // --------------------------------------------------------------------------- [ ASK_ALL_RECIPES] - FOR REVISING
+              console.log("ENTROU NO ASK_ALL_RECIPES");
+              var message = {'intent':'ask_all_recipes', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "ask_for_tools": // ----------------------------------------------------------------------------- [ ASK_FOR_TOOLS] - FOR REVISING
+              var message = {'intent':'ask_for_tools', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "ask_for_ingredients": // ----------------------------------------------------------------------- [ ASK_FOR_INGREDIENTS] - FOR REVISING
+              var message = {'intent':'ask_for_ingredients', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "ask_specific_recipe": // ----------------------------------------------------------------------- [ ASK_SPECIFIC_RECIPE]+
               /*for (let i = 0; i < data.entities.length; i++)
               {
                 if(data.entities[i].entity=='recipe')
@@ -439,40 +464,8 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
-            case "greet": // ------------------------------------------------------------------------------------- [ GREET]
-              var message = {'intent':'greet', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "goodbye": // ----------------------------------------------------------------------------------- [ GOODBYE]
-              var message = {'intent':'goodbye', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
             case "ask_random_recipe": // ------------------------------------------------------------------------- [ ASK_RANDOM_RECIPE]
               var message = {'intent':'ask_random_recipe', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "affirm": // ------------------------------------------------------------------------------------ [ AFFIRM]
-              var message = {'intent':'affirm', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "deny": // -------------------------------------------------------------------------------------- [ DENY]
-              var message = {'intent':'deny', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
               mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -503,39 +496,6 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
-            case "joke":  // ------------------------------------------------------------------------------------- [ JOKE]
-              var message = {'intent':'joke', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "ask_all_recipes": // --------------------------------------------------------------------------- [ ASK_ALL_RECIPES] - FOR REVISING
-              console.log("ENTROU NO ASK_ALL_RECIPES");
-              var message = {'intent':'ask_all_recipes', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "ask_for_tools": // ----------------------------------------------------------------------------- [ ASK_FOR_TOOLS] - FOR REVISING
-              var message = {'intent':'ask_for_tools', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
-            case "ask_for_ingredients": // ----------------------------------------------------------------------- [ ASK_FOR_INGREDIENTS] - FOR REVISING
-              var message = {'intent':'ask_for_ingredients', 'audioReconized': final_transcript }
-              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
-              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
-              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
-                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
-                    setValue(JSON.stringify(result))));
-              break;
             case "ask_pantry": // -------------------------------------------------------------------------------- [ ASK_PANTRY] - FOR REVISING
               var message = {'intent':'ask_pantry', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
@@ -551,7 +511,7 @@
               mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
-              break;
+              break; 
             case "add_pantry_barcode":
                 var message = {'intent':'add_pantry_barcode', 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
@@ -559,9 +519,25 @@
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
                       doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                       setValue(JSON.stringify(result))));
-                break;
+              break;
             case "remove_pantry": // ----------------------------------------------------------------------------- [ REMOVE_PANTRY] - FOR REVISING
               var message = {'intent':'remove_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["unidade"], 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "remove_all_pantry": // ------------------------------------------------------------------------- [ REMOVE_ALL_PANTRY] - FOR REVISING
+              var message = {'intent':'remove_all_pantry', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "remove_all_sopping_list": // ------------------------------------------------------------------- [ REMOVE_ALL_SHOPPING_LIST] - FOR REVISING
+              var message = {'intent':'remove_all_sopping_list', 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
               mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -600,6 +576,78 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
+            case "get_quantity_ingrediente": // ------------------------------------------------------------------ [ GET_QUANTITY_INGREDIENTE] - FOR REVISING
+              var message = {'intent':'get_quantity_ingrediente', 'quantity' : data.entities["quantity"], 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "get_expiration_date": // ----------------------------------------------------------------------- [ GET_EXPIRATION_DATE] - FOR REVISING
+              var message = {'intent':'get_expiration_date', 'expiration_date' : data.entities["expiration_date"], 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "greet": // ------------------------------------------------------------------------------------- [ GREET]
+              var message = {'intent':'greet', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "goodbye": // ----------------------------------------------------------------------------------- [ GOODBYE]
+              var message = {'intent':'goodbye', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            
+            case "affirm": // ------------------------------------------------------------------------------------ [ AFFIRM]
+              var message = {'intent':'affirm', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            case "deny": // -------------------------------------------------------------------------------------- [ DENY]
+              var message = {'intent':'deny', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            
+            
+            
+            case "joke":  // ------------------------------------------------------------------------------------- [ JOKE]
+              var message = {'intent':'joke', 'audioReconized': final_transcript }
+              var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+              var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message};
+              mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                    doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                    setValue(JSON.stringify(result))));
+              break;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             case "default":
               break;
