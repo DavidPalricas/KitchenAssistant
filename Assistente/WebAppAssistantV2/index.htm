@@ -576,7 +576,7 @@
                     doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                     setValue(JSON.stringify(result))));
               break;
-            case "get_quantity_ingrediente": // ------------------------------------------------------------------ [ GET_QUANTITY_INGREDIENTE] - FOR REVISING
+            case "get_quantity_ingredient": // ------------------------------------------------------------------ [ GET_QUANTITY_INGREDIENTE] - FOR REVISING
               var message = {'intent':'get_quantity_ingrediente', 'quantity' : data.entities["quantity"], 'audioReconized': final_transcript }
               var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
               var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
