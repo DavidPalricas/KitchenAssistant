@@ -1,34 +1,76 @@
-# Como testar o Assistente
+# Instruções de Execução
 
-## 1. Abrir o terminal Conda neste diretório
+Este documento descreve os passos necessários para executar os componentes do sistema.
 
-## 2. Ativar o ambiente virtual do Rasa
-    activate rasa-env
-## macOS
-    conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
+## Primeiro Passo: Correr o FusionEngine
 
-## 3. Repetir os passos 1 e 2 noutro terminal
+O FusionEngine é um bloco que permite adicionar diferentes módulos.
 
-## 4. Passos a Executar no 1º terminal
-    Se pretende treinar o assistente :
-        rasa train
+```bash
+cd KitchenAssistant/Assistente/FusionEngine
+java -jar FusionEngine.jar
+```
 
-    Se pretende testar o assistente(executar depois do passo 5):
-     rasa shell
-     
+## Segundo Passo: Correr o IM (Interaction Manager)
 
-## 5. Executar o ficheiro de ações personalizadas no 2º terminal:
-    rasa run actions
+```bash
+cd KitchenAssistant/Assistente/mmiframeworkV2
+java -jar mmiframeworkV2.jar
+```
 
-## 6. Repetir os passos 1 e 2 noutro terminal 
+## Terceiro Passo: Correr o Rasa
 
-## 7. Executar o seguinte comando no 3ºterminal para executar o asssistente na Web:
-    rasa run --enable-api --cors="*"
+O Rasa usa para dar reconhecer as entidades e intents.
 
-## 8. Executar a app num outro terminal :
-    Caso não tenha instalado o flask:
-        condsa install flask
-        
-    cd Site_Assistente/
-    python app.py
-    
+1. Ativar o ambiente virtual do Rasa:
+### macOs:
+Correr no terminal normal
+
+```bash
+cd KitchenAssistant/Assistente
+conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
+```
+
+### windows:
+Abrir o terminal do AnacondaPrompt Miniconda
+
+```bash
+activate rasa-env
+```
+2. Caso tenham sido feitas alterações no nlu 
+
+```bash
+rasa train
+``` 
+
+3. Correr o Rasa:
+
+```bash
+rasa run --enable-api --cors="*"
+```
+
+## Quarto Passo: client-side 
+
+```bash
+cd KitchenAssistant/Assistente/WebAppAssistantV2/APP2
+python app.py
+```
+
+## Quinto Passo: Correr a APP
+
+```bash
+cd KitchenAssistant/Assistente/WebAppAssistantV2
+http-server -p 8082 -S -C cert.pem -K key.pem
+```
+
+## Sexto Passo: Abrir Uma janela do Chrome para correr o IM         
+
+```bash
+https://127.0.0.1:8082/index.htm
+```
+
+## Sétimo Passo: Abrir Uma janela do Chrome para correr o Assistente 
+
+```bash
+https://127.0.0.1:8082/index.htm
+```
