@@ -23,7 +23,7 @@ java -jar mmiframeworkV2.jar
 O Rasa usa para dar reconhecer as entidades e intents.
 
 1. Ativar o ambiente virtual do Rasa:
-### macOs:
+### - macOs:
 Correr no terminal normal
 
 ```bash
@@ -31,7 +31,7 @@ cd KitchenAssistant/Assistente
 conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
 ```
 
-### windows:
+### - windows:
 Abrir o terminal do AnacondaPrompt Miniconda
 
 ```bash
