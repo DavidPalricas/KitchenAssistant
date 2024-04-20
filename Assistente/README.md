@@ -37,6 +37,7 @@ Abrir o terminal do AnacondaPrompt Miniconda
 ```bash
 activate rasa-env
 ```
+
 2. Caso tenham sido feitas alterações no nlu 
 
 ```bash
