@@ -575,7 +575,7 @@
                       setValue(JSON.stringify(result))));
                 break;
               case "get_quantity_ingredient": // ---------------------------------- [ GET_QUANTITY_INGREDIENTE] - FOR REVISING
-                var message = {'intent':'get_quantity_ingrediente', 'quantity' : data.entities["quantity"], 'audioReconized': final_transcript }
+                var message = {'intent':'get_quantity_ingredient', 'quantity' : findValueByKey(data.entities,"quantidade"),'unit' : findValueByKey(data.entities,"unidade"),'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -583,7 +583,7 @@
                       setValue(JSON.stringify(result))));
                 break;
               case "get_expiration_date": // -------------------------------------- [ GET_EXPIRATION_DATE] - FOR REVISING
-                var message = {'intent':'get_expiration_date', 'expiration_date' : data.entities["expiration_date"], 'audioReconized': final_transcript }
+                var message = {'intent':'get_expiration_date', 'expiration_date' : data.entities[0].value, 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -700,17 +700,40 @@
         // como comunicar inversamente com o APPGUI ------------------> TEMOS DE FAZER ISTO DE FORMA A ATIVAR O MICRO
         var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out1 = null;
-        mmiCli_Out1 = new MMIClientSocket(mmiCli_Out_add + "SPEECHINCONTROL");
+        mmiCli_Out1 = new MMIClientSocket(mmiCli_Out_add + "ASSISTANT_ANSWER");
         mmiCli_Out1.onMessage.on(im1MessageHandler1);
         mmiCli_Out1.onOpen.on(socketOpenHandler);
         mmiCli_Out1.openSocket();
 
         function im1MessageHandler1(data){
-            console.log("--------------im1MessageHandlerbbb1---------------");
+            // Inicia o reconhecimento de fala
+            run_delay();
         }
-      // -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
+        
+        function delay(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function run_delay() {
+            console.log("Starting delay...");
+            await delay(5000); // Wait for 10 seconds
+            console.log("Delay finished.");
+            recognition.start();
+            circle.animate(20, 0, 'now').attr({ fill: '#00a431' });
+            transcriptDiv.textContent = "...";
+        }
       
-      
+        function findValueByKey(structure, keyToFind) {
+          for(const sub_dict in structure){
+            for(const key in structure[sub_dict]){
+                if(structure[sub_dict][key] == keyToFind){
+                    return structure[sub_dict].value;
+                }
+            }
+          }
+        }
+
     </script>
   </body>
 </html>
