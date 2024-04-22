@@ -272,7 +272,9 @@ nlu:
     - Adiciona [1](quantidade) [litro](unidade) de [leite](ingrediente) à despensa
     - Adiciona [1](quantidade) [alface](ingrediente) à despensa
     - Comprei [ovos](ingrediente)
+    - Comprei [3](quantidade) [kilos](unidade) de [peitos de frango](ingrediente)
     - Trouxe do supermercado [peitos de frango](ingrediente)
+    - Trouxe do supermercado [3](quantidade) [kilos](unidade) de [peitos de frango](ingrediente)
 
 #- regex: quantidade
 #  examples: |

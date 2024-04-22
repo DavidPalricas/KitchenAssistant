@@ -768,19 +768,22 @@
             if (alertType === "expiration"){
                 email["subject"] = "Produtos a expirar - Kitchen Assistant";
                 email["body"] = createEmailBody(alertType, list);
+                console.log("BODY: ", email["body"]);
             }
             else if (alertType === "shoopinglist"){
                 email["subject"] = "Lista de compras - Kitchen Assistant";
                 email["body"] = createEmailBody(alertType, list);
+                console.log("BODY: ", email["body"]);
             }
 
             const response = await fetch('http://127.0.0.1:5000/send-email',
             {
                 method: 'POST',
+                
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({email})
+                body: JSON.stringify(email)
             });
 
         }
@@ -1184,8 +1187,11 @@
                                 let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
                                 let near_expiration_date_products = get_near_expiration_date_products(product_list); // ---- Get the products that are near the expiration date
                                 // CONSTRUCT EMAIL 
-
-                                // SEND EMAIL
+                                if (near_expiration_date_products.length > 0){
+                                    await send_email("expiration", near_expiration_date_products); // ---------------------- SEND EMAIL
+                                    console.log("---------> EMAIL SENT <---------");
+                                    alerted = true;
+                                }
                                 
                                 alerted = true;
                             }
@@ -1330,10 +1336,73 @@
                                     }
                                 break;
                                 case "ask_pantry":
+                                    // O que tenho na despensa
                                     break;
                                 case "add_pantry":
+                                    // Adiciona [3](quantidade) [ovos](ingrediente) à despensa
+                                    // Comprei [ovos](ingrediente)
                                     console.log("ADD PANTRY");
                                     add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
+                                    let name = c.nlu.name; // ---------------------------------------------------- Get the ingredient
+                                    if(name)
+                                        product["name"] = name; // ----------------------------------------------- Store the ingredient
+                                    let quantity = c.nlu.quantity; // -------------------------------------------- Get the quantity
+                                    if(quantity)
+                                        product["quantity"] = quantity; // ----------------------------------------- Store the quantity
+                                    let unit = c.nlu.unit; // ------------------------------------------------------ Get the unit
+                                    if(unit)
+                                        product["unit"] = unit; // --------------------------------------------------- Store the unit
+
+                                    // name && quantity
+                                    // name && unit & quantity
+                                    // name 
+                                    // 
+                                    if(product["name"] && !product["quantity"] && !product["unit"]){
+                                        // ask for the quantity
+                                        sendToVoice("Indique a quantidade do produto");
+                                        mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
+                                            doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                                            setValue(JSON.stringify({text: "Get Quantity Ingredient"})))); // ------------ Call the function to get the quantity
+                                    }else if(product["name"] && product["quantity"] && !product["unit"]){
+                                        // ask for the unit
+                                        sendToVoice("Indique a quantidade : EXEMPLO : 5 quilos");
+                                        mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
+                                            doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                                            setValue(JSON.stringify({text: "Get Unit Ingredient"})))); // ------------ Call the function to get the unit
+                                    }else if(product["name"] && product["quantity"] && product["unit"]){
+                                        // ask for the expiration_date
+                                        if(checkType(product["name"]) == "animal"){
+                                            // add a pre-established expiration_date for animal products : 3 DAYS
+                                            product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
+                                            // --------------------------------------------------------------------------- Create the message to the user
+                                            let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
+                                            insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                            let answer2 = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
+                                            sendToVoice(answer2); // ----------------------------------------------------- Send the voice msg to the user
+                                            openChatBox(); // ------------------------------------------------------------ Open the chat box
+                                            addMsgToChat("Assistente", answer1); // -------------------------------------- Add the message to the chat
+                                            reset_product(); // ---------------------------------------------------------- Reset the product dictionary
+                                            add_pdb_flag = false; // ----------------------------------------------------- Reset the flag
+                                        }else if(checkType(product["name"]) == "plant"){
+                                            // add a pre-established expiration_date for plant products : 7 DAYS ( 1 week )
+                                            product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
+                                            // --------------------------------------------------------------------------- Create the message to the user
+                                            let answer3 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
+                                            insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                            let answer4 = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
+                                            sendToVoice(answer4); // ----------------------------------------------------- Send the voice msg to the user
+                                            openChatBox(); // ------------------------------------------------------------ Open the chat box
+                                            addMsgToChat("Assistente", answer3); // -------------------------------------- Add the message to the chat
+                                            reset_product(); // ---------------------------------------------------------- Reset the product dictionary
+                                            add_pdb_flag = false; // ----------------------------------------------------- Reset the flag
+                                        }else{
+                                            // ask for the expiration_date
+                                            sendToVoice("Indique uma data de validade");
+                                            mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
+                                                doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                                                setValue(JSON.stringify({text: "Get Expiration Date"})))); // ----- Call the function to get the expiration date
+                                        }
+                                    }
                                     break;
                                 case "add_pantry_barcode":
                                     console.log("ADD PANTRY BARCODE");
@@ -1373,38 +1442,14 @@
                                             product["name"] = name; // ----------------------------------------------- Store the ingredient
 
                                         // --------------------------------------------------------------------------- Check if all the fields are filled
-                                        if (product["name"] && product["quantity"] && product["unit"] && !product["expiration_date"]){ 
-                                            if(checkType(product["name"]) == "animal"){
-                                                // add a pre-established expiration_date for animal products : 3 DAYS
-                                                product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
-                                                // --------------------------------------------------------------------------- Create the message to the user
-                                                let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
-                                                insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
-                                                let answer2 = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
-                                                sendToVoice(answer2); // ----------------------------------------------------- Send the voice msg to the user
-                                                openChatBox(); // ------------------------------------------------------------ Open the chat box
-                                                addMsgToChat("Assistente", answer1); // -------------------------------------- Add the message to the chat
-                                                reset_product(); // ---------------------------------------------------------- Reset the product dictionary
-                                                add_pdb_flag = false; // ----------------------------------------------------- Reset the flag
-                                            }else if(checkType(product["name"]) == "plant"){
-                                                // add a pre-established expiration_date for plant products : 7 DAYS ( 1 week )
-                                                product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
-                                                // --------------------------------------------------------------------------- Create the message to the user
-                                                let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
-                                                insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
-                                                let answer2 = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
-                                                sendToVoice(answer2); // ----------------------------------------------------- Send the voice msg to the user
-                                                openChatBox(); // ------------------------------------------------------------ Open the chat box
-                                                addMsgToChat("Assistente", answer1); // -------------------------------------- Add the message to the chat
-                                                reset_product(); // ---------------------------------------------------------- Reset the product dictionary
-                                                add_pdb_flag = false; // ----------------------------------------------------- Reset the flag
-                                            }else{
-                                                // ask for the expiration_date
-                                                sendToVoice("Indique uma data de validade");
-                                                mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
-                                                    doStartRequest(new EMMA("text-", "text", "command", 1, 0).
-                                                    setValue(JSON.stringify({text: "Get Expiration Date"})))); // ----- Call the function to get the expiration date
-                                            }
+                                        if (product["name"] && product["quantity"] && product["unit"] && !product["expiration_date"]){
+                                            // ask for the expiration_date
+                                            sendToVoice("Indique uma data de validade");
+                                            mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
+                                                doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                                                setValue(JSON.stringify({text: "Get Expiration Date"})))); // ----- Call the function to get the expiration date
+                                        }else{
+                                            
                                         }
                                         openChatBox(); // ------------------------------------------------------------ Open the chat box
                                         // --------------------------------------------------------------------------- Create the message to the user

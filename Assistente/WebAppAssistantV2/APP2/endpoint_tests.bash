@@ -11,7 +11,7 @@ curl -X POST http://127.0.0.1:5000/pantry/insert-stock \
     "name": "Azeite",
     "quantity": "1",
     "unit": "l",
-    "expiration_date": "2024-12-31"
+    "expiration_date": "2024-04-23"
 }'
 
 # -------------------------------------------------------------- [TEST REMOVE STOCK FROM PANTRY]
