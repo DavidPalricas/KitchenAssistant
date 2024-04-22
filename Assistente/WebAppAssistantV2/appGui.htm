@@ -421,6 +421,19 @@
             unit: null,
             expiration_date: null
         };
+
+        // Global email object to store the email configuration
+        let email = {
+            from_addr: "kitchen_assistant@outlook.com",
+            to_addr: "inesaguia@ua.pt",
+            subject: null,
+            body: null,
+            smtp_server: "smtp-mail.outlook.com",
+            smtp_port: 587,
+            password: "kitchen123."
+        };
+
+
         mmiCli_Out = new MMIClientSocket(mmiCli_Out_add + "APP");
         mmiCli_Out.onMessage.on(im1MessageHandler);
         mmiCli_Out.onOpen.on(socketOpenHandler);
@@ -668,6 +681,9 @@
             return "others"
         }
 
+        /* FUNCTION : SET EXPIRATION DATE
+            return the expiration date in the format YYYY-MM-DD
+        */
         function set_expiration_date(ndays){
             let today = new Date();
             let expiration_date = today.setDate(today.getDate() + ndays);
@@ -675,6 +691,110 @@
             expiration_date = today.toISOString().slice(0,10) //Obter apenas ano,mês e dia
             
             return expiration_date
+        }
+
+        /* FUNCTION : ALERT EXPIRATION DATE
+            return TRUE is the expiration date is less than 3 days
+            return FALSE if the expiration date is more than 3 days
+        */
+        function alert_expiration_date(expiration_date){
+            let today = new Date();
+            expiration_date = new Date(expiration_date);
+            
+            let date_dif = Math.abs(today.getTime() - expiration_date.getTime()); //Diferença de datas em millisegundos
+            date_dif  = Math.ceil(date_dif  / (1000 * 3600 * 24));//Diferença de datas em dias
+            if (date_dif <=3){
+                return true;
+            }
+            return false;
+        }
+
+        /* FUNCTION : GET NEAR EXPIRATION DATE PRODUCTS
+            return a list of products that are near the expiration date
+        */
+        function get_near_expiration_date_products(product_list){
+            let near_expiration_date_products = [];
+            for (let i = 0; i < product_list.length; i++){
+                let product = product_list[i].split(":");
+                let product_date = product[product.length-1];
+                let near_expired = alert_expiration_date(product_date);
+                if (near_expired){
+                    near_expiration_date_products.push(product_list[i]);
+                }
+            }
+            return near_expiration_date_products;
+        }
+
+        /* FUNCTION : CREATE EMAIL BODY
+            return the body of the email with a table of products
+        */
+        function createEmailBody(alertType, list) {
+            let body = `<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">`;
+        
+            if (alertType === 'expiration') {
+                body += `
+                    <h1>Alerta: Produtos Perto do Fim da Validade!</h1>
+                    <p>Caro cliente, informamos que os seguintes produtos estão próximos da sua data de validade:</p>
+                    <ul>`;
+                list.forEach(item => {
+                    body += `<li>${item}</li>`;
+                });
+                body += `</ul>
+                    <p>Por favor, verifique estes produtos e aproveite-os enquanto estão frescos!</p>`;
+            } else if (alertType === 'shoppinglist') {
+                body += `
+                    <h1>Lista de Compras</h1>
+                    <p>Caro cliente, aqui está a sua lista de compras para que não se esqueça de nada:</p>
+                    <ul>`;
+                list.forEach(item => {
+                    body += `<li>${item}</li>`;
+                });
+                body += `</ul>`;
+            }
+        
+            body += `
+                <p>Este email foi enviado automaticamente pelo <strong>Kitchen Assistant</strong>. Não responda a este email.</p>
+                <footer><p>Com os melhores cumprimentos,</p><p><strong>Equipa Kitchen Assistant</strong></p></footer>
+                </body></html>`;
+            
+            return body;
+            //return body.replace(/"/g, '\\"');
+        }
+
+        /* FUNCTION : SEND EMAIL
+            return a message to the user (email sent or not)
+        */
+        async function send_email(alertType, list){
+            if (alertType === "expiration"){
+                email["subject"] = "Produtos a expirar - Kitchen Assistant";
+                email["body"] = createEmailBody(alertType, list);
+            }
+            else if (alertType === "shoopinglist"){
+                email["subject"] = "Lista de compras - Kitchen Assistant";
+                email["body"] = createEmailBody(alertType, list);
+            }
+
+            const response = await fetch('http://127.0.0.1:5000/send-email',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({email})
+            });
+
+        }
+
+        /* FUNCTION : GET ALL PRODUCTS IN THE PANTRY
+        RETURN: 
+        [
+            "Azeite 1.0 l, Data de Validade : 2024/12/31",
+            "Rhubarb Sparkling Water 250.0 mL, Data de Validade : 2050/05/21"
+        ]*/
+        async function get_pantry_products(){
+            const response = await fetch('http://127.0.0.1:5000//pantry/stock');
+            const data = await response.json();
+            return data;
         }
 
         async function insert_stock() {
@@ -999,6 +1119,7 @@
         var step = 1;
         var voice;
         var add_pdb_flag = false;
+        var alerted = false;
 
 
         const jokes = [
@@ -1057,7 +1178,19 @@
                                 //Isto deve-se ao facto deste elemento ser criado sempre que é lido um código de barras
                                 //E tem de ser removido depois da leitura do código de barras
                             }
-                    
+                            
+                            if (!alerted){
+                                // check if the product is near the expiration date
+                                let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
+                                let near_expiration_date_products = get_near_expiration_date_products(product_list); // ---- Get the products that are near the expiration date
+                                // CONSTRUCT EMAIL 
+
+                                // SEND EMAIL
+                                
+                                alerted = true;
+                            }
+
+
                             switch(c.nlu.intent){
                                 case "ask_all_recipes":
                                     console.log("ASK ALL RECIPES -----------------------------");
