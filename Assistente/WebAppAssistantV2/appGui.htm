@@ -1182,7 +1182,8 @@
                                 //E tem de ser removido depois da leitura do código de barras
                             }
                             
-                            if (!alerted){
+
+                            if (!alerted){ // ------------------------------------------------------------------------------ Check if the email was already sent
                                 // check if the product is near the expiration date
                                 let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
                                 let near_expiration_date_products = get_near_expiration_date_products(product_list); // ---- Get the products that are near the expiration date
@@ -1191,6 +1192,8 @@
                                     await send_email("expiration", near_expiration_date_products); // ---------------------- SEND EMAIL
                                     console.log("---------> EMAIL SENT <---------");
                                     alerted = true;
+                                    email["body"] = null; // --------------------------------------------------------------- Reset the email body
+                                    email["subject"] = null; // ------------------------------------------------------------ Reset the email subject
                                 }
                                 
                                 alerted = true;
@@ -1207,16 +1210,16 @@
                                     mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
                                         doStartRequest(new EMMA("text-", "text", "command", 1, 0).
                                         setValue(JSON.stringify({text: "TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"}))));
-                                    //closeChatBox(); // -------------------------------------------------------- Close the chat box
-                                    //let recipes = await getAllRecipes(); // ---------------------------------------- Get all the recipes
-                                    //printRecipes("RECEITAS ", recipes); // --------------------------------------------------- Print the recipes
-                                    //addRecipesTable(recipes); // ----------------------------------------------- Add the recipes to the page as <table> id = recipes-table
-                                    //sendToVoice("Segue a lista de todas as receitas disponíveis!"); // --------- SEND THE VOICE TO THE USER
-                                    //voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
-                                    //openChatBox(); // ---------------------------------------------------------- Open the chat box
-                                    //clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-                                    //addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
-                                    //addMsgToChat('Assistente','Escolha uma receita para começar a preparação'); // - Add the Assistent message to the chat
+                                    //closeChatBox(); // -------------------------------------------------------------------- Close the chat box
+                                    //let recipes = await getAllRecipes(); // ----------------------------------------------- Get all the recipes
+                                    //printRecipes("RECEITAS ", recipes); // ------------------------------------------------ Print the recipes
+                                    //addRecipesTable(recipes); // ---------------------------------------------------------- Add the recipes to the page as <table> id = recipes-table
+                                    //sendToVoice("Segue a lista de todas as receitas disponíveis!"); // -------------------- SEND THE VOICE TO THE USER
+                                    //voice = c.nlu.audioReconized; // ------------------------------------------------------ Get the voice from the user
+                                    //openChatBox(); // --------------------------------------------------------------------- Open the chat box
+                                    //clearChatMessages() // ---------------------------------------------------------------- Clear the chat messages (when asked for a new recipe)
+                                    //addMsgToChat('Você',': ' + voice); // ------------------------------------------------- Add the voice to the chat
+                                    //addMsgToChat('Assistente','Escolha uma receita para começar a preparação'); // -------- Add the Assistent message to the chat
                                     break;
                                 case "ask_for_tools":
                                     break;
