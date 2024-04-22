@@ -32,25 +32,26 @@ def send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, passwo
         return f"Failed to send email: {e}"
 
 # Example usage
-smtp_server = 'smtp-mail.outlook.com'
-smtp_port = 587
+#smtp_server = 'smtp-mail.outlook.com'
+#smtp_port = 587
 
 # Email credentials
-email = 'kitchen_assistant@outlook.com'
-password = 'kitchen123.'  # Replace with the correct password
+#email = 'kitchen_assistant@outlook.com'
+#password = 'kitchen123.'  # Replace with the correct password
 
-from_addr = email
-to_addr = 'inesaguia@ua.pt'  # Change to the recipient's email
-subject = 'Test Email from Python'
-body = """
-<html><body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
-            <h1>Lista de Compras</h1>
-            <p>Caro cliente, aqui está a sua lista de compras para facilitar as suas compras no supermercado:</p>
-            <ul><li>Pão</li><li>Leite</li><li>Ovos</li></ul>
-        <p>Este email foi enviado automaticamente pelo <strong>Kitchen Assistant</strong>. Não responda a este email.</p>
-        <footer><p>Com os melhores cumprimentos,</p><p><strong>Equipa Kitchen Assistant</strong></p></footer>
-        </body></html>
-"""
+#from_addr = email
+#to_addr = 'inesaguia@ua.pt'  # Change to the recipient's email
+#subject = 'Test Email from Python'
+#body = """
+#<html><body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
+#            <h1>Lista de Compras</h1>
+#            <p>Caro cliente, aqui está a sua lista de compras para facilitar as suas compras no supermercado:</p>
+#            <ul><li>Pão</li><li>Leite</li><li>Ovos</li></ul>
+#        <p>Este email foi enviado automaticamente pelo <strong>Kitchen Assistant</strong>. Não responda a este email.</p>
+#        <footer><p>Com os melhores cumprimentos,</p><p><strong>Equipa Kitchen Assistant</strong></p></footer>
+#        </body></html>
+#"""
 
-result = send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, password)
-print(result)
+
+#result = send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, password)
+#print(result)
