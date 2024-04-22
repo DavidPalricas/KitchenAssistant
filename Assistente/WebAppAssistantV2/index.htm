@@ -503,7 +503,7 @@
                       setValue(JSON.stringify(result))));
                 break;
               case "add_pantry": // ----------------------------------------------- [ ADD_PANTRY] - FOR REVISING
-                var message = {'intent':'add_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["ingredient"], 'audioReconized': final_transcript }
+                var message = {'intent':'add_pantry', 'quantity' : findValueByKey(data.entities,"quantidade"),'unit' : findValueByKey(data.entities,"unidade"),'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -519,7 +519,7 @@
                         setValue(JSON.stringify(result))));
                 break;
               case "remove_pantry": // -------------------------------------------- [ REMOVE_PANTRY] - FOR REVISING
-                var message = {'intent':'remove_pantry', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["unidade"], 'audioReconized': final_transcript }
+                var message = {'intent':'remove_pantry', 'quantity' : findValueByKey(data.entities,"quantidade"),'unit' : findValueByKey(data.entities,"unidade"),'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -527,7 +527,7 @@
                       setValue(JSON.stringify(result))));
                 break;
               case "remove_all_pantry": // ---------------------------------------- [ REMOVE_ALL_PANTRY] - FOR REVISING
-                var message = {'intent':'remove_all_pantry', 'audioReconized': final_transcript }
+                var message = {'intent':'remove_all_pantry', 'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -543,7 +543,7 @@
                       setValue(JSON.stringify(result))));
                 break;
               case "add_shopping_list": // ---------------------------------------- [ ADD_SHOPPING_LIST] - FOR REVISING
-                var message = {'intent':'add_shopping_list', 'quantity' : data.entities["quantidade"].value, 'unit' : data.entities["unidade"], 'ingredient' : data.entities["unidade"], 'audioReconized': final_transcript }
+                var message = {'intent':'add_shopping_list', 'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
