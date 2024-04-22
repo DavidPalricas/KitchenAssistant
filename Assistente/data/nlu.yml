@@ -241,7 +241,7 @@ nlu:
 # regex to extract the expiration date - simplistic way only validating the number of digits
 - regex: data
   examples: |
-    - \d{2}/\d{2}/\d{4}
+    - \d{1,2}/\d{1,2}\s\d{4}
 
 # Ask for ingredients on the pantry
 - intent: ask_pantry
@@ -398,14 +398,14 @@ nlu:
 # get expiration date of an ingredient
 - intent : get_expiration_date
   examples: |
-    - a data de validade é [12/12/2022](data)
-    - [12/12/2022](data)
-    - [12/12/2022](data) é a data de validade
-    - a data de validade é [12/12/2022](data)
-    - o fim da validade é [12/12/2022](data)
-    - [12/12/2022](data) é o fim da validade
-    - o prazo de validade é [12/12/2022](data)
-    - [12/12/2022](data) é o prazo de validade
+    - a data de validade é [12/12 2022](data)
+    - [12/12 2022](data)
+    - [12/12 2022](data) é a data de validade
+    - a data de validade é [12/12 2022](data)
+    - o fim da validade é [12/12 2025](data)
+    - [12/12 2022](data) é o fim da validade
+    - o prazo de validade é [12/12 2030](data)
+    - [12/12 2022](data) é o prazo de validade
 
 # Greet the assistant
 - intent: greet
