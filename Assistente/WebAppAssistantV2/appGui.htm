@@ -655,13 +655,26 @@
         }
         
         function checkType(product_name) {
-            if (plant_products.includes(product_name)) {
-                return "plant";
-            } else if (animal_products.includes(product_name)) {
-                return "animal";
-            } else {
-                return "other";
+            for(const plant of plant_products){
+                if (plant.includes(product_name)){
+                    return "plant";
+                }
             }
+            for(const animal of animal_products){
+               if (animal.includes(product_name)){
+                    return "animal";
+                }
+            }
+            return "others"
+        }
+
+        function set_expiration_date(ndays){
+            let today = new Date();
+            let expiration_date = today.setDate(today.getDate() + ndays);
+        
+            expiration_date = today.toISOString().slice(0,10) //Obter apenas ano,mês e dia
+            
+            return expiration_date
         }
 
         async function insert_stock() {
@@ -1225,14 +1238,12 @@
                                         let name = c.nlu.name; // ---------------------------------------------------- Get the ingredient
                                         if(name)
                                             product["name"] = name; // ----------------------------------------------- Store the ingredient
-                                    
+
                                         // --------------------------------------------------------------------------- Check if all the fields are filled
                                         if (product["name"] && product["quantity"] && product["unit"] && !product["expiration_date"]){ 
                                             if(checkType(product["name"]) == "animal"){
-                                                // add a pre-established expiration_date for animal products
-                                                // FALTA CRIAR A FUNÇÂO DE ADICIONAR A DATA TENDO EM CONTA A DATA ATUAL
-                                                // DEFINIR A VALIDADE PARA PRODUTOS DE ORIGEM ANIMAL
-                                                product["expiration_date"] = "21/05/2023"; // -------------------------------- Set the expiration date
+                                                // add a pre-established expiration_date for animal products : 3 DAYS
+                                                product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
                                                 insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
@@ -1243,10 +1254,8 @@
                                                 reset_product(); // ---------------------------------------------------------- Reset the product dictionary
                                                 add_pdb_flag = false; // ----------------------------------------------------- Reset the flag
                                             }else if(checkType(product["name"]) == "plant"){
-                                                // add a pre-established expiration_date for plant products
-                                                // FALTA CRIAR A FUNÇÂO DE ADICIONAR A DATA TENDO EM CONTA A DATA ATUAL
-                                                // DEFINIR A VALIDADE PARA PRODUTOS DE ORIGEM NÃO ANIMAL
-                                                product["expiration_date"] = "21/05/2023"; // -------------------------------- Set the expiration date
+                                                // add a pre-established expiration_date for plant products : 7 DAYS ( 1 week )
+                                                product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
                                                 insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
