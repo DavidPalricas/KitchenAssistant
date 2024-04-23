@@ -514,87 +514,179 @@
         }
 
         function addIngredientsTable(ingredients) {
-        let container = document.getElementById("table-container");
-        // Verifica e remove a tabela existente de ingredientes
-        let existingTable = container.querySelector("#ingredients-table");
-        if (existingTable) {
-            container.removeChild(existingTable);
-        }
+            let container = document.getElementById("table-container");
+            // Verifica e remove a tabela existente de ingredientes
+            let existingTable = container.querySelector("#ingredients-table");
+            if (existingTable) {
+                container.removeChild(existingTable);
+            }
 
-        // Cria a nova tabela de ingredientes
-        let table = document.createElement("table");
-        table.id = "ingredients-table"; // Adiciona um ID único
-        let thead = document.createElement("thead");
-        let tbody = document.createElement("tbody");
-        let rowHead = document.createElement("tr");
+            // Cria a nova tabela de ingredientes
+            let table = document.createElement("table");
+            table.id = "ingredients-table"; // Adiciona um ID único
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let rowHead = document.createElement("tr");
 
-        // Define os títulos das colunas
-        let headers = ["Ingrediente", "Valor", "Quantidade"];
-        headers.forEach(headerText => {
-            let header = document.createElement("th");
-            header.textContent = headerText;
-            rowHead.appendChild(header);
-        });
+            // Define os títulos das colunas
+            let headers = ["Ingrediente", "Valor", "Quantidade"];
+            headers.forEach(headerText => {
+                let header = document.createElement("th");
+                header.textContent = headerText;
+                rowHead.appendChild(header);
+            });
 
-        thead.appendChild(rowHead);
-        table.appendChild(thead);
+            thead.appendChild(rowHead);
+            table.appendChild(thead);
 
-        // Adiciona os dados dos ingredientes no corpo da tabela
-        ingredients.forEach(ingredient => {
-            let row = document.createElement("tr");
-            
-            let nameCell = document.createElement("td");
-            nameCell.textContent = ingredient.name;
-            row.appendChild(nameCell);
-            
-            let quantityCell = document.createElement("td");
-            quantityCell.textContent = ingredient.quantity;
-            row.appendChild(quantityCell);
-            
-            let unitCell = document.createElement("td");
-            unitCell.textContent = ingredient.unit;
-            row.appendChild(unitCell);
-            
-            tbody.appendChild(row);
-        });
+            // Adiciona os dados dos ingredientes no corpo da tabela
+            ingredients.forEach(ingredient => {
+                let row = document.createElement("tr");
+                
+                let nameCell = document.createElement("td");
+                nameCell.textContent = ingredient.name;
+                row.appendChild(nameCell);
+                
+                let quantityCell = document.createElement("td");
+                quantityCell.textContent = ingredient.quantity;
+                row.appendChild(quantityCell);
+                
+                let unitCell = document.createElement("td");
+                unitCell.textContent = ingredient.unit;
+                row.appendChild(unitCell);
+                
+                tbody.appendChild(row);
+            });
 
-        table.appendChild(tbody);
-        container.appendChild(table);
+            table.appendChild(tbody);
+            container.appendChild(table);
         }
 
         function addToolsTable(tools) {
-        let container = document.getElementById("table-container");
-        // Verifica e remove a tabela existente de utensílios
-        let existingTable = container.querySelector("#tools-table");
-        if (existingTable) {
-            container.removeChild(existingTable);
+            let container = document.getElementById("table-container");
+            // Verifica e remove a tabela existente de utensílios
+            let existingTable = container.querySelector("#tools-table");
+            if (existingTable) {
+                container.removeChild(existingTable);
+            }
+
+            // Cria a nova tabela de utensílios
+            let table = document.createElement("table");
+            table.id = "tools-table"; // Adiciona um ID único
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let rowHead = document.createElement("tr");
+            let header = document.createElement("th");
+            header.textContent = "Utensílios";
+            rowHead.appendChild(header);
+            thead.appendChild(rowHead);
+            table.appendChild(thead);
+
+            // Adiciona os dados dos utensílios no corpo da tabela
+            tools.forEach(tool => {
+                let row = document.createElement("tr");
+                let cell = document.createElement("td");
+                cell.textContent = tool[0]; // Considerando que cada ferramenta é um elemento em um array
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            container.appendChild(table);
         }
 
-        // Cria a nova tabela de utensílios
-        let table = document.createElement("table");
-        table.id = "tools-table"; // Adiciona um ID único
-        let thead = document.createElement("thead");
-        let tbody = document.createElement("tbody");
-        let rowHead = document.createElement("tr");
-        let header = document.createElement("th");
-        header.textContent = "Utensílios";
-        rowHead.appendChild(header);
-        thead.appendChild(rowHead);
-        table.appendChild(thead);
+        function addShoopingListTable(list) {
+            let container = document.getElementById("table-container");
+            // Verifica e remove a tabela existente
+            let existingTable = container.querySelector("#tools-table");
+            if (existingTable) {
+                container.removeChild(existingTable);
+            }
 
-        // Adiciona os dados dos utensílios no corpo da tabela
-        tools.forEach(tool => {
-            let row = document.createElement("tr");
-            let cell = document.createElement("td");
-            cell.textContent = tool[0]; // Considerando que cada ferramenta é um elemento em um array
-            row.appendChild(cell);
-            tbody.appendChild(row);
-        });
+            // Cria a nova tabela de compras
+            let table = document.createElement("table");
+            table.id = "tools-table"; // Adiciona um ID único para a tabela de compras
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let rowHead = document.createElement("tr");
+            let header = document.createElement("th");
+            header.textContent = "Lista de Compras"; // Altera o título para Lista de Compras
+            rowHead.appendChild(header);
+            thead.appendChild(rowHead);
+            table.appendChild(thead);
 
-        table.appendChild(tbody);
-        container.appendChild(table);
+            // Adiciona os itens da lista de compras no corpo da tabela
+            list.forEach(item => {
+                let row = document.createElement("tr");
+                let cell = document.createElement("td");
+                cell.textContent = item; // Adiciona cada item da lista na célula
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            container.appendChild(table);
         }
-
+        
+        function addPantryTable(list) {
+            let container = document.getElementById("table-container");
+            // Verifica e remove a tabela existente da despensa
+            let existingTable = container.querySelector("#ingredients-table");
+            if (existingTable) {
+                container.removeChild(existingTable);
+            }
+        
+            // Cria a nova tabela da despensa
+            let table = document.createElement("table");
+            table.id = "ingredients-table"; // Adiciona um ID único
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let rowHead = document.createElement("tr");
+        
+            // Define os títulos das colunas
+            let headers = ["Produto", "Quantidade", "Data de Validade"];
+            headers.forEach(headerText => {
+                let header = document.createElement("th");
+                header.textContent = headerText;
+                rowHead.appendChild(header);
+            });
+        
+            thead.appendChild(rowHead);
+            table.appendChild(thead);
+        
+            // Adiciona os dados da despensa no corpo da tabela
+            list.forEach(item => {
+                let row = document.createElement("tr");
+        
+                // Divide a string pelo padrão: ", Data de Validade : "
+                let parts = item.split(", Data de Validade : ");
+                let productAndQuantity = parts[0].split(' ');
+                let quantity = productAndQuantity.pop(); // Último elemento é a quantidade
+                let product = productAndQuantity.join(' '); // O restante é o nome do produto
+                let expirationDate = parts[1];
+        
+                // Célula do produto
+                let productCell = document.createElement("td");
+                productCell.textContent = product;
+                row.appendChild(productCell);
+        
+                // Célula da quantidade
+                let quantityCell = document.createElement("td");
+                quantityCell.textContent = quantity;
+                row.appendChild(quantityCell);
+        
+                // Célula da data de validade
+                let dateCell = document.createElement("td");
+                dateCell.textContent = expirationDate;
+                row.appendChild(dateCell);
+        
+                tbody.appendChild(row);
+            });
+        
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
+        
         function addRecipesTable(recipes) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente de receitas
@@ -795,8 +887,22 @@
             "Rhubarb Sparkling Water 250.0 mL, Data de Validade : 2050/05/21"
         ]*/
         async function get_pantry_products(){
-            const response = await fetch('http://127.0.0.1:5000//pantry/stock');
+            const response = await fetch('http://127.0.0.1:5000/pantry/stock');
             const data = await response.json();
+            console.log("DATA INSIDE GET FUNCTION: ", data);
+            return data;
+        }
+
+        /* FUNCTION : GET SHOPPING LIST
+        [
+            "Azeite",
+            "Rhubarb Sparkling Water"
+        ]
+        */
+        async function get_shopping_list(){
+            const response = await fetch('http://127.0.0.1:5000/pantry/shopping-list');
+            const data = await response.json();
+            console.log("DATA INSIDE GET FUNCTION: ", data);
             return data;
         }
 
@@ -1154,27 +1260,27 @@
             console.log("--------------im1MessageHandler---------------");
 
             if(data != null && data!="RENEW" && data!="OK"){
-                console.log(data);
+                //console.log(data);
                 var content = $(data).find("emma\\:interpretation").first().text().trim();
                 console.log("CONTENTE ------> "+content);
                 if (typeof content == 'string') {
                     try {
                         // Try to parse XML
-                        console.log("INSIDE TRY CATCH: " + content);
+                        //console.log("INSIDE TRY CATCH: " + content);
 
                         //$("#response").html(content);
                         //$("#response").addClass("container");
                         //$("#response").addClass("responseText");
-                        console.log("CONTENT: ", content.intent);
+                        //console.log("CONTENT: ", content.intent);
                         // Parse JSON from XML content index.htm
                         let c = JSON.parse(content);
                         //let recipe;
                         
-                        console.log("C : ", c);
+                        //console.log("C : ", c);
                         closeHelpBox(); // -------------------------------------------------------- Close the help box
                         if(c.hasOwnProperty("nlu")){
-                            console.log("NLU: ", c.nlu);
-                            console.log("NLU INTENT: ", c.nlu.intent);
+                            //console.log("NLU: ", c.nlu);
+                            //console.log("NLU INTENT: ", c.nlu.intent);
 
                             const product_card = document.getElementById("product-card");
                             if (product_card) {
@@ -1187,21 +1293,7 @@
                                 active_assistant = true; // ---------------------------------------------------------------- Activate the assistant when the user greets
                             }
 
-                            if (!alerted){ // ------------------------------------------------------------------------------ Check if the email was already sent
-                                // check if the product is near the expiration date
-                                let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
-                                let near_expiration_date_products = get_near_expiration_date_products(product_list); // ---- Get the products that are near the expiration date
-                                // CONSTRUCT EMAIL 
-                                if (near_expiration_date_products.length > 0){
-                                    await send_email("expiration", near_expiration_date_products); // ---------------------- SEND EMAIL
-                                    console.log("---------> EMAIL SENT <---------");
-                                    alerted = true;
-                                    email["body"] = null; // --------------------------------------------------------------- Reset the email body
-                                    email["subject"] = null; // ------------------------------------------------------------ Reset the email subject
-                                }
-                                
-                                alerted = true;
-                            }
+                            
 
                             if (active_assistant){ // ----------------------------------------------------------------------- Check if the assistant is active
 
@@ -1500,6 +1592,25 @@
                                         openChatBox(); // ---------------------------------------------------------- Open the chat box
                                         addMsgToChat('Assistente','Olá, posso ajudar?'); // ------------------------ Add the Assistent message to the chat
                                         sendToVoice("Olá, posso ajudar?"); // -------------------------------------- Send the voice to the user saying "Olá, posso ajudar?"
+                                        if (!alerted){ // ------------------------------------------------------------------------------ Check if the email was already sent
+                                            // check if the product is near the expiration date
+                                            let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
+                                            let near_expiration_date_products = get_near_expiration_date_products(product_list); // ---- Get the products that are near the expiration date
+                                            // CONSTRUCT EMAIL 
+                                            if (near_expiration_date_products.length > 0){
+                                                await send_email("expiration", near_expiration_date_products); // ---------------------- SEND EMAIL
+                                                console.log("---------> EMAIL SENT <---------");
+                                                alerted = true;
+                                                email["body"] = null; // --------------------------------------------------------------- Reset the email body
+                                                email["subject"] = null; // ------------------------------------------------------------ Reset the email subject
+                                            }
+                                            alerted = true;
+                                        }
+                                        let s_list = await get_shopping_list(); // ------------------------------------------------ Get the shopping list
+                                        let p_list = await get_pantry_products(); // ------------------------------------------------ Get the pantry products
+                                        addRecipeName("Despensa"); // ------------------------------------------------------ Add the recipe name to the page as <h2>
+                                        addPantryTable(p_list); // ------------------------------------------------------------ Add the pantry table to the page
+                                        addShoopingListTable(s_list); // ------------------------------------------------------ Add the shopping list table to the page
                                         break;
                                     case "goodbye":
                                         closeHelpBox(); // -------------------------------------------------------- Close the help box
