@@ -1436,6 +1436,13 @@
                                         }
                                     break;
                                     case "ask_pantry":
+                                        console.log("ASK PANTRY -----------------------------");
+                                        clearContent(); // -------------------------------------------------------- Clear the content
+                                        let pantry_products = await get_pantry_products(); // ---------------------- Get all the products in the pantry
+                                        addRecipeName("Produtos na Despensa"); // ------------------------------------ Add the title to the page as <h2>
+                                        addPantryTable(pantry_products); // ---------------------------------------- Add the pantry products to the page as <table> id = pantry-table
+                                        // ------------------------------------------------------------------------- SEND THE VOICE TO THE USER
+                                        sendToVoice("Segue a lista de produtos na despensa!"); // ---------------------- SEND THE VOICE TO THE USER
                                         // O que tenho na despensa
                                         break;
                                     case "add_pantry":
@@ -1506,14 +1513,13 @@
                                         break;
                                     case "add_pantry_barcode":
                                         console.log("ADD PANTRY BARCODE");
+                                        clearContent(); // -------------------------------------------------------- Clear the content
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
                                         sendToVoice("O produto foi lido com sucesso, indique a data de validade"); //- SEND THE VOICE TO THE USER
                                         mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
                                             doStartRequest(new EMMA("text-", "text", "command", 1, 0).
                                             setValue(JSON.stringify({text: "Get Expiration Date"})))); // ------------ Call the function to get the expiration date
-                                        break;
-                                    case "remove_pantry":
                                         break;
                                     case "remove_pantry":
                                         break;
@@ -1526,8 +1532,24 @@
                                     case "add_recipe_ingredients_pantry":
                                         break;
                                     case "ask_shopping_list":
+                                        console.log("ASK SHOPPING LIST -----------------------------");
+                                        clearContent(); // -------------------------------------------------------- Clear the content
+                                        let s_list_1 = await get_shopping_list(); // ------------------------------------- Get the shopping list
+                                        addRecipeName("Lista de Compras"); // ---------------------------------------- Add the title to the page as <h2>
+                                        addShoopingListTable(s_list_1); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
                                         break;
                                     case "send_shopping_list":
+                                        console.log("SEND SHOPPING LIST -----------------------------");
+                                        let s_list_2 = await get_shopping_list(); // ------------------------------------- Get the shopping list 
+
+                                        if(s_list_2.length > 0){
+                                            // send the shopping list
+                                            send_email("shopping", s_list_2); // -------------------------------------- SEND EMAIL
+                                            console.log("---------> EMAIL SENT <---------");
+                                            sendToVoice("A sua lista de compras foi enviada para o seu email"); // ------------ SEND THE VOICE TO THE USER
+                                            openChatBox(); // ------------------------------------------------------------ Open the chat box
+                                            addMsgToChat("Assistente", "A sua lista de compras foi enviada para o seu email"); // --- Add the message to the chat
+                                        }
                                         break;
                                     case "get_quantity_ingredient":
                                         if(add_pdb_flag){
