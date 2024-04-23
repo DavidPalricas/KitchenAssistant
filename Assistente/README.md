@@ -73,5 +73,5 @@ https://127.0.0.1:8082/index.htm
 ## Sétimo Passo: Abrir Uma janela do Chrome para correr o Assistente 
 
 ```bash
-https://127.0.0.1:8082/index.htm
+https://127.0.0.1:8082/appGui.htm
 ```
