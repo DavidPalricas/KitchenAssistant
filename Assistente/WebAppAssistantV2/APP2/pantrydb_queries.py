@@ -358,18 +358,18 @@ def showAllGrocery():
 # removeStock("Apples", 10000, "g")
 # print("----------------------------------------------")
 # print("\n")
-# # Test inserting a item in the grocery list
+# Test inserting a item in the grocery list
 #insertGrocery("Oranges")
 #print("----------------------------------------------")
 #print("\n")
-# # Test inserting a item in the grocery list
+# Test inserting a item in the grocery list
 #insertGrocery("azeite")
 #print("----------------------------------------------")
 #print("\n")
-# # Test showing all items in the grocery list
-# print(showAllGrocery())
-# print("----------------------------------------------")
-# print("\n")
+# Test showing all items in the grocery list
+#print(showAllGrocery())
+#print("----------------------------------------------")
+#print("\n")
 # # Test removing a item in the grocery list
 #removeGrocery("azeite")
 #print("----------------------------------------------")
