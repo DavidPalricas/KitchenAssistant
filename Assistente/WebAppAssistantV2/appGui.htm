@@ -1230,6 +1230,8 @@
         var add_pdb_flag = false;
         var alerted = false;
         var active_assistant = false;
+        var s_list = null;
+        var p_list = null;
 
 
         const jokes = [
@@ -1319,11 +1321,15 @@
                                         //addMsgToChat('Assistente','Escolha uma receita para começar a preparação'); // -------- Add the Assistent message to the chat
                                         break;
                                     case "ask_for_tools":
+                                        console.log("ASK FOR TOOLS -----------------------------");
                                         break;
                                     case "ask_for_ingredients":
+                                        console.log("ASK FOR INGREDIENTS -----------------------------");
                                         break;
                                     case "ask_spefific_recipe":
+                                        console.log("ASK SPECIFIC RECIPE -----------------------------");
                                         closeHelpBox(); // -------------------------------------------------------- Close the help box
+                                        clearContent(); // -------------------------------------------------------- Clear the content
                                         console.log("ASK SPECIFIC RECIPE: ");
                                         //console.log("ASK SPECIFIC RECIPE_VALUE: "+c.nlu.recipe);
                                         let tag = c.nlu.recipe; // ------------------------------------------------- Get the recipe tag
@@ -1353,12 +1359,15 @@
                                         addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                                         break;
                                     case "ask_help":
+                                        console.log("ASK HELP -----------------------------");
                                         closeChatBox();
                                         sendToVoice("Segue a lista de comandos aceites para interagir comigo!");
                                         openHelpBox();
                                         break;
                                     case "ask_random_recipe":
+                                        console.log("ASK RANDOM RECIPE -----------------------------");
                                         closeHelpBox(); // -------------------------------------------------------- Close the help box
+                                        clearContent(); // -------------------------------------------------------- Clear the content
                                         //console.log(c.nlu);
                                         data = await getRandRecipe() // -------------------------------------------- Get the random recipe
                                         recipe_id = data.recipe_id; // --------------------------------------------- Set the recipe_id fer the random recipe
@@ -1388,7 +1397,7 @@
                                         addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                                         break;
                                     case "ask_repeat_step":
-                                        //console.log("ASK REPEAT STEP -----------------------------");
+                                        console.log("ASK REPEAT STEP -----------------------------");
                                         let repeat_instruction = await getActualInstruction(recipe_id, step); // --- Get the actual instruction for the recipe
                                         //console.log("REPEAT INSTRUCTION: ", repeat_instruction.actual_instruction);
                                         voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
@@ -1400,7 +1409,7 @@
                                         addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
                                         break;
                                     case "ask_first_step":
-                                        //console.log("ASK FIRST STEP -----------------------------");
+                                        console.log("ASK FIRST STEP -----------------------------");
                                         let instruction = await getActualInstruction(recipe_id, step); // ---------- Get the first instruction for the recipe
                                         //console.log("INSTRUCTION: ", instruction.actual_instruction); 
                                         voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
@@ -1413,7 +1422,7 @@
                                         addMsgToChat('Assistente','PRÓXIMA INSTRUÇÃO : Avança para o próximo passo');
                                         break;
                                     case "ask_next_step":
-                                        //console.log("ASK NEXT STEP -----------------------------");
+                                        console.log("ASK NEXT STEP -----------------------------");
                                         let next_instruction = await getNextInstruction(recipe_id, step); // ------- Get the next instruction for the recipe
                                         voice = c.nlu.audioReconized;
                                         if (next_instruction == null) { // ----------------------------------------- If there are NO MORE instructions
@@ -1448,7 +1457,7 @@
                                     case "add_pantry":
                                         // Adiciona [3](quantidade) [ovos](ingrediente) à despensa
                                         // Comprei [ovos](ingrediente)
-                                        console.log("ADD PANTRY");
+                                        console.log("ADD PANTRY -----------------------------");
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         let name = c.nlu.name; // ---------------------------------------------------- Get the ingredient
                                         if(name)
@@ -1512,7 +1521,7 @@
                                         }
                                         break;
                                     case "add_pantry_barcode":
-                                        console.log("ADD PANTRY BARCODE");
+                                        console.log("ADD PANTRY BARCODE -----------------------------");
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
@@ -1522,29 +1531,34 @@
                                             setValue(JSON.stringify({text: "Get Expiration Date"})))); // ------------ Call the function to get the expiration date
                                         break;
                                     case "remove_pantry":
+                                        console.log("REMOVE PANTRY -----------------------------");
                                         break;
                                     case "remove_all_pantry":
+                                        console.log("REMOVE ALL PANTRY -----------------------------");
                                         break;
                                     case "remove_all_shopping_list":
+                                        console.log("REMOVE ALL SHOPPING LIST -----------------------------");
                                         break;
                                     case "add_shopping_list":
+                                        console.log("ADD SHOPPING LIST -----------------------------");
                                         break;
                                     case "add_recipe_ingredients_pantry":
+                                        console.log("ADD RECIPE INGREDIENTS PANTRY -----------------------------");
                                         break;
                                     case "ask_shopping_list":
                                         console.log("ASK SHOPPING LIST -----------------------------");
                                         clearContent(); // -------------------------------------------------------- Clear the content
-                                        let s_list_1 = await get_shopping_list(); // ------------------------------------- Get the shopping list
+                                        s_list = await get_shopping_list(); // ------------------------------------- Get the shopping list
                                         addRecipeName("Lista de Compras"); // ---------------------------------------- Add the title to the page as <h2>
-                                        addShoopingListTable(s_list_1); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
+                                        addShoopingListTable(s_list); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
                                         break;
                                     case "send_shopping_list":
                                         console.log("SEND SHOPPING LIST -----------------------------");
-                                        let s_list_2 = await get_shopping_list(); // ------------------------------------- Get the shopping list 
+                                        s_list = await get_shopping_list(); // ------------------------------------- Get the shopping list 
 
-                                        if(s_list_2.length > 0){
+                                        if(s_list.length > 0){
                                             // send the shopping list
-                                            send_email("shopping", s_list_2); // -------------------------------------- SEND EMAIL
+                                            send_email("shopping", s_list); // -------------------------------------- SEND EMAIL
                                             console.log("---------> EMAIL SENT <---------");
                                             sendToVoice("A sua lista de compras foi enviada para o seu email"); // ------------ SEND THE VOICE TO THE USER
                                             openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1553,6 +1567,7 @@
                                         break;
                                     case "get_quantity_ingredient":
                                         if(add_pdb_flag){
+                                            console.log("GET QUANTITY INGREDIENT -----------------------------");
                                             product["quantity"] = c.nlu.quantity; // ------------------------------------- Get & Store the quantity
                                             let unidade = c.nlu.unit; // ------------------------------------------------- Get the unit
                                             if(unidade)
@@ -1587,11 +1602,15 @@
                                         break;
                                     case "get_expiration_date":
                                         if (add_pdb_flag){ // ------------------------------------------------------------ Check if already added a product
+                                            console.log("GET EXPIRATION DATE -----------------------------");
                                             let expiration_date = c.nlu.expiration_date; // ------------------------------ Get the expiration date
                                             product["expiration_date"] = convertDateToSQLFormat(expiration_date); // ----- Convert the date to SQL format
                                             // --------------------------------------------------------------------------- Create the message to the user
                                             let answer1 = "O produto "+ product["name"] + " com a quantidade " + product["quantity"] + " " + product["unit"] + " foi adicionado à despensa com a data de validade " + product["expiration_date"];
                                             insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                            console.log(" UPDATE PANTRY TABLE"); // -------------------------------------- Update the pantry table
+                                            p_list = await get_pantry_products(); // ------------------------------------- Get the shopping list
+                                            addPantryTable(p_list); // --------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
                                             let answer2 = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                             sendToVoice(answer2); // ----------------------------------------------------- Send the voice msg to the user
                                             openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1628,13 +1647,14 @@
                                             }
                                             alerted = true;
                                         }
-                                        let s_list = await get_shopping_list(); // ------------------------------------------------ Get the shopping list
-                                        let p_list = await get_pantry_products(); // ------------------------------------------------ Get the pantry products
+                                        s_list = await get_shopping_list(); // ------------------------------------------------ Get the shopping list
+                                        p_list = await get_pantry_products(); // ------------------------------------------------ Get the pantry products
                                         addRecipeName("Despensa"); // ------------------------------------------------------ Add the recipe name to the page as <h2>
                                         addPantryTable(p_list); // ------------------------------------------------------------ Add the pantry table to the page
                                         addShoopingListTable(s_list); // ------------------------------------------------------ Add the shopping list table to the page
                                         break;
                                     case "goodbye":
+                                        console.log("GOODBYE -----------------------------");
                                         closeHelpBox(); // -------------------------------------------------------- Close the help box
                                         clearChatMessages(); // ---------------------------------------------------- Clear the chat messages
                                         closeChatBox(); // --------------------------------------------------------- Close the chat box
@@ -1647,13 +1667,14 @@
                                     case "deny":
                                         break;
                                     case "joke":
-                                        console.log("JOKES");
+                                        console.log("JOKES -----------------------------");
                                         openChatBox();
                                         let joke_selected = getRandJoke();
                                         addMsgToChat('Assistente',joke_selected); // --------- Add the joke to the chat
                                         sendToVoice(joke_selected);
                                         break;
                                     case "default":
+                                        console.log("DEFAULT -----------------------------");
                                         break;
                                 }
                                 // end switch
