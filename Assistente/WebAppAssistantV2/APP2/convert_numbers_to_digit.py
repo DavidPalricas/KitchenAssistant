@@ -65,7 +65,7 @@ numbers_dict = {
     "seiscentos": 600, "seiscentas": 600, "setecentos": 700, "setecentas": 700,
     "oitocentos": 800, "oitocentas": 800, "novecentos": 900, "novecentas": 900,
     "mil": 1000, "milhão": 1000000, "milhões": 1000000,
-    "milhares": 1000, "milhar": 1000, 
+    "milhares": 1000, "milhar": 1000
 }
 
 uni_dict = {

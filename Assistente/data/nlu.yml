@@ -222,6 +222,9 @@ nlu:
 - regex: data
   examples: |
     - \d{1,2}/\d{1,2}\s\d{4}
+    - \d{1,2}/\d{1,2}/\d{4}
+    - \d{1,2}/\d{1,2}/\d{4}
+    - \d{1,2}\sde\s(?:Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\sde\s\d{4}
 
 # Ask for ingredients on the pantry
 - intent: ask_pantry

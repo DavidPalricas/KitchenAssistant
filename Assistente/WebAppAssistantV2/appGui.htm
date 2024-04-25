@@ -1505,6 +1505,11 @@
                                                 product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                clearContent(); // -------------------------------------------------------- Clear the content
+                                                s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                                p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1517,6 +1522,11 @@
                                                 product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                clearContent(); // -------------------------------------------------------- Clear the content
+                                                s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                                p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1548,6 +1558,11 @@
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
                                         remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                        clearContent(); // -------------------------------------------------------- Clear the content
+                                        s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                        p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                        addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                        addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                         sendToVoice("O produto foi removido com sucesso"); //- SEND THE VOICE TO THE USER
                                         reset_product(); // ---------------------------------------------------------- Reset the product dictionary
                                         break;
@@ -1587,6 +1602,11 @@
                                                 product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                clearContent(); // -------------------------------------------------------- Clear the content
+                                                s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                                p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi removido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1599,6 +1619,11 @@
                                                 product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
                                                 remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                clearContent(); // -------------------------------------------------------- Clear the content
+                                                s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                                p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi removido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1694,8 +1719,11 @@
                                             // --------------------------------------------------------------------------- Create the message to the user
                                             insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
                                             console.log(" UPDATE PANTRY TABLE"); // -------------------------------------- Update the pantry table
-                                            p_list = await get_pantry_products(); // ------------------------------------- Get the shopping list
-                                            addPantryTable(p_list); // --------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
+                                            clearContent(); // -------------------------------------------------------- Clear the content
+                                            s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                            p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                            addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                            addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                             answer = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                             sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                             openChatBox(); // ------------------------------------------------------------ Open the chat box
