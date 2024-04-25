@@ -736,20 +736,6 @@
             container.appendChild(table);
         }
 
-        async function convertDateToSQLFormat(transcript) {
-            const response = await fetch("http://127.0.0.1:5000/format-date", 
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ "date": transcript })
-            });
-            const data = await response.json();
-            console.log("DATA formated: ", data);
-            return data;
-        }
-
         function reset_product() {
             product = {
                 name: null,
@@ -852,6 +838,28 @@
             return body;
             //return body.replace(/"/g, '\\"');
         }
+
+        async function convertDateToSQLFormat(transcript) {
+            try {
+                const response = await fetch("http://127.0.0.1:5000/format-date", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "text": transcript })
+                });
+                const data = await response.json(); // Attempt to read response body even if the request is not OK
+                if (!response.ok) {
+                    console.error('Response data for error:', data); // Log the error body for debugging
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                console.log("DATA formatted: ", data);
+                return data;
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        }
+        
 
         /* FUNCTION : SEND EMAIL
             return a message to the user (email sent or not)
@@ -1562,6 +1570,7 @@
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
                                         p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                        clearContent(); // -------------------------------------------------------- Clear the content
                                         addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
                                         addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                         sendToVoice("O produto foi removido com sucesso"); //- SEND THE VOICE TO THE USER

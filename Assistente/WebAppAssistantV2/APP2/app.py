@@ -171,13 +171,15 @@ def convert_text():
 @app.route('/format-date', methods=['POST'])
 def format_date():
     # Check if the request contains JSON data
-    if not request.json or 'date' not in request.json:
+    if not request.json or 'text' not in request.json:
         return jsonify({'error': 'Request must be JSON and contain a "date" field.'}), 400
 
-    date_to_format = request.json['date']
+    date_to_format = request.json['text']
+    print("DATE TO FORMAT: " + date_to_format)
     
     # Use the format_date function from your module
     formatted_date = fd.parse_date(date_to_format)
+    print("FORMATED DATE: " + formatted_date)
     
     if formatted_date != "Invalid date format":
         return jsonify(formatted_date)

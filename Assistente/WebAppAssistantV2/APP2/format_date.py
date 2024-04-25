@@ -12,7 +12,10 @@ month_to_number = {
 date_patterns = {
     r"(\d{1,2})/(\d{1,2})\s(\d{4})": "DD/MM YYYY",  # 24/3 2045
     r"(\d{1,2})/(\d{1,2})/(\d{4})": "DD/MM/YYYY",   # 21/05/2024
-    r"(\d{1,2}) de (\w+) de (\d{4})": "DD de Month de YYYY"  # 21 de Maio de 2030
+    r"(\d{1,2}) de (\w+) de (\d{4})": "DD de Month de YYYY",  # 21 de Maio de 2030
+    r"(\d{1,2}) de (\w+)\s(\d{4})": "DD de Month de YYYY",  # 21 de Maio 2030
+    r"(\d{1,2})\s(\w+) de (\d{4})": "DD de Month de YYYY",  # 21 Maio de 2030
+    r"(\d{1,2})\s(\w+)\s(\d{4})": "DD de Month de YYYY"  # 21 Maio 2030
 }
 
 def parse_date(date_string):
