@@ -1,5 +1,6 @@
 import re
 import sys
+# working with numbers in Portuguese
 
 def convert_number_words_to_digits(words, numbers_dict):
     result = 0
