@@ -1,6 +1,6 @@
 import re
 import sys
-# working with numbers in Portuguese
+# working with numbers in Portuguese based on a exercicie made in the course "Compiladores"
 
 def convert_number_words_to_digits(words, numbers_dict):
     result = 0
