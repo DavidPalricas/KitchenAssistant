@@ -736,18 +736,18 @@
             container.appendChild(table);
         }
 
-        function convertDateToSQLFormat(dateString) {
-            // Split the string by '/' and ' ' to extract day, month, and year
-            const parts = dateString.split(/[/\s]/); // This regex splits at '/' or space
-            const day = parts[0];
-            const month = parts[1];
-            const year = parts[2];
-        
-            // Construct a new date string in SQL DATE format (YYYY-MM-DD)
-            // Pad the month and day with '0' if they are less than 10
-            const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        
-            return formattedDate;
+        async function convertDateToSQLFormat(transcript) {
+            const response = await fetch("http://127.0.0.1:5000/format-date", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "date": transcript })
+            });
+            const data = await response.json();
+            console.log("DATA formated: ", data);
+            return data;
         }
 
         function reset_product() {
@@ -1253,6 +1253,7 @@
         var answer = null;
 
 
+        
         const jokes = [
             'Eu gosto tanto de comida que meu super herói preferido é o super mercado.',
             'O que disse a farinha para o fermento? "Sem ti, a minha vida não cresce."',
@@ -1714,8 +1715,12 @@
                                     case "get_expiration_date":
                                         if (add_pdb_flag){ // ------------------------------------------------------------ Check if already added a product
                                             console.log("GET EXPIRATION DATE -----------------------------");
-                                            let expiration_date = c.nlu.expiration_date; // ------------------------------ Get the expiration date
-                                            product["expiration_date"] = convertDateToSQLFormat(expiration_date); // ----- Convert the date to SQL format
+                                            let expiration_date = c.nlu.audioReconized; // ------------------------------ Get the expiration date
+                                            console.log("EXPIRATION DATE - audio: ", expiration_date);
+                                            let formated_date = await convertDateToSQLFormat(expiration_date); // ---------------- Convert the date to SQL format
+                                            console.log("EXPIRATION DATE - convertDateToSQLFormat: ", formated_date);
+                                            product["expiration_date"] = formated_date; // ----- Convert the date to SQL format
+                                            console.log("PRODUCT : ", product["expiration_date"]);
                                             // --------------------------------------------------------------------------- Create the message to the user
                                             insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
                                             console.log(" UPDATE PANTRY TABLE"); // -------------------------------------- Update the pantry table

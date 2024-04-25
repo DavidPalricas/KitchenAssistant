@@ -11,7 +11,9 @@ import barcode_scanner as bs
 import email_service as es
 # ----------------------------------------------------------------------------------------- MODULE: API_OpenFoodFacts
 import API_OpenFoodFacts as api_op
-
+# ----------------------------------------------------------------------------------------- MODULE: format_date
+import format_date as fd
+# ----------------------------------------------------------------------------------------- MODULE: requests
 import json
 
 from decimal import Decimal
@@ -162,10 +164,25 @@ def convert_text():
         response.data = json.dumps(converted_text, ensure_ascii=False)  # Use ensure_ascii=False
         print(response)
         return response
-        
     else:
         return jsonify({'error': 'Failed to convert text.'}), 500
 
+# ----------------------------------------------------------------------------------------- > FORMAT DATE
+@app.route('/format-date', methods=['POST'])
+def format_date():
+    # Check if the request contains JSON data
+    if not request.json or 'date' not in request.json:
+        return jsonify({'error': 'Request must be JSON and contain a "date" field.'}), 400
+
+    date_to_format = request.json['date']
+    
+    # Use the format_date function from your module
+    formatted_date = fd.parse_date(date_to_format)
+    
+    if formatted_date != "Invalid date format":
+        return jsonify(formatted_date)
+    else:
+        return jsonify({'error': 'Failed to format date.'}), 500
 
 
 # ----------------------------------- > [ PANTRY DATABASE -> ENDPOINTS]

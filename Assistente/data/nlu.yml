@@ -223,7 +223,6 @@ nlu:
   examples: |
     - \d{1,2}/\d{1,2}\s\d{4}
     - \d{1,2}/\d{1,2}/\d{4}
-    - \d{1,2}/\d{1,2}/\d{4}
     - \d{1,2}\sde\s(?:Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\sde\s\d{4}
 
 # Ask for ingredients on the pantry
@@ -402,13 +401,29 @@ nlu:
 - intent : get_expiration_date
   examples: |
     - a data de validade é [12/12 2022](data)
+    - a data de validade é [12/12/2022](data)
+    - a data de validade é [21 de abril de 2024](data)
     - [12/12 2022](data)
+    - [12/12/2022](data)
+    - [21 de abril de 2024](data)
     - [12/12 2022](data) é a data de validade
+    - [12/12/2022](data) é a data de validade
+    - [21 de abril de 2024](data) é a data de validade
     - a data de validade é [12/12 2022](data)
+    - a data de validade é [12/12/2022](data)
+    - a data de validade é [21 de abril de 2024](data)
     - o fim da validade é [12/12 2025](data)
+    - o fim da validade é [12/12/2025](data)
+    - o fim da validade é [21 de abril de 2024](data)
     - [12/12 2022](data) é o fim da validade
+    - [12/12/2022](data) é o fim da validade
+    - [21 de abril de 2024](data) é o fim da validade
     - o prazo de validade é [12/12 2030](data)
+    - o prazo de validade é [12/12/2030](data)
+    - o prazo de validade é [21 de abril de 2024](data)
     - [12/12 2022](data) é o prazo de validade
+    - [12/12/2022](data) é o prazo de validade
+    - [21 de abril de 2024](data) é o prazo de validade
 
 # Greet the assistant
 - intent: greet
