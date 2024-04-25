@@ -46,7 +46,8 @@ conversion_factors = {
     'garrafa': {'l': Decimal('1.5')},
     'tablete': {'g': Decimal('200')},
     'pacote': {'kg': Decimal('1')},
-    'saqueta': {'g': Decimal('5')}
+    'saqueta': {'g': Decimal('5')},
+    'uni': {'g': Decimal('200')}
 }
 
 # ---------------------------------------------------------------------------------------------- [CONVERT MEASURE]
