@@ -400,8 +400,8 @@
         // | UNICO SPOT PARA ALTERAÇÕES - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!                                      |
         // |                                                               - KITCHEN ASSISTANT FOR ACTIVE AGEING !!!!!   |
         // ---------------------------------------------------------------------------------------------------------------
-        function sendMMI(final_transcript){
-
+        async function sendMMI(final_transcript){
+          final_transcript = await convert_numbers_into_digits(final_transcript);
           var obj = new Object();
           var recipe ;
           obj.text = final_transcript;
@@ -518,6 +518,14 @@
                         doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
                         setValue(JSON.stringify(result))));
                 break;
+              case "remove_pantry_barcode":
+                  var message = {'intent':'add_pantry_barcode', 'audioReconized': final_transcript }
+                  var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+                  var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+                  mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                        doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                        setValue(JSON.stringify(result))));
+                break;
               case "remove_pantry": // -------------------------------------------- [ REMOVE_PANTRY] - FOR REVISING
                 var message = {'intent':'remove_pantry', 'quantity' : findValueByKey(data.entities,"quantidade"),'unit' : findValueByKey(data.entities,"unidade"),'name' : findValueByKey(data.entities, "ingrediente"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
@@ -560,6 +568,14 @@
                 break;
               case "ask_shopping_list": // ---------------------------------------- [ ASK_SHOPPING_LIST] - FOR REVISING
                 var message = {'intent':'ask_shopping_list', 'audioReconized': final_transcript }
+                var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+                var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
+                mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
+                      doExtensionNotification(new EMMA("text-", "text", "command", 1, 0).
+                      setValue(JSON.stringify(result))));
+                break;
+              case "ask_specific_pantry":
+                var message = {'intent':'ask_specific_pantry', 'name' : findValueByKey(data.entities, "ingrediente"), 'audioreconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").
@@ -717,7 +733,7 @@
 
         async function run_delay() {
             console.log("Starting delay...");
-            await delay(5000); // Wait for 10 seconds
+            await delay(5000); // Wait for 5 seconds
             console.log("Delay finished.");
             recognition.start();
             circle.animate(20, 0, 'now').attr({ fill: '#00a431' });
@@ -732,6 +748,21 @@
                 }
             }
           }
+        }
+
+        /* FUNCTION TO CONVERT NUMBERS ALWAYS INTO DIGITS TO BE MORE EASY TO USE ON RASA */
+        async function convert_numbers_into_digits(transcript){
+          const response = await fetch("http://127.0.0.1:5000/convert-text",
+          {
+            method : "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"text": transcript})
+          });
+          const data = await response.json();
+          console.log("Transcript converted",data);
+          return data;
         }
 
     </script>

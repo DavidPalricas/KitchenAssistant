@@ -2,7 +2,7 @@ import re
 import sys
 # working with numbers in Portuguese based on a exercicie made in the course "Compiladores"
 
-def convert_number_words_to_digits(words, numbers_dict):
+def convert_number_words_to_digits(words):
     result = 0
     temp_number = 0
     for word in words:
@@ -22,25 +22,31 @@ def convert_number_words_to_digits(words, numbers_dict):
             return None
     return result + temp_number
 
-def extract_and_convert_numeric_phrases(sentence, numbers_dict):
+def convert_units(word):
+    if word in uni_dict:
+        return uni_dict[word]
+    return word
+    
+def extract_and_convert_numeric_phrases(sentence):
     # Simplified approach: directly replace words with their numeric equivalents
     words = sentence.split()
     converted_words = []
     number_phrase = []
     for word in words:
-        if word.lower() in numbers_dict or word.lower() == "e":
-            number_phrase.append(word.lower())
+        lower_word = word.lower()
+        if lower_word in numbers_dict or lower_word == "e":
+            number_phrase.append(lower_word)
         else:
             if number_phrase:
-                converted_number = convert_number_words_to_digits(number_phrase, numbers_dict)
+                converted_number = convert_number_words_to_digits(number_phrase)
                 if converted_number is not None:
                     converted_words.append(str(converted_number))
                 number_phrase = []
-            converted_words.append(word)
+            converted_words.append(convert_units(word))
     
     # Check if sentence ends with a number phrase
     if number_phrase:
-        converted_number = convert_number_words_to_digits(number_phrase, numbers_dict)
+        converted_number = convert_number_words_to_digits(number_phrase)
         if converted_number is not None:
             converted_words.append(str(converted_number))
     
@@ -59,7 +65,16 @@ numbers_dict = {
     "seiscentos": 600, "seiscentas": 600, "setecentos": 700, "setecentas": 700,
     "oitocentos": 800, "oitocentas": 800, "novecentos": 900, "novecentas": 900,
     "mil": 1000, "milhão": 1000000, "milhões": 1000000,
-    "milhares": 1000, "milhar": 1000
+    "milhares": 1000, "milhar": 1000, 
+}
+
+uni_dict = {
+    "litros" : "l", "mililitros" : "ml", "centilitros" : "cl", "decilitros" : "dl",
+    "gramas" : "g", "quilogramas" : "kg", "quilos" : "kg", "miligramas" : "mg", 
+    "unidades" : "uni", "latas" : "lata", "pacotes" : "pacote", "tabletes" : "tablete",
+    "dentes" : "dente", "folhas" : "folha", "ramos" : "ramo", "talos" : "talo",
+    "copos" : "copo", "garrafas" : "garrafa", "capsulas" : "capsula", "saquetas" : "saqueta",
+    "colheres de sopa" : "colher de sopa", "colheres de chá" : "colher de chá"
 }
 
 def main(argv):
@@ -68,7 +83,7 @@ def main(argv):
         return
 
     input_sentence = argv[1]
-    converted_sentence = extract_and_convert_numeric_phrases(input_sentence, numbers_dict)
+    converted_sentence = extract_and_convert_numeric_phrases(input_sentence)
     print(converted_sentence)
 
 if __name__ == "__main__":

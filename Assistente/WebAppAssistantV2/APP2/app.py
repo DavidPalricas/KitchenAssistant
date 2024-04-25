@@ -12,6 +12,7 @@ import email_service as es
 # ----------------------------------------------------------------------------------------- MODULE: API_OpenFoodFacts
 import API_OpenFoodFacts as api_op
 
+import json
 
 from decimal import Decimal
 from flask_cors import CORS
@@ -154,10 +155,14 @@ def convert_text():
     text_to_convert = request.json['text']
     
     # Use the conversion function from your module
-    converted_text = convert.extract_and_convert_numeric_phrases(text_to_convert, convert.numbers_dict)
+    converted_text = convert.extract_and_convert_numeric_phrases(text_to_convert)
     
     if converted_text is not None:
-        return jsonify(converted_text)
+        response =  jsonify(converted_text)
+        response.data = json.dumps(converted_text, ensure_ascii=False)  # Use ensure_ascii=False
+        print(response)
+        return response
+        
     else:
         return jsonify({'error': 'Failed to convert text.'}), 500
 
