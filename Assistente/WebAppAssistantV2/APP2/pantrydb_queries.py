@@ -371,6 +371,7 @@ def showAllGrocery():
 #removeAllStock("Azeite")
 #clearStock()
 
+
 # print("\n")
 # # Test inserting a new stock item and its details
 #insertStock("Azeite", 1, "l", "2024-01-01")

@@ -45,7 +45,6 @@ CORS(app)
 #     app.run(debug=True) # Para mostrar os erros no browser
 
 
-
 # ----------------------------------- > [ RECIPES DATABASE -> ENDPOINTS]
 
 # ----------------------------------------------------------------------------------------- > FETCH ALL RECIPES
