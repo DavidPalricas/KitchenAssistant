@@ -47,7 +47,8 @@ conversion_factors = {
     'tablete': {'g': Decimal('200')},
     'pacote': {'kg': Decimal('1')},
     'saqueta': {'g': Decimal('5')},
-    'uni': {'g': Decimal('200')}
+    'uni': {'g': Decimal('200')},
+    'caixa': {'saqueta': Decimal('20')}
 }
 
 # ---------------------------------------------------------------------------------------------- [CONVERT MEASURE]
@@ -239,6 +240,48 @@ def getStockDetails():
             conn.close()
     else:
         return None
+
+# remove all entries of a stock item from stock_details
+def removeAllStock(name):
+    conn, cursor = connectDatabase()
+    if conn is not None:
+        try:
+            cursor.execute("SELECT stock_id FROM stock WHERE name = %s", (name,))
+            stock_id_result = cursor.fetchone()
+            if stock_id_result:
+                stock_id = stock_id_result[0]
+                cursor.execute("DELETE FROM stock_details WHERE stock_id = %s", (stock_id,))
+                conn.commit()
+                print(f"Removed all stock details for '{name}' from stock_details.")
+            else:
+                print(f"Stock item '{name}' does not exist in the database.")
+        except Error as e:
+            print(e)
+            print(f"Failed to remove all stock details for '{name}'")
+        finally:
+            cursor.close()
+            conn.close()
+            print("Connection closed.")
+    else:
+        print("Failed to connect to the database.")
+        
+# clear all entries from stock_details table
+def clearStock():
+    conn, cursor = connectDatabase()
+    if conn is not None:
+        try:
+            cursor.execute("DELETE FROM stock_details")
+            conn.commit()
+            print("Cleared all stock details from stock_details.")
+        except Error as e:
+            print(e)
+            print("Failed to clear all stock details from stock_details.")
+        finally:
+            cursor.close()
+            conn.close()
+            print("Connection closed.")
+    else:
+        print("Failed to connect to the database.")
     
 # ---------------------------------------------------------------------------------------------- [GROCERY List]
 
@@ -323,7 +366,10 @@ def showAllGrocery():
     else:
         print("Failed to connect to the database.")
 
+# ---------------------------------------------------------------------------------------------- [TESTS]
 
+#removeAllStock("Azeite")
+#clearStock()
 
 # print("\n")
 # # Test inserting a new stock item and its details

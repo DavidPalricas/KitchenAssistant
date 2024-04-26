@@ -234,7 +234,23 @@ def get_pantry_stock():
     pantry_list = pdb.getStockDetails()
     return jsonify(pantry_list)
 
+# ----------------------------------------------------------------------------------------- > REMOVE ALL <GIVEN PRODUCT> FROM PANTRY
+@app.route('/pantry/remove_stock/<name>', methods=['DELETE'])
+def remove_all_stock(name):
+    try:
+        result = pdb.removeAllStock(name)
+        return jsonify({'message': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+# ----------------------------------------------------------------------------------------- > CLEAR PANTRY
+@app.route('/pantry/clear', methods=['DELETE'])
+def clear_pantry():
+    try:
+        result = pdb.clearStock()
+        return jsonify({'message': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ----------------------------------- > [ SHOPPING LIST DATABASE -> ENDPOINTS]
 
@@ -274,9 +290,11 @@ def remove_grocery():
 # ----------------------------------------------------------------------------------------- > FETCH ALL GROCERY LIST
 @app.route('/pantry/shopping-list', methods=['GET'])
 def get_grocery_list():
-    grocery_list = pdb.showAllGrocery()
-    return jsonify(grocery_list)
-
+    try:
+        grocery_list = pdb.showAllGrocery()
+        return jsonify(grocery_list), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # ----------------------------------- > [ BARCODE -> ENDPOINTS]
