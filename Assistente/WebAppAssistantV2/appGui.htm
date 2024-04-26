@@ -860,7 +860,6 @@
             }
         }
         
-
         /* FUNCTION : SEND EMAIL
             return a message to the user (email sent or not)
         */
@@ -1274,15 +1273,15 @@
         const plant_products = [
             'maçãs', 'bananas', 'cenouras', 'batatas', 'tomates', 'alface', 'cebolas', 'trigo', 
             'arroz', 'milho', 'soja', 'aveia', 'abacates', 'morangos', 'laranjas', 'limões', 'uvas',
-            'amêndoas', 'castanhas', 'nozes', 'pimentões', 'couve', 'espinafre', 'feijão', 'ervilhas', 
+            'amêndoas', 'castanhas', 'nozes', 'pimento', 'couve', 'espinafre', 'feijão', 'ervilhas', 
             'pepinos', 'abóboras', 'melancias', 'mangas', 'pêssegos'
         ];
 
         /* All Types of ANIMAL products */
         const animal_products = [
             'galinha', 'frango', 'peixe', 'salmão', 'polvo', 'porco', 'vaca', 'cordeiro',
-            'carneiro', 'bacalhau', 'camarão', 'lagosta', 'atum', 'truta', 'siri', 'mexilhão',
-            'ostra', 'pato', 'peru', 'coelho', 'cervo', 'javali', 'faisão', 'codorniz', 'arenque' 
+            'carneiro', 'bacalhau', 'camarão', 'lagosta', 'atum', 'truta', 'mexilhão',
+            'ostra', 'pato', 'peru', 'coelho', 'javali', 'faisão', 'codorniz'
         ];
 
         async function im1MessageHandler(data){
@@ -1632,6 +1631,19 @@
                                         break;
                                     case "remove_all_pantry":
                                         console.log("REMOVE ALL PANTRY -----------------------------");
+                                        let pantry_products_rmv = c.nlu.name; // ---------------------------------------------------- Get the ingredient
+                                        if(pantry_products_rmv){
+                                            // remover todas as ocurencias desse produto
+                                            sendToVoice("Foi removido o produto " + pantry_products_rmv + " da despensa!"); // ---------------------- SEND THE VOICE TO THE USER
+                                        }else{
+                                            // apagar toda a dispensa
+                                            sendToVoice("A despensa foi limpa!"); // ---------------------- SEND THE VOICE TO THE USER
+                                        }
+                                        clearContent(); // -------------------------------------------------------- Clear the content
+                                        s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
+                                        p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
+                                        addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                        addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                         break;
                                     case "remove_all_shopping_list":
                                         console.log("REMOVE ALL SHOPPING LIST -----------------------------");
