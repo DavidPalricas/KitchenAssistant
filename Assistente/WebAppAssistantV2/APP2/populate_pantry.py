@@ -4,27 +4,68 @@ import random
 
 # List of products to be inserted into the pantry database
 products = [
+   # Seafood
+    ("bacalhau", "kg"),
+    ("sardinhas", "lata"),
+    ("polvo", "kg"),
+    ("amêijoas", "kg"),
+    ("lulas", "kg"),
+
+    # Meats
+    ("frango", "kg"),
+    ("perna de frango", "kg"),
+    ("bife de vaca", "kg"),
+    ("lombo de porco", "kg"),
+    ("peru", "kg"),
+
+    # Dairy
+    ("queijo da serra", "kg"),
+    ("leite", "l"),
+    ("iogurte", "uni"),
+    ("manteiga", "g"),
+    ("requeijão", "g"),
+
+    # Vegetables
+    ("batata", "kg"),
+    ("tomates", "kg"),
+    ("cenoura", "kg"),
+    ("espinafres", "molho"),
+    ("abóbora", "kg"),
+
+    # Fruits
+    ("laranja", "kg"),
+    ("maçã", "kg"),
+    ("banana", "kg"),
+    ("uvas", "kg"),
+    ("melancia", "kg"),
+
+    # Grains
     ("arroz", "kg"),
     ("feijão", "kg"),
-    ("azeite", "l"),
-    ("massa", "kg"),
-    ("açúcar", "kg"),
+    ("quinoa", "kg"),
+    ("aveia", "kg"),
+    ("farinha de trigo", "kg"),
+
+    # Herbs and spices
+    ("salsa", "g"),
+    ("coentros", "g"),
+    ("paprika", "g"),
+    ("canela", "g"),
     ("sal", "kg"),
-    ("farinha", "kg"),
-    ("biscoitos", "pacote"),
-    ("café", "g"),
-    ("chá", "caixa"),
-    ("leite", "l"),
-    ("tomate pelado", "lata"),
-    ("atum", "lata"),
-    ("sardinhas enlatadas", "lata"),
-    ("pão", "uni"),
-    ("manteiga", "g"),
-    ("maçãs", "kg"),
-    ("bananas", "kg"),
-    ("bifanas", "kg"),
-    ("frango", "kg"),
-    ("salmão", "kg")
+
+    # Nuts
+    ("amêndoa", "kg"),
+    ("noz", "kg"),
+    ("castanha", "kg"),
+    ("pistácio", "kg"),
+    ("amendoim", "kg"),
+
+    # Oils and others
+    ("azeite", "l"),
+    ("vinagre", "l"),
+    ("massa", "kg"),
+    ("manteiga de amendoim", "g"),
+    ("molho de tomate", "lata")
 ]
 
 grocery_items = [
@@ -48,8 +89,8 @@ def populate_pantry():
     today = datetime.now()
     for name, unit in products:
         # Randomize the quantity and create between 1 and 3 entries per product
-        for _ in range(random.randint(1, 3)):
-            quantity = random.randint(1, 5)  # Random quantity between 1 and 5
+        for _ in range(random.randint(0, 1)):
+            quantity = random.randint(1, 4)  # Random quantity between 1 and 4
             # Generate a random expiration date within the next two years
             expiration_date = today + timedelta(days=random.randint(30, 730))
             expiration_date_str = expiration_date.strftime('%Y-%m-%d')
