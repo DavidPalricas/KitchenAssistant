@@ -1,6 +1,7 @@
-import re
-import sys
 import spacy
+# pip install spacy
+# python -m spacy download pt_core_news_sm
+
 
 unit_list = [
     "l", "ml", "cl", "dl", "kg", "g", "mg", 
