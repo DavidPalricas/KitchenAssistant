@@ -334,6 +334,14 @@ def get_grocery_list():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# ----------------------------------------------------------------------------------------- > CLEAR GROCERY LIST
+@app.route('/pantry/clear-grocery', methods=['DELETE'])
+def clear_grocery():
+    try:
+        result = pdb.clearGrocery()
+        return jsonify({'message': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ----------------------------------- > [ BARCODE -> ENDPOINTS]
 

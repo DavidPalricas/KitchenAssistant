@@ -373,6 +373,24 @@ def showAllGrocery():
     else:
         print("Failed to connect to the database.")
 
+# clear all entries from grocery_list table
+def clearGrocery():
+    conn, cursor = connectDatabase()
+    if conn is not None:
+        try:
+            cursor.execute("DELETE FROM grocerylist")
+            conn.commit()
+            print("Cleared all stock details from grocerylist.")
+        except Error as e:
+            print(e)
+            print("Failed to clear all stock details from grocerylist.")
+        finally:
+            cursor.close()
+            conn.close()
+            print("Connection closed.")
+    else:
+        print("Failed to connect to the database.")
+
 # ---------------------------------------------------------------------------------------------- [TESTS]
 
 #removeAllStock("Azeite")

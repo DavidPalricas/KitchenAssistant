@@ -338,17 +338,18 @@ nlu:
   examples: |
     - Adiciona [ovos](ingrediente) à lista de compras
     - Adiciona [peitos de frango](ingrediente) à lista de compras
+    - Acrescenta na lista de compras [cebola](ingrediente)
 
 # add ingridiente that we didnt have to make a recipe to the shopping list
-- intent: add_recipe_ingredients_pantry
-  examples: |
-    - Adiciona os ingredientes que faltam à lista de compras
-    - Adiciona os ingredientes que faltam para a receita à lista de compras
-    - Adiciona os ingredientes que faltam para fazer a receita à lista de compras
-    - Adiciona o que não temos à lista de compras
-    - Adiciona o que falta à lista de compras
-    - Adiciona o que falta para a receita à lista de compras
-    - Adiciona o que falta para fazer a receita à lista de compras
+#- intent: add_recipe_ingredients_pantry
+#  examples: |
+#    - Adiciona os ingredientes que faltam à lista de compras
+#    - Adiciona os ingredientes que faltam para a receita à lista de compras
+#    - Adiciona os ingredientes que faltam para fazer a receita à lista de compras
+#    - Adiciona o que não temos à lista de compras
+#    - Adiciona o que falta à lista de compras
+#    - Adiciona o que falta para a receita à lista de compras
+#    - Adiciona o que falta para fazer a receita à lista de compras
 
 # Ask for the shopping list
 - intent: ask_shopping_list
