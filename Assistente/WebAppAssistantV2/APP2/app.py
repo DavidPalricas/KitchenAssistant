@@ -194,21 +194,36 @@ def get_ingredient():
     data = request.json
     
     sentence = data.get('sentence')
+    print(sentence)
     sentence = sentence.lower()
-    stock_details = pdb.getStockDetails()
-    print(stock_details)
-    for stock in stock_details:
-        temp = stock.split(" ")
-        lista.append(temp[0].lower())
     
-    if not sentence and not lista:
+    if not sentence:
         return jsonify({'error': 'Missing required fields.'}), 400
     
     try:
-        wanted_ingridient = gp.get_ingredient(sentence, lista)
+        wanted_ingridient = gp.get_ingredient(sentence)
         return jsonify({'message': wanted_ingridient}), 200
     except Exception as e:
         return jsonify({'error': f'Failed to get ingridient: {e}'}), 500
+    
+# ----------------------------------------------------------------------------------------- > FETCH UNIT FROM A SENTENCE
+@app.route('/get-unit', methods=['POST'])
+def get_unit():
+    lista = []
+    data = request.json
+    
+    sentence = data.get('sentence')
+    print(sentence)
+    sentence = sentence.lower()
+    
+    if not sentence:
+        return jsonify({'error': 'Missing required fields.'}), 400
+    
+    try:
+        wanted_unit = gp.get_unit(sentence)
+        return jsonify({'message': wanted_unit}), 200
+    except Exception as e:
+        return jsonify({'error': f'Failed to get unit: {e}'}), 500
 
 # ----------------------------------- > [ PANTRY DATABASE -> ENDPOINTS]
 

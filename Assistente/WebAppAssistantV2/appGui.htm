@@ -659,11 +659,11 @@
                 let row = document.createElement("tr");
         
                 // Divide a string pelo padrão: ", Data de Validade : "
-                let parts = item.split(", Data de Validade : ");
-                let productAndQuantity = parts[0].split(' ');
-                let quantity = productAndQuantity.pop(); // Último elemento é a quantidade
-                let product = productAndQuantity.join(' '); // O restante é o nome do produto
-                let expirationDate = parts[1];
+                let [productQuantity, expirationDate] = item.split(', Data de Validade : ');
+                let productDetails = productQuantity.split(' ');
+                let quantity = productDetails.pop(); // Último elemento é a quantidade com unidade
+                let unit = productDetails.pop(); // Penúltimo elemento é a unidade
+                let product = productDetails.join(' '); // O restante é o nome do produto
         
                 // Célula do produto
                 let productCell = document.createElement("td");
@@ -672,7 +672,7 @@
         
                 // Célula da quantidade
                 let quantityCell = document.createElement("td");
-                quantityCell.textContent = quantity;
+                quantityCell.textContent = ` ${unit} ${quantity}`; // Combina quantidade e unidade
                 row.appendChild(quantityCell);
         
                 // Célula da data de validade
@@ -837,6 +837,26 @@
             
             return body;
             //return body.replace(/"/g, '\\"');
+        }
+
+        async function get_product_unit(sentence) {
+            try {
+                const response = await fetch("http://127.0.0.1:5000/get-unit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "sentence": sentence })
+                });const data = await response.json();
+                if (!response.ok) {
+                    console.error('Response data for error:', data); // Log the error body for debugging
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                console.log("Product Unit: ", data);
+                return data;
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
         }
 
         async function get_product_name(sentence){
@@ -1321,17 +1341,53 @@
 
         /* All Types of PLANT products */
         const plant_products = [
-            'maçãs', 'bananas', 'cenouras', 'batatas', 'tomates', 'alface', 'cebolas', 'trigo', 
-            'arroz', 'milho', 'soja', 'aveia', 'abacates', 'morangos', 'laranjas', 'limões', 'uvas',
-            'amêndoas', 'castanhas', 'nozes', 'pimento', 'couve', 'espinafre', 'feijão', 'ervilhas', 
-            'pepinos', 'abóboras', 'melancias', 'mangas', 'pêssegos'
+            // Vegetables
+            "batata", "cenoura", "tomates", "alho", "cebola", "courgette", "abóbora",
+            "espinafres", "pimento", "ervilhas", "beterraba", "alface", "pepino", "brócolos",
+            "couve-flor", "couve", "repolho", "nabo", "rabanete", "azeitonas", "milho",
+            "feijão verde", "feijão", "feijão preto", "feijão encarnado", "feijão manteiga",
+            "feijão frade", "grão de bico", "lentilhas", "favas", "espargos", "beringela",
+            "abacate", "couve-de-bruxelas", "chuchu", "funcho", "gengibre", "alho-francês",
+            "tremoços", "tomate-cereja", "cenoura baby", "espargos verdes", "espargos brancos",
+            "cogumelos", "cogumelos shitake", "cogumelos portobello", "cogumelos paris",
+            "cogumelos shimeji", "cogumelos enoki", "cogumelos maitake", "cogumelos chanterelle",
+            "cogumelos morel", "grelos", "nabiças", "agrião", "rucula", "rucula selvagem", "mostarda", "alface romana", "alface iceberg",
+
+            // Fruits
+            "laranja", "tangerina", "limão", "lima", "maçã", "pera", "figo", "uvas",
+            "morangos", "framboesas", "mirtilos", "amoras", "frutos vermelhos",
+            "kiwi", "bananas", "ananás", "abacaxi", "maracujá", "manga", "papaia",
+            "melão", "meloa", "melancia", "cereja", "nectarina", "pêssego", "damascos",
+            "ameixa", "ameixa seca", "passas", "tâmaras", "alperce", "cocos"
         ];
 
         /* All Types of ANIMAL products */
         const animal_products = [
-            'galinha', 'frango', 'peixe', 'salmão', 'polvo', 'porco', 'vaca', 'cordeiro',
-            'carneiro', 'bacalhau', 'camarão', 'lagosta', 'atum', 'truta', 'mexilhão',
-            'ostra', 'pato', 'peru', 'coelho', 'javali', 'faisão', 'codorniz'
+            // Seafood
+            "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
+            "truta", "atum", "cavala", "salmão", "peixe-espada", "pescada", "linguado",
+            "carapau", "enguias", "lagosta", "camarões", "lagostim", "sapateira",
+            "caranguejo", "berbigão", "búzios", "congro", "salmonete", "filetes de pescada",
+            "bife de atum", "lombos de salmão", "medalhões de pescada","pescada",
+            
+            // Meats
+            "frango", "peito de frango", "coxa de frango", "perna de frango", "asas de frango",
+            "peru", "peito de peru", "coxa de peru", "perna de peru", "lombo de porco",
+            "porco", "cachaço", "rojões", "entremeada", "costeleta de porco", "feveras",
+            "bife", "bife da vazia", "bife do lombo", "bife da alcatra", "bife da pá",
+            "bife de peru", "bife de frango", "bife de vitela", "lombo de vitela", "vitela",
+            "lombo de novilho", "novilho", "lombo de vaca", "vaca", "lombo de boi", "boi",
+            "lombo de cabrito", "cabrito", "lombo de borrego", "borrego", "chouriço", "presunto",
+            "entrecosto", "pato", "coelho", "perdiz", "codorniz", "picanha", "alheira", "farinheira",
+            "chouriça", "linguiça",
+            
+        
+            // Dairy
+            "queijo da serra", "queijo flamengo", "queijo de cabra", "queijo de ovelha",
+            "queijo fresco", "queijo curado", "queijo ralado", "queijo emmental", "queijo mozzarella",
+            "queijo cheddar", "queijo de barrar", "queijo creme", "leite", "manteiga",
+            "manteiga de alho", "manteiga de ervas", "manteiga de amendoim", "manteiga de caju",
+            "requeijão", "iogurte", "natas", "natas de soja", "mascarpone", "ricotta", "ovos"
         ];
 
         async function im1MessageHandler(data){
@@ -1530,21 +1586,26 @@
                                         // Comprei [ovos](ingrediente)
                                         console.log("ADD PANTRY -----------------------------");
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
-                                        let name = c.nlu.name; // ---------------------------------------------------- Get the ingredient
-                                        if(name)
-                                            product["name"] = name; // ----------------------------------------------- Store the ingredient
+                                        let name = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
+                                        if(name){
+                                            name = await get_product_name(name); // -------------------------------------- Get the type of the product
+                                            product["name"] = name["message"]; // ----------------------------------------------- Store the ingredient
+                                        }
                                         let quantity = c.nlu.quantity; // -------------------------------------------- Get the quantity
                                         if(quantity)
                                             product["quantity"] = quantity; // ----------------------------------------- Store the quantity
                                         let unit = c.nlu.unit; // ------------------------------------------------------ Get the unit
-                                        if(unit)
-                                            product["unit"] = unit; // --------------------------------------------------- Store the unit
-                                        else
+                                        if(unit){
+                                            unit = await get_product_unit(unit)
+                                            product["unit"] = unit["message"]; // --------------------------------------------------- Store the unit
+                                        }else
                                             product["unit"] = "uni"; // -------------------------------------------------- Default unit
                                         // name && quantity
                                         // name && unit & quantity
                                         // name 
-                                        // 
+                                        //
+                                        
+                                        console.log("PRODUCT: ", product);
                                         if(product["name"] && !product["quantity"] && product["unit"]){
                                             // ask for the quantity
                                             sendToVoice("Indique a quantidade do produto");
@@ -1558,12 +1619,12 @@
                                                 // add a pre-established expiration_date for animal products : 3 DAYS
                                                 product["expiration_date"] = set_expiration_date(3); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
-                                                insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                await insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
                                                 await clearContent(); // -------------------------------------------------------- Clear the content
                                                 s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
                                                 p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
-                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
-                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
+                                                await addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                await addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1576,12 +1637,12 @@
                                                 // add a pre-established expiration_date for plant products : 7 DAYS ( 1 week )
                                                 product["expiration_date"] = set_expiration_date(7); // ---------------------- Set the expiration date
                                                 // --------------------------------------------------------------------------- Create the message to the user
-                                                insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                                await insert_stock(); // ----------------------------------------------------------- Insert the product to the pantry
                                                 await clearContent(); // -------------------------------------------------------- Clear the content
                                                 s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
                                                 p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
-                                                addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
-                                                addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
+                                                await addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                                await addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                                 answer = "O produto foi inserido com sucesso" // ------------------------ Create the VOICE message to the user
                                                 sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                                 openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1637,16 +1698,21 @@
                                         break;
                                     case "remove_pantry":
                                         console.log("REMOVE PANTRY -----------------------------");
-                                        let name_rmv = c.nlu.name; // ---------------------------------------------------- Get the ingredient
-                                        if(name_rmv)
-                                            product["name"] = name_rmv; // ----------------------------------------------- Store the ingredient
+                                        let name_rmv = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
+                                        console.log("NAME TO REMOVE: ", name_rmv);
+                                        if(name_rmv){
+                                            name_rmv = await get_product_name(name_rmv);
+                                            console.log("NAME TO REMOVE: ", name_rmv["message"]);
+                                            product["name"] = name_rmv["message"]; // --------------------------------------------------- Store the ingredient
+                                        }
                                         let quantity_rmv = c.nlu.quantity; // -------------------------------------------- Get the quantity
                                         if(quantity_rmv)
                                             product["quantity"] = quantity_rmv; // ----------------------------------------- Store the quantity
                                         let unit_rmv = c.nlu.unit; // ------------------------------------------------------ Get the unit
-                                        if(unit_rmv)
-                                            product["unit"] = unit_rmv; // --------------------------------------------------- Store the unit
-                                        else
+                                        if(unit_rmv){
+                                            unit_rmv = await get_product_unit(unit_rmv)
+                                            product["unit"] = unit_rmv["message"]; // --------------------------------------------------- Store the unit
+                                        }else
                                             product["unit"] = "uni"; // -------------------------------------------------- Default unit
                                         // name && quantity
                                         // name && unit & quantity
@@ -1661,12 +1727,12 @@
                                         }else if(product["name"] && product["quantity"] && product["unit"]){
                                             // ask for the expiration_date
                                             // --------------------------------------------------------------------------- Create the message to the user
-                                            remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
-                                            clearContent(); // -------------------------------------------------------- Clear the content
+                                            await remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
+                                            await clearContent(); // -------------------------------------------------------- Clear the content
                                             s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
                                             p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
-                                            addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
-                                            addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
+                                            await addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                            await addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                             answer = "O produto foi removido com sucesso" // ------------------------ Create the VOICE message to the user
                                             sendToVoice(answer); // ----------------------------------------------------- Send the voice msg to the user
                                             openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1681,7 +1747,7 @@
                                         break;
                                     case "remove_all_pantry":
                                         console.log("REMOVE ALL PANTRY -----------------------------");
-                                        let pantry_products_rmv = c.nlu.name; // ---------------------------------------------------- Get the ingredient
+                                        let pantry_products_rmv = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
                                         pantry_products_rmv = await get_product_name(pantry_products_rmv);
                                         console.log("PANTRY PRODUCT TO REMOVE: ", pantry_products_rmv["message"]);
                                         if(pantry_products_rmv["message"] == null){
@@ -1695,11 +1761,11 @@
                                             await remove_a_product(pantry_products_rmv["message"]); // -------------------------------------- Remove the specific product
                                             sendToVoice("Foi removido o produto " + pantry_products_rmv["message"] + " da despensa!"); // ---------------------- SEND THE VOICE TO THE USER
                                         }
-                                        clearContent(); // -------------------------------------------------------- Clear the content
+                                        await clearContent(); // -------------------------------------------------------- Clear the content
                                         s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list
                                         p_list = await get_pantry_products(); // -------------------------------------- Get the pantry list
-                                        addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
-                                        addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
+                                        await addPantryTable(p_list); // ------------------------------------------------------ Add the pantry list to the page as <table> id = pantry-table
+                                        await addShoopingListTable(s_list); // ---------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table 
                                         break;
                                     case "remove_all_shopping_list":
                                         console.log("REMOVE ALL SHOPPING LIST -----------------------------");
@@ -1714,8 +1780,8 @@
                                         console.log("ASK SHOPPING LIST -----------------------------");
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         s_list = await get_shopping_list(); // ------------------------------------- Get the shopping list
-                                        addRecipeName("Lista de Compras"); // ---------------------------------------- Add the title to the page as <h2>
-                                        addShoopingListTable(s_list); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
+                                        await addRecipeName("Lista de Compras"); // ---------------------------------------- Add the title to the page as <h2>
+                                        await addShoopingListTable(s_list); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
                                         sendToVoice("Segue a lista de compras!"); // -------------------------------------- SEND THE VOICE TO THE USER
                                         break;
                                     case "ask_specific_Pantry":
@@ -1727,7 +1793,7 @@
                                         //console.log("SHOPPING LIST: ", s_list);
                                         if(s_list.length > 0){
                                             // send the shopping list
-                                            send_email("shoopinglist", s_list); // -------------------------------------- SEND EMAIL
+                                            await send_email("shoopinglist", s_list); // -------------------------------------- SEND EMAIL
                                             console.log("---------> EMAIL SENT <---------");
                                             sendToVoice("A sua lista de compras foi enviada para o seu email"); // ------------ SEND THE VOICE TO THE USER
                                             openChatBox(); // ------------------------------------------------------------ Open the chat box
@@ -1739,14 +1805,17 @@
                                             console.log("GET QUANTITY INGREDIENT -----------------------------");
                                             product["quantity"] = c.nlu.quantity; // ------------------------------------- Get & Store the quantity
                                             let unidade = c.nlu.unit; // ------------------------------------------------- Get the unit
-                                            if(unidade)
-                                                product["unit"] = unidade; // -------------------------------------------- Store the unit
-                                            else
+                                            if(unidade){
+                                                unidade = await get_product_unit(unidade);
+                                                product["unit"] = unidade["message"]; // -------------------------------------------- Store the unit
+                                            }else
                                                 product["unit"] = "uni"; // ---------------------------------------------- Infer & Store the unit
-                                            let name = c.nlu.name; // ---------------------------------------------------- Get the ingredient
-                                            if(name)
-                                                product["name"] = name; // ----------------------------------------------- Store the ingredient
-    
+                                            /*let name = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
+                                            if(name){
+                                                name = await get_product_name(name); // -------------------------------------- Get the type of the product
+                                                product["name"] = name["message"]; // ----------------------------------------------- Store the ingredient
+                                            }*/
+                                           
                                             // --------------------------------------------------------------------------- Check if all the fields are filled
                                             if (product["name"] && product["quantity"] && product["unit"] && !product["expiration_date"]){
                                                 // ask for the expiration_date
