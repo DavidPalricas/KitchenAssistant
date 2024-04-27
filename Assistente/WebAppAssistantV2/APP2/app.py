@@ -13,6 +13,8 @@ import email_service as es
 import API_OpenFoodFacts as api_op
 # ----------------------------------------------------------------------------------------- MODULE: format_date
 import format_date as fd
+# ----------------------------------------------------------------------------------------- MODULE: get_product
+import get_product as gp
 # ----------------------------------------------------------------------------------------- MODULE: requests
 import json
 
@@ -185,6 +187,28 @@ def format_date():
     else:
         return jsonify({'error': 'Failed to format date.'}), 500
 
+# ----------------------------------------------------------------------------------------- > FETCH INGRIDIENT FROM A SENTENCE
+@app.route('/get-ingredient', methods=['POST'])
+def get_ingredient():
+    lista = []
+    data = request.json
+    
+    sentence = data.get('sentence')
+    sentence = sentence.lower()
+    stock_details = pdb.getStockDetails()
+    print(stock_details)
+    for stock in stock_details:
+        temp = stock.split(" ")
+        lista.append(temp[0].lower())
+    
+    if not sentence and not lista:
+        return jsonify({'error': 'Missing required fields.'}), 400
+    
+    try:
+        wanted_ingridient = gp.get_ingredient(sentence, lista)
+        return jsonify({'message': wanted_ingridient}), 200
+    except Exception as e:
+        return jsonify({'error': f'Failed to get ingridient: {e}'}), 500
 
 # ----------------------------------- > [ PANTRY DATABASE -> ENDPOINTS]
 
@@ -234,7 +258,7 @@ def get_pantry_stock():
     return jsonify(pantry_list)
 
 # ----------------------------------------------------------------------------------------- > REMOVE ALL <GIVEN PRODUCT> FROM PANTRY
-@app.route('/pantry/remove_stock/<name>', methods=['DELETE'])
+@app.route('/pantry/remove-all-stock/<name>', methods=['DELETE'])
 def remove_all_stock(name):
     try:
         result = pdb.removeAllStock(name)

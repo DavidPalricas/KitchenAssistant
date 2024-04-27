@@ -252,12 +252,19 @@ def removeAllStock(name):
                 stock_id = stock_id_result[0]
                 cursor.execute("DELETE FROM stock_details WHERE stock_id = %s", (stock_id,))
                 conn.commit()
-                print(f"Removed all stock details for '{name}' from stock_details.")
+                message = f"Removed all stock details for '{name}' from stock_details."
+                print(message)
+                return message
+                
             else:
-                print(f"Stock item '{name}' does not exist in the database.")
+                message = f"Stock item '{name}' does not exist in the database."
+                print(message)
+                return message
         except Error as e:
             print(e)
-            print(f"Failed to remove all stock details for '{name}'")
+            message = f"Failed to remove all stock details for '{name}'"
+            print(message)
+            return message
         finally:
             cursor.close()
             conn.close()
