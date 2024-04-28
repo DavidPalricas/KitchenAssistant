@@ -414,7 +414,27 @@
     <script type="module">
         var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out = null;
-        // Global dictionary to store the products before adding them to the pantry
+        
+        /**
+            * @typedef {Object} Product
+            * @property {string|null} name - [PT] O nome do produto / [EN] The name of the product
+            * @property {number|null} quantity - [PT] A quantidade do produto / [EN] The quantity of the product
+            * @property {string|null} unit - [PT] A unidade do produto / [EN] The unit of the product
+            * @property {Date|string|null} expiration_date - [PT] A data de validade do produto / [EN] The expiration date of the product
+        */
+        
+
+        
+        /**
+            * PT: Um objeto para armazenar informações detalhadas sobre um produto. Este objeto é usado
+            * para rastrear detalhes do produto em diferentes partes da aplicação
+            *
+            * EN: An object to store detailed information about a product. This object is used
+            * to track product details across different parts of the application
+            *
+            * @type {Product}
+            *
+        */
         let product = {
             name: null,
             quantity: null,
@@ -423,6 +443,24 @@
         };
 
         // Global email object to store the email configuration
+        /**
+            * @typedef {Object} EmailConfig
+            * @property {string} from_addr - [PT] endereço de email do Assistent / [EN]The email address of the Assistent.
+            * @property {string} to_addr - [PT] endereço de email do destinatário / [EN]The email address of the recipient.
+            * @property {string|null} subject - [PT] O assunto do email / [EN] The subject of the email.
+            * @property {string|null} body - [PT] O corpo do email / [EN] The body of the email.
+            * @property {string} smtp_server - [PT] O servidor SMTP para se conectar / [EN] The SMTP server to connect to.
+            * @property {number} smtp_port - [PT] A porta do servidor SMTP / [EN] The port of the SMTP server.
+            * @property {string} password - [PT] A senha do email do Assistent / [EN] The password of the Assistent email.
+        */
+        
+        /**
+            * PT: Objeto de email global para armazenar a configuração do email
+            * EN: Global email object to store the email configuration
+            *
+            * @type {EmailConfig}
+            *       
+        */
         let email = {
             from_addr: "kitchen_assistant@outlook.com",
             to_addr: "inesaguia@ua.pt",
@@ -433,13 +471,35 @@
             password: "kitchen123."
         };
 
-
+        /**
+            * PT: Inicializa e configura o MMIClientSocket para lidar com mensagens e eventos de conexão.
+            * Este trecho de código cria uma nova instância de MMIClientSocket, anexa event listeners para
+            * manipulação de mensagens e connection open events, em seguida, abre o socket para iniciar a comunicação.
+            *
+            * EN: Initializes and sets up the MMIClientSocket for handling messages and connection events. 
+            * This snippet creates a new instance of MMIClientSocket, attaches event listeners for
+            * message handling and connection open events, and then opens the socket to start communication.
+            *
+            * @see MMIClientSocket - For further documentation on the MMIClientSocket class and its methods.
+        */
         mmiCli_Out = new MMIClientSocket(mmiCli_Out_add + "APP");
         mmiCli_Out.onMessage.on(im1MessageHandler);
         mmiCli_Out.onOpen.on(socketOpenHandler);
         mmiCli_Out.openSocket();
 
-
+        /**
+            * PT: Manipula o evento de abertura de conexão do socket.
+            * Este manipulador de evento é chamado quando um evento 'open' ocorre no socket. Ele verifica
+            * se o estado do socket é verdadeiramente 'OPEN', prevenindo a execução de ações subsequentes
+            * caso a conexão não esteja efetivamente aberta.
+            *
+            * EN: Handles the socket connection 'open' event.
+            * This event handler is called when an 'open' event is triggered on the socket. It checks
+            * if the socket's state is truly 'OPEN', preventing any subsequent actions if the connection
+            * is not actually open.
+            *
+            * @param {Event} event - The event object associated with the 'open' event.
+        */
         function socketOpenHandler(event) {
             console.log("---------------openSocketHandler---------------")
 
@@ -448,26 +508,52 @@
             }
         }
         
+        /**
+            * PT: Abre a caixa de Ajuda
+            * EN: Open the Help Box
+        */
         function openHelpBox() {
         $("#help-box").removeClass("d-none");
         }
 
+        /**
+            * PT: Fecha a caixa de Ajuda
+            * EN: Close the Help Box
+        */
         function closeHelpBox() {
         $("#help-box").addClass("d-none");
         }
 
+        /**
+            * PT: Abre a caixa de Mensagens
+            * EN: Open the Chat Box
+        */
         function openChatBox() {
         $("#chat-box").removeClass("d-none");
         }
 
+        /**
+            * PT: Fecha a caixa de Mensagens
+            * EN: Close the Chat Box
+        */
         function closeChatBox() {
             $("#chat-box").addClass("d-none");
         }
-            
+        
+        /**
+            * PT: Limpa as mensagens do chat
+            * EN: Clear the chat messages
+        */
         function clearChatMessages() {
         $("#chat-messages").empty();
         }
 
+        /**
+            * PT: Adiciona uma mensagem ao chat
+            * EN: Add a message to the chat
+            * @param {string} user - O utilizador que enviou a mensagem
+            * @param {string} message - A mensagem a ser enviada
+        */
         function addMsgToChat(user, message){
         // Determine the sender
         let sender = user;
@@ -475,12 +561,21 @@
         $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
         }
 
+        /**
+            * PT: Limpa o conteúdo da página
+            * EN: Clear the content of the page
+        */
         function clearContent() {
             document.getElementById("title").innerHTML = "";
             document.getElementById("image-container").innerHTML = "";
             document.getElementById("table-container").innerHTML = "";
             }
-            
+        
+        /**
+            * PT: Adiciona o nome da receita ao título
+            * EN: Add the recipe name to the title
+            * @param {string} recipe_name - O nome da receita
+        */
         function addRecipeName(recipe_name) {
         let container = document.getElementById("title");
         // Verifica se já existe um elemento h2 dentro do contêiner
@@ -497,6 +592,11 @@
         }
         }
 
+        /**
+            * PT: Adiciona uma imagem à página
+            * EN: Add an image to the container
+            * @param {string} img_url - A URL da imagem
+        */
         function addImage(img_url) {
         let container = document.getElementById("image-container");
         // Verifica se já existe uma imagem dentro do contêiner
@@ -513,6 +613,11 @@
         }
         }
 
+        /**
+            * PT: Adiciona uma tabela de ingredientes à página
+            * EN: Add an ingredients table to the container
+            * @param {array} ingredients - A lista de ingredientes
+        */
         function addIngredientsTable(ingredients) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente de ingredientes
@@ -562,6 +667,11 @@
             container.appendChild(table);
         }
 
+        /**
+            * PT: Adiciona uma tabela de utensílios à página
+            * EN: Add a tools table to the container
+            * @param {array} tools - A lista de utensílios
+        */
         function addToolsTable(tools) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente de utensílios
@@ -595,6 +705,11 @@
             container.appendChild(table);
         }
 
+        /**
+            * PT: Adiciona uma tabela com produtos na Lista de compras à página
+            * EN: Add a shopping list table to the container
+            * @param {array} steps - A lista de Produtos na Lista de Compras
+        */
         function addShoopingListTable(list) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente
@@ -628,6 +743,11 @@
             container.appendChild(table);
         }
         
+        /**
+            * PT: Adiciona uma tabela com os produtos na Despensa à página
+            * EN: Add a steps table to the container
+            * @param {array} steps - A lista de passos
+        */
         function addPantryTable(list) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente da despensa
@@ -687,6 +807,11 @@
             container.appendChild(table);
         }
         
+        /**
+            * PT: Adiciona uma tabela com as Receitas à página
+            * EN: Add a suggested recipes table to the container
+            * @param {array} recipes - A lista de receitas
+        */
         function addRecipesTable(recipes) {
             let container = document.getElementById("table-container");
             // Verifica e remove a tabela existente de receitas
@@ -736,6 +861,10 @@
             container.appendChild(table);
         }
 
+        /**
+            * PT: Reseta o objeto 'product'
+            * EN: Reset the 'product' object
+        */
         function reset_product() {
             product = {
                 name: null,
@@ -745,6 +874,11 @@
             };
         }
         
+        /**
+            * PT: Averigua o tipo de produto (Planta, Animal ou Outros)
+            * EN: Check the type of product (Plant, Animal or Others)
+            * @param {string} product_type - ( "plant", "animal", "others")
+        */
         function checkType(product_name) {
             for(const plant of plant_products){
                 if (plant.includes(product_name)){
@@ -759,8 +893,12 @@
             return "others"
         }
 
-        /* FUNCTION : SET EXPIRATION DATE
-            return the expiration date in the format YYYY-MM-DD
+        /**
+            * PT: Cria uma data de validade para o produto , dia de hoje + ndays
+            * EN: Create an expiration date for the product, today + ndays
+            * @param {string} ndays - Número de dias de validade do produto
+            *
+            * @return {string} expiration_date - Data de validade do produto com formato "YYYY-MM-DD"
         */
         function set_expiration_date(ndays){
             let today = new Date();
@@ -771,9 +909,12 @@
             return expiration_date
         }
 
-        /* FUNCTION : ALERT EXPIRATION DATE
-            return TRUE is the expiration date is less than 3 days
-            return FALSE if the expiration date is more than 3 days
+        /**
+            * PT: Alerta de produtos no final de validade para quando a validade estiver a 3 dias
+            * EN: Alert of products near expiration date for when the expiration date is 3 days
+            * @param {string} expiration_date - A data de validade do produto
+            *
+            * @return {boolean} - True se a data de validade estiver a 3 dias, False caso contrário
         */
         function alert_expiration_date(expiration_date){
             let today = new Date();
@@ -787,8 +928,12 @@
             return false;
         }
 
-        /* FUNCTION : GET NEAR EXPIRATION DATE PRODUCTS
-            return a list of products that are near the expiration date
+        /**
+            * PT: Obter produtos na despensa que estão perto do fim da validade
+            * EN: Get products in the pantry that are near the expiration date
+            * @param {array} product_list - A lista de produtos na despensa
+            *
+            * @return {array} near_expiration_date_products - Lista de produtos perto do fim da validade
         */
         function get_near_expiration_date_products(product_list){
             let near_expiration_date_products = [];
@@ -803,8 +948,13 @@
             return near_expiration_date_products;
         }
 
-        /* FUNCTION : CREATE EMAIL BODY
-            return the body of the email with a table of products
+        /**
+            * PT: Construir o corpo do email tanto para a lista de compras , como para a lista de produtos em fim de validade
+            * EN: Build the email body for both the shopping list and the near expiration date products
+            * @param {array} product_list - A lista de produtos
+            * @param {string} alertType - O tipo de alerta ("expiration" ou "shoopinglist")
+            *
+            * @return {string} body - Corpo de email formatado{html} de forma a ser usado no envio de email
         */
         function createEmailBody(alertType, list) {
             let body = `<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">`;
@@ -839,6 +989,15 @@
             //return body.replace(/"/g, '\\"');
         }
 
+        /**
+            * PT: Validar se o produto já existe na despensa
+            * - envia um pedido [GET] para o servidor
+            * EN: Validate if the product already exists in the pantry
+            * - sends a [GET] request to the server
+            * @param {string} product_name - O nome do produto a pesquisar
+            *
+            * @return {string} data - A quantidade e a unidade do produto se existir{ message: "7 kg"}, caso contrário, retorna (message: "0 null")
+        */
         async function check_shoppingList(product_name) {
             try {
                 // URL encode the product_name to ensure it's safe to include in a URL
@@ -860,6 +1019,14 @@
             }
         }
 
+        /**
+            * PT: Adicionar um produto à lista de compras o produto é passado atravez do objeto product
+            * - envia um pedido [POST] para o servidor
+            * EN: Add a product to the shopping list the product is passed through the product object
+            * - sends a [POST] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro
+        */
         async function insert_shooping_list(){
             try {
                 const response = await fetch("http://127.0.0.1:5000/pantry/insert-grocery", {
@@ -880,6 +1047,15 @@
             }
         }
 
+        /**
+            * PT: Remover um produto da lista de compras
+            * - envia um pedido [DELETE] para o servidor
+            * EN: Remove a product from the shopping list
+            * - sends a [DELETE] request to the server
+            * @param {string} name - O nome do produto a remover
+            *
+            * @return {string} data - A mensagem de sucesso ou erro
+        */
         async function remove_shopping_list(name){
             try {
                 const response = await fetch("http://127.0.0.1:5000/pantry/remove-grocery", {
@@ -900,6 +1076,14 @@
             }
         }
 
+        /**
+            * PT: Limpar a lista de compras
+            * - envia um pedido [DELETE] para o servidor
+            * EN: Clear the shopping list
+            * - sends a [DELETE] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro
+        */
         async function clear_shoppingList(){
             try {
                 const response = await fetch('http://127.0.0.1:5000/pantry/clear-grocery', {
@@ -913,6 +1097,15 @@
             }
         }
 
+        /**
+            * PT: Extrair a unidade de uma determinada frase
+            * - envia um pedido [POST] para o servidor
+            * EN: Extract the unit from a given sentence
+            * - sends a [POST] request to the server
+            * @param {string} sentence - A frase a ser analisada
+            *
+            * @return {string} data - A unidade do produto {message: "kg"}
+        */
         async function get_product_unit(sentence) {
             try {
                 const response = await fetch("http://127.0.0.1:5000/get-unit", {
@@ -933,6 +1126,15 @@
             }
         }
 
+        /**
+            * PT: Extrair o nome do produto de uma determinada frase 
+            * - envia um pedido [POST] para o servidor
+            * EN: Extract the product name from a given sentence 
+            * - sends a [POST] request to the server
+            * @param {string} sentence - A frase a ser analisada
+            *
+            * @return {string} data - O nome do produto {message: "azeite"}
+        */
         async function get_product_name(sentence){
             try {
                 const response = await fetch("http://127.0.0.1.:5000/get-ingredient", {
@@ -954,6 +1156,14 @@
             }
         }
 
+        /**
+            * PT: Limpar a despensa - envia um pedido 
+            * - [DELETE] para o servidor
+            * EN: Clear the pantry
+            * - sends a [DELETE] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
+        */
         async function clear_pantry(){
             try {
                 const response = await fetch('http://127.0.0.1:5000/pantry/clear', {
@@ -967,6 +1177,14 @@
             }
         }
 
+        /**
+            * PT: Remover um produto na totalidade da despensa
+            * - envia um pedido [DELETE] para o servidor
+            * EN: Remove a product entirely from the pantry
+            * - sends a [DELETE] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
+        */
         async function remove_a_product(product_name) {
             try {
                 // Need to mount the URL with the product name
@@ -983,6 +1201,14 @@
             }
         }
 
+        /**
+            * PT: Converte a data para o formato {date} (SQL) 
+            * - envia um pedido [POST] para o servidor
+            * EN: Convert the date to {date} format (SQL)
+            * - sends a [POST] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
+        */
         async function convertDateToSQLFormat(transcript) {
             try {
                 const response = await fetch("http://127.0.0.1:5000/format-date", {
@@ -1004,8 +1230,13 @@
             }
         }
         
-        /* FUNCTION : SEND EMAIL
-            return a message to the user (email sent or not)
+        /**
+            * PT: Enviar um email com a lista de produtos a expirar ou a lista de compras
+            * - envia um pedido [POST] para o servidor
+            * EN: Send an email with the list of products to expire or the shopping list
+            * - sends a [POST] request to the server
+            *
+            * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
         */
         async function send_email(alertType, list){
             if (alertType === "expiration"){
@@ -1031,12 +1262,14 @@
 
         }
 
-        /* FUNCTION : GET ALL PRODUCTS IN THE PANTRY
-        RETURN: 
-        [
-            "Azeite 1.0 l, Data de Validade : 2024/12/31",
-            "Rhubarb Sparkling Water 250.0 mL, Data de Validade : 2050/05/21"
-        ]*/
+        /**
+            * PT: Obter os produtos na despensa
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the products in the pantry
+            * - sends a [GET] request to the server
+            *
+            * @return {array} data - A lista de produtos na despensa
+        */
         async function get_pantry_products(){
             const response = await fetch('http://127.0.0.1:5000/pantry/stock');
             const data = await response.json();
@@ -1044,11 +1277,13 @@
             return data;
         }
 
-        /* FUNCTION : GET SHOPPING LIST
-        [
-            "Azeite",
-            "Rhubarb Sparkling Water"
-        ]
+        /**
+            * PT: Obter a lista de compras
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the shopping list
+            * - sends a [GET] request to the server
+            *
+            * @return {array} data - A lista de produtos na lista de compras
         */
         async function get_shopping_list(){
             const response = await fetch('http://127.0.0.1:5000/pantry/shopping-list');
@@ -1057,6 +1292,14 @@
             return data;
         }
 
+        /**
+            * PT: Inserir um produto na despensa usando o objeto product preenchido previamente
+            * - envia um pedido [POST] para o servidor
+            * EN: Insert a product into the pantry using the previously filled product object
+            * - sends a [POST] request to the server
+            *
+            * @return {array} data - A mensagem de sucesso ou erro
+        */
         async function insert_stock() {
             
             const response = await fetch('http://127.0.0.1:5000/pantry/insert-stock', {
@@ -1070,6 +1313,14 @@
             console.log("DATA INSIDE GET FUNCTION: ", data);
         }
 
+        /**
+            * PT: Remover um produto da despensa usando o objeto product preenchido previamente
+            * - envia um pedido [POST] para o servidor
+            * EN: Remove a product from the pantry using the previously filled product object
+            * - sends a [POST] request to the server
+            *
+            * @return {array} data - A mensagem de sucesso ou erro
+        */
         async function remove_stock() {
             const response = await fetch('http://127.0.0.1:5000/pantry/remove-stock', {
                 method: 'POST',
@@ -1080,13 +1331,14 @@
             });
         }
 
-        /* FUNCTION : GET RANDOM RECIPE
-        RETURN: 
-        {
-        "recipe_id": ,
-        "recipe_img": ,
-        "recipe_name": 
-        }*/
+        /**
+            * PT: Obter uma receita aleatória
+            * - envia um pedido [GET] para o servidor
+            * EN: Get a random recipe
+            * - sends a [GET] request to the server
+            *
+            * @return {array} data - A receita aleatória {'recipe_id': recipe_id, 'recipe_name': recipe_name, 'recipe_img': recipe_img}
+        */
         async function getRandRecipe() {
             const response = await fetch('http://127.0.0.1:5000/recipe/random');
             const data = await response.json();
@@ -1094,6 +1346,15 @@
             return data;
         }
 
+        /**
+            * PT: Envia uma imagem codificada em base64 para o servidor e obtém a resposta do scanner de produtos
+            * - envia um pedido [POST] para o servidor
+            * EN: Send a base64 encoded image to the server and get the product scanner response
+            * - sends a [GET] request to the server
+            * @param {string} frame - A imagem codificada em base64 que representa uma imagem capturada para análise do scanner
+            *
+            * @return {array} data - Assume-se que o servidor retorne um objeto JSON com informações relevantes
+        */
         async function getProduct_scanner(frame) {
             // Remove o prefixo de dados da string base64
             const frameData = frame.replace(/^data:image\/\w+;base64,/, "");
@@ -1108,8 +1369,28 @@
             const data = await response.json();
             console.log("DATA INSIDE GET FUNCTION: ", data);
             return data;
-    }
+        }
 
+        /**
+            * PT: Inicia a captura de vídeo da webcam, captura frames contínuos para análise
+            *
+            * Esta função cria dinamicamente elementos de vídeo e de texto na página,
+            * inicializa a webcam, captura imagens continuamente, e tenta obter informações
+            * do produto de cada frame capturado usando a função `getProduct_scanner`.
+            * Se informações válidas do produto são detectadas, elas são usadas para montar
+            * um "card" na interface com a imagem e detalhes do produto.
+            * - envia um pedido [GET] para o servidor
+            * EN: Start the webcam video capture, capture continuous frames for analysis
+            *
+            * This function dynamically creates video and text elements on the page,
+            * initializes the webcam, captures images continuously, and tries to get product
+            * information from each captured frame using the `getProduct_scanner` function.
+            * If valid product information is detected, it is used to build a "card" on the interface
+            * with the product image and details.
+            * - sends a [GET] request to the server
+            *
+            * @return {array} data - A lista de produtos na despensa
+        */
         async function takeSnapshot() {
             let product_info;
             const webcam_container = document.getElementById("webcam-container");
@@ -1207,28 +1488,16 @@
 
                 }
             });
-    }
+        }
 
-        /* FUNCTION : GET ALL RECIPES
-        RETURN: 
-        [
-        {
-            "recipe_name": ,
-            "recipe_servings": ,
-            "recipe_time":
-        },
-        {
-            "recipe_name": ,
-            "recipe_servings": ,
-            "recipe_time":
-        },
-        {
-            "recipe_name": ,
-            "recipe_servings": ,
-            "recipe_time":
-        },
-        ... 
-        ]*/
+        /**
+            * PT: Obter todas as receitas
+            * - envia um pedido [GET] para o servidor
+            * EN: Get all recipes
+            * - sends a [GET] request to the server
+            *
+            * @return {array} data - A lista de receitas [{recipe_id: recipe_id, recipe_name: recipe_name, recipe_img: recipe_img}, ...]
+        */
         async function getAllRecipes() {
         const response = await fetch('http://127.0.0.1:5000/recipes');
         const data = await response.json();
@@ -1236,11 +1505,20 @@
         return data;
         }
 
-        /* FUNCTION : GET RECIPES BY TAG
-        RETURN: 
-        {
-        "recipe_ids": [id]
-        }*/
+        /**
+            * PT: Obter receitas por uma tag
+            * - envia um pedido [GET] para o servidor
+            * EN: Get recipes by a tag
+            * - sends a [GET] request to the server
+            * @param {string} tag - A tag da receita
+            *
+            * @return {array} data - A lista de receitas com a tag especificada 
+            * {
+            *   recipe_id: recipe_id, 
+            *   recipe_name: recipe_name,
+            *   recipe_img: recipe_img
+            * }
+        */
         async function getRecipesByTag(tag) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/tag/${tag}`);
         const data = await response.json();
@@ -1248,11 +1526,18 @@
         return data;
         }
 
-        /* FUNCTION : GET RECIPES BY NAME - NOT WORKING -
-        RETURN: 
-        {
-        "recipe_id": 
-        }*/
+        /**
+            * PT: Obter uma receita por um nome
+            * - envia um pedido [GET] para o servidor
+            * EN: Get a recipe by a name
+            * - sends a [GET] request to the server
+            * @param {string} name - O nome da receita
+            *
+            * @return {array} data - A receita com o nome especificado 
+            * {
+            *    recipe_id: recipe_id
+            * }
+        */
         async function getRecipeByName(name) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/name/${encodeURIComponent(name)}`);
         const data = await response.json();
@@ -1260,21 +1545,28 @@
         return data;
         }
 
-        /* FUNCTION : GET INGREDIENTS BY RECIPE_ID
-        RETURN: 
-        [
-        {
-            "name": "ingredient1",
-            "quantity": "4.00",
-            "unit": "uni"
-        },
-        {
-            "name": "ingredient2",
-            "quantity": "4.00",
-            "unit": "uni"
-        },
-        ... 
-        ]*/
+        /**
+            * PT: Obter ingredientes por um ID de receita
+            * - envia um pedido [GET] para o servidor
+            * EN: Get ingredients by a recipe ID
+            * - sends a [GET] request to the server
+            * @param {string} recipeId - O ID da receita
+            *
+            * @return {array} data - A lista de ingredientes da receita
+            * [
+            *    {
+            *        "name": "ingredient1",
+            *        "quantity": "4.00",
+            *        "unit": "uni"
+            *    },
+            *    {
+            *        "name": "ingredient2",
+            *        "quantity": "4.00",
+            *        "unit": "uni"
+            *    },
+            *    ... 
+            * ]
+        */
         async function getIngredients(recipeId) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/ingredients`);
         const data = await response.json();
@@ -1282,17 +1574,20 @@
         return data;
         }
 
-        /* FUNCTION : GET TOOLS BY RECIPE_ID
-        RETURN: 
-        [
-        [
-            "tool1"
-        ],
-        [
-            "tool2"
-        ],
-        ...
-        ]*/
+        /**
+            * PT: Obter ferramentas por um ID de receita
+            * - envia um pedido [GET] para o servidor
+            * EN: Get tools by a recipe ID
+            * - sends a [GET] request to the server
+            * @param {string} recipeId - O ID da receita
+            *
+            * @return {array} data - A lista de ferramentas da receita
+            * [
+            *    ["tool1"],
+            *    ["tool2"],
+            *    ... 
+            * ]
+        */
         async function getTools(recipeId) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/tools`);
         const data = await response.json();
@@ -1300,15 +1595,25 @@
         return data;
         }
 
-        /* FUNCTION : GET NEXT INSTRUCTION BY RECIPE_ID AND STEP
-        STEP = 0 -> FIRST INSTRUCTION (STEP 1)
-        STEP = 1 -> SECOND INSTRUCTION (STEP 2)
-        ...
-        STEP = N -> N+1 INSTRUCTION (STEP N+1) -> RETURN NULL
-        RETURN: 
-        {
-        "next_instruction": "instruction"
-        }*/
+        /**
+            * PT: Obter a próxima instrução por um ID de receita e passo
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the next instruction by a recipe ID and step
+            * - sends a [GET] request to the server
+            *
+            *   STEP = 0 -> FIRST INSTRUCTION (STEP 1)
+            *   STEP = 1 -> SECOND INSTRUCTION (STEP 2)
+            *   ...
+            *   STEP = N -> N+1 INSTRUCTION (STEP N+1) -> RETURN NULL
+            *
+            * @param {string} recipeId - O ID da receita
+            * @param {string} step - O passo da receita
+            *
+            * @return {array} data - A próxima instrução da receita
+            * {
+            *    "next_instruction": "instruction"
+            * }
+        */
         async function getNextInstruction(recipeId, step) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/next-instruction/${step}`);
         const data = await response.json();
@@ -1316,16 +1621,26 @@
         return data;
         }
 
-        /* FUNCTION : GET PREVIOUS INSTRUCTION BY RECIPE_ID AND STEP
-        STEP = 0 -> FIRST INSTRUCTION (STEP -1) -> RETURN NULL
-        STEP = 1 -> SECOND INSTRUCTION (STEP 0) -> RETURN NULL
-        STEP = 2 -> THIRD INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
-        ...
-        STEP = N -> N-1 INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
-        RETURN: 
-        {
-        "previous_instruction": "instruction"
-        }*/
+        /**
+            * PT: Obter a instrução anterior por um ID de receita e passo
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the previous instruction by a recipe ID and step
+            * - sends a [GET] request to the server
+            *
+            *   STEP = 0 -> FIRST INSTRUCTION (STEP -1) -> RETURN NULL
+            *   STEP = 1 -> SECOND INSTRUCTION (STEP 0) -> RETURN NULL
+            *   STEP = 2 -> THIRD INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+            *   ...
+            *   STEP = N -> N-1 INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+            *
+            * @param {string} recipeId - O ID da receita
+            * @param {string} step - O passo da receita
+            *
+            * @return {array} data - A instrução anterior da receita
+            * {
+            *    "previous_instruction": "instruction"
+            * }
+        */
         async function getPreviousInstruction(recipeId, step) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/previous-instruction/${step}`);
         const data = await response.json();
@@ -1333,16 +1648,26 @@
         return data;
         }
 
-        /* FUNCTION : GET ACTUAL INSTRUCTION BY RECIPE_ID AND STEP
-        STEP = 0 -> 0 INSTRUCTION (STEP -1) -> RETURN NULL
-        STEP = 1 -> FIRST INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
-        STEP = 2 -> SECOND INSTRUCTION (STEP 2) -> RETURN SECOND INSTRUCTION
-        ...
-        STEP = N -> N INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
-        RETURN: 
-        {
-        "previous_instruction": "instruction"
-        }*/
+        /**
+            * PT: Obter a instrução atual por um ID de receita e passo
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the actual instruction by a recipe ID and step
+            * - sends a [GET] request to the server
+            *
+            *   STEP = 0 -> 0 INSTRUCTION (STEP -1) -> RETURN NULL
+            *   STEP = 1 -> FIRST INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+            *   STEP = 2 -> SECOND INSTRUCTION (STEP 2) -> RETURN SECOND INSTRUCTION
+            *   ...
+            *   STEP = N -> N INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+            *
+            * @param {string} recipeId - O ID da receita
+            * @param {string} step - O passo da receita
+            *
+            * @return {array} data - A instrução atual da receita
+            * {
+            *    "actual_instruction": "instruction"
+            * }
+        */
         async function getActualInstruction(recipeId, step) {
         const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/actual-instruction/${step}`);
         const data = await response.json();
@@ -1350,11 +1675,18 @@
         return data;
         }
 
-        /* FUNCTION : GET RECIPE NAME BY RECIPE_ID
-        RETURN: 
-        {
-        "recipe_name": "name"
-        }*/
+        /**
+            * PT: Obter o nome da receita por um ID de receita
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the recipe name by a recipe ID
+            * - sends a [GET] request to the server
+            * @param {string} recipeId - O ID da receita
+            *
+            * @return {array} data - O nome da receita
+            * {
+            *    "recipe_name": "name"
+            * }
+        */
         async function getRecipeName(recipeId) {
             const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/name`);
             const data = await response.json();
@@ -1363,11 +1695,18 @@
             return data;
         }
 
-        /* FUNCTION : GET RECIPE IMAGE BY RECIPE_ID
-        RETURN: 
-        {
-        "recipe_img": "url"
-        }*/
+        /**
+            * PT: Obter a imagem da receita por um ID de receita
+            * - envia um pedido [GET] para o servidor
+            * EN: Get the recipe image by a recipe ID
+            * - sends a [GET] request to the server
+            * @param {string} recipeId - O ID da receita
+            *
+            * @return {array} data - A imagem da receita
+            * {
+            *    "recipe_img": "url"
+            * }
+        */
         async function getRecipeImage(recipeId) {
         try {
             const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/image`);
@@ -1383,28 +1722,96 @@
         }
         }
 
-        /* FUNCTION : GET RAMDOM JOKE
-            RETURN: 
-            'joke'*/
+        /**
+            * PT: Obter uma piada aleatória
+            * - envia um pedido [GET] para o servidor
+            * EN: Get a random joke
+            * - sends a [GET] request to the server
+            *
+            * @return {string} joke - A piada aleatória
+        */
         function getRandJoke() {
                 let joke = jokes[Math.floor(Math.random() * jokes.length)];
                 console.log("Joke: ", joke);
                 return joke;
         }
 
+        /** 
+            * [PT] Identificador único para cada receita na aplicação.
+            * [EN] Unique identifier for each recipe in the application.
+            * @type {number}
+        */
         var recipe_id = 0;
+
+        /** 
+            * [PT] Contador de etapas da receita atual.
+            * [EN] Step counter for the current recipe.
+            * @type {number}
+        */
         var step = 1;
+
+        /** 
+            * [PT] Referência para a instância de voz utilizada para comandos de voz.
+            * [EN] Reference to the voice instance used for voice commands.
+            * @type {VoiceInstance|null}
+        */
         var voice;
+
+        /** 
+            * [PT] Bandeira para determinar se novos produtos devem ser adicionados ao banco de dados.
+            * [EN] Flag to determine whether new products should be added to the database.
+            * @type {boolean}
+        */
         var add_pdb_flag = false;
+
+        /** 
+            * [PT] Bandeira para determinar se produtos devem ser removidos do banco de dados.
+            * [EN] Flag to determine whether products should be removed from the database.
+            * @type {boolean}
+        */
         var remove_pdb_flag = false;
+
+        /** 
+            * [PT] Indicador se um alerta foi disparado na aplicação.
+            * [EN] Indicator if an alert has been triggered in the application.
+            * @type {boolean}
+        */
         var alerted = false;
+
+        /** 
+            * [PT] Indicador se o assistente está ativo.
+            * [EN] Indicator whether the assistant is active.
+            * @type {boolean}
+        */
         var active_assistant = false;
+
+        /** 
+            * [PT] Lista de compras temporária, utilizada para operações pendentes.
+            * [EN] Temporary shopping list, used for pending operations.
+            * @type {Array|null}
+        */
         var s_list = null;
+
+        /** 
+            * [PT] Lista de produtos temporária, usada para gestão de estoque.
+            * [EN] Temporary product list, used for inventory management.
+            * @type {Array|null}
+        */
         var p_list = null;
+
+        /** 
+            * [PT] Armazena a resposta do usuário para interações que requerem confirmação.
+            * [EN] Stores the user's response for interactions requiring confirmation.
+            * @type {string|null}
+        */
         var answer = null;
 
 
-        
+        /**
+            * [PT] Lista de piadas relacionadas com comida 
+            * [EN] List of food-related jokes
+            * @type {string[]}
+        */        
         const jokes = [
             'Eu gosto tanto de comida que meu super herói preferido é o super mercado.',
             'O que disse a farinha para o fermento? "Sem ti, a minha vida não cresce."',
@@ -1413,7 +1820,11 @@
             'Qual o nome do peixe que caiu do vigésimo andar? Aaaaaaaaah, Tum!'
         ];
 
-        /* All Types of PLANT products */
+        /**
+            * [PT] Lista de todos os tipos de produtos vegetais (frutas/vegetais)
+            * [EN] List of all types of plant products (fruits/vegetables)
+            * @type {string[]}
+        */        
         const plant_products = [
             // Vegetables
             "batata", "cenoura", "tomates", "alho", "cebola", "courgette", "abóbora",
@@ -1435,7 +1846,11 @@
             "ameixa", "ameixa seca", "passas", "tâmaras", "alperce", "cocos"
         ];
 
-        /* All Types of ANIMAL products */
+        /**
+            * [PT] Lista de todos os tipos de produtos de origem animal (carne/peixe/lacticínios)
+            * [EN] List of all types of animal products (meat/fish/dairy)
+            * @type {string[]}
+        */
         const animal_products = [
             // Seafood
             "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
@@ -1464,6 +1879,79 @@
             "requeijão", "iogurte", "natas", "natas de soja", "mascarpone", "ricotta", "ovos"
         ];
 
+        /**
+            * [PT] Gere as mensagens recebidas através do WebSocket e responde com ações específicas baseadas na intenção detectada (switch case).
+            * Esta função processa dados recebidos, verificando o conteúdo de cada mensagem. Dependendo da intenção identificada (`intent`),
+            * a função executa operações correspondentes, como manipulação de interface do usuário, consultas de dados,
+            * e execução de comandos de voz. Erros durante o processamento são capturados e registrados no console.
+            *
+            * [EN] Processes messages received through the WebSocket and responds with specific actions based on the detected intent (switch case).
+            * This function processes received data by checking the content of each message. Depending on the identified intent (`intent`),
+            * the function performs corresponding operations such as UI manipulation, data queries, and voice command execution.
+            * Errors during processing are caught and logged to the console.
+            *
+            * @param {string} data - Dados recebidos pelo WebSocket. Espera-se que seja um string JSON que representa
+            *                        informações de comando e estado.
+            * @returns {void}
+            *  - case "ask_all_recipes": [PT ]Obter todas as receitas disponíveis 
+            *                            [EN] Get all available recipes
+            *  - case "ask_for_tools":  [PT] Obter todas as ferramentas necessárias para uma receita 
+            *    [NOT IMPLEMENTED]      [EN] Get all tools needed for a recipe
+            *  - case "ask_for_ingredients": [PT] Obter todos os ingredientes necessários para uma receita 
+            *    [NOT IMPLEMENTED]           [EN] Get all ingredients needed for a recipe
+            *  - case "ask_spefific_recipe": [PT] Obter uma receita específica 
+            *                                [EN] Get a specific recipe
+            *  - case "ask_help": [PT] Obter ajuda 
+            *                     [EN] Get help
+            *  - case "ask_random_recipe": [PT] Obter uma receita aleatória 
+            *                              [EN] Get a random recipe
+            *  - case "ask_repeat_step": [PT] Repetir a etapa atual 
+            *                            [EN] Repeat the current step
+            *  - case "ask_first_step": [PT] Ir para a primeira etapa 
+            *                           [EN] Go to the first step
+            *  - case "ask_next_step": [PT] Ir para a próxima etapa 
+            *                          [EN] Go to the next step
+            *  - case "ask_pantry": [PT] Obter a lista de produtos na despensa 
+            *                       [EN] Get the list of products in the pantry
+            *  - case "add_pantry": [PT] Adicionar um produto à despensa 
+            *                       [EN] Add a product to the pantry
+            *  - case "add_pantry_barcode": [PT] Adicionar um produto à despensa usando um código de barras 
+            *                               [EN] Add a product to the pantry using a barcode
+            *  - case "remove_pantry_barcode": [PT] Remover um produto da despensa usando um código de barras 
+            *                                  [EN] Remove a product from the pantry using a barcode
+            *  - case "remove_pantry": [PT] Remover um produto da despensa 
+            *                          [EN] Remove a product from the pantry
+            *  - case "remove_all_pantry": [PT] Remover todos os produtos da despensa/ todo o produto especifico 
+            *                              [EN] Remove all products from the pantry/ all specific product
+            *  - case "remove_all_shopping_list": [PT] Remover todos os produtos da lista de compras 
+            *                                     [EN] Remove all products from the shopping list
+            *  - case "add_shopping_list": [PT] Adicionar um produto à lista de compras 
+            *                              [EN] Add a product to the shopping list
+            *  - case "add_recipe_ingredients_pantry": [PT] Adicionar todos os ingredientes em falta de uma receita à despensa 
+            *    [NOT IMPLEMENTED]                     [EN] Add all missing ingredients from a recipe to the pantry 
+            *  - case "ask_shopping_list": [PT] Obter a lista de compras 
+            *                              [EN] Get the shopping list
+            *  - case "ask_specific_pantry": [PT] Verificar se um produto específico existe na despensa e caso exista a quantidade 
+            *                                [EN] Check if a specific product exists in the pantry and if it exists the quantity
+            *  - case "send_shopping_list": [PT] Enviar a lista de compras por e-mail
+            *                               [EN] Send the shopping list by email
+            *  - case "get_quantity_ingredient": [PT] Obter a quantidade de um ingrediente específico ( quantidade e unidade )
+            *                                    [EN] Get the quantity of a specific ingredient ( quantity and unit )
+            *  - case "get_expiration_date": [PT] Obter a data de validade de um produto específico
+            *                                [EN] Get the expiration date of a specific product
+            *  - case "greet": [PT] Cumprimentar o assistente de forma a ativar toda a dinamica do Assistente
+            *                  [EN] Greet the assistant in order to activate the entire Assistant dynamic
+            *  - case "goodbye": [PT] Despedir-se do assistente e com isto encerrar o Assistente
+            *                    [EN] Say goodbye to the assistant closing the Assistant
+            *  - case "affirm":    [PT] Responder afirmativamente a uma pergunta
+            *    [NOT IMPLEMENTED] [EN] Answer affirmatively to a question
+            *  - case "deny":      [PT] Responder negativamente a uma pergunta
+            *    [NOT IMPLEMENTED] [EN] Answer negatively to a question
+            *  - case "joke": [PT] Obter uma piada aleatória
+            *                 [EN] Get a random joke
+            *  - case "default": [PT] Responder com uma mensagem padrão
+            *                    [EN] Respond with a default message
+        */
         async function im1MessageHandler(data){
 
             console.log("--------------im1MessageHandler---------------");
