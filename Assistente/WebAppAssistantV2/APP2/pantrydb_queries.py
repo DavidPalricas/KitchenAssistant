@@ -241,6 +241,51 @@ def getStockDetails():
     else:
         return None
 
+# Search for a stock item in the pantry table
+def searchStock(name):
+    conn, cursor = connectDatabase()
+    if conn is not None and cursor is not None:
+        try:
+            # Fetch stock_id using the name
+            cursor.execute("SELECT stock_id FROM stock WHERE name = %s", (name,))
+            stock_id_result = cursor.fetchone()
+            if stock_id_result:
+                stock_id = stock_id_result[0]
+
+                # Fetch all stock details for this stock_id
+                cursor.execute("""
+                SELECT quantity, unit
+                FROM stock_details
+                WHERE stock_id = %s
+                """, (stock_id,))
+                
+                total_quantity = Decimal(0)
+                base_unit = None
+                
+                for quantity, unit in cursor.fetchall():
+                    if base_unit is None:
+                        # Initialize base unit if not set
+                        base_unit = unit
+                        total_quantity += Decimal(quantity)
+                    elif unit == base_unit:
+                        # Sum directly if unit is the same
+                        total_quantity += Decimal(quantity)
+                    else:
+                        # Convert and then sum if different units
+                        converted_quantity, _ = convert_measure(Decimal(quantity), unit, base_unit, conversion_factors)
+                        total_quantity += converted_quantity
+
+                return f"{total_quantity} {base_unit}"
+            else:
+                return f"No stock found for '{name}'."
+        except Exception as e:
+            return f"Database error: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        return "Failed to connect to the database."
+
 # remove all entries of a stock item from stock_details
 def removeAllStock(name):
     conn, cursor = connectDatabase()
@@ -395,7 +440,7 @@ def clearGrocery():
 
 #removeAllStock("Azeite")
 #clearStock()
-
+#print(searchStock("banana"))
 
 # print("\n")
 # # Test inserting a new stock item and its details

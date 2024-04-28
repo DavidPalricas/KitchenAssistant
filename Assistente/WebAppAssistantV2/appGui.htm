@@ -839,6 +839,27 @@
             //return body.replace(/"/g, '\\"');
         }
 
+        async function check_shoppingList(product_name) {
+            try {
+                // URL encode the product_name to ensure it's safe to include in a URL
+                const encodedProductName = encodeURIComponent(product_name);
+                const url = `http://127.0.0.1:5000/pantry/check-grocery/${encodedProductName}`;
+        
+                const response = await fetch(url, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    console.error('Response data for error:', data); // Log the error body for debugging
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                console.log("Product Data: ", data);
+                return data;
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        }
+
         async function insert_shooping_list(){
             try {
                 const response = await fetch("http://127.0.0.1:5000/pantry/insert-grocery", {
@@ -1836,8 +1857,10 @@
                                         console.log("ADD SHOPPING LIST -----------------------------");
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         let name_shopping = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
+                                        console.log("NAME SHOPPING: ", name_shopping);
                                         if(name_shopping){
                                             name_shopping = await get_product_name(name); // -------------------------------------- Get the type of the product
+                                            console.log("NAME SHOPPING ---> : ", name_shopping["message"]);
                                             product["name"] = name_shopping["message"]; // ----------------------------------------------- Store the ingredient
                                         }
 
@@ -1875,8 +1898,27 @@
                                         await addShoopingListTable(s_list); // ------------------------------------------------- Add the shopping list to the page as <table> id = shopping-list-table
                                         sendToVoice("Segue a lista de compras!"); // -------------------------------------- SEND THE VOICE TO THE USER
                                         break;
-                                    case "ask_specific_Pantry":
+                                    case "ask_specific_pantry":
                                         console.log("ASK SPECIFIC PANTRY -----------------------------");
+                                        let asp_name = c.nlu.audioreconized; // ---------------------------------------------------- Get the ingredient
+                                        console.log("NAME TO CHECK: ", asp_name);
+                                        if(asp_name){
+                                            asp_name = await get_product_name(asp_name);
+                                            console.log("Audio Recognized: ", asp_name["message"]);
+                                            product["name"] = asp_name["message"]; // --------------------------------------------------- Store the ingredient
+                                        }
+                                        let asp_value = await check_shoppingList(product["name"]); // -------------------------------------- Check if the product is in the pantry
+                                        let parts = asp_value["message"].split(" ");
+                                        console.log("ASP VALUE: ", parts);
+                                        if(parts[0] == "0"){
+                                            sendToVoice("O produto " + product["name"] + " não se encontra na despensa"); // ---------------------- SEND THE VOICE TO THE USER
+                                        }else{
+                                            answer = "Tem "+ parts[0]+ " " + parts[1]+ " de "+ product["name"] + " na despensa";
+                                            sendToVoice(answer); // ---------------------- SEND THE VOICE TO THE USER
+                                            openChatBox(); // ------------------------------------------------------------ Open the chat box
+                                            addMsgToChat("Assistente", answer); // -------------------------------------- Add the message to the chat
+                                        }
+                                        reset_product(); // ---------------------------------------------------------- Reset the product dictionary
                                         break;
                                     case "send_shopping_list":
                                         console.log("SEND SHOPPING LIST -----------------------------");
@@ -1969,7 +2011,7 @@
                                         active_assistant = true; // ------------------------------------------------ Activate the assistant
                                         openChatBox(); // ---------------------------------------------------------- Open the chat box
                                         addMsgToChat('Assistente','Olá, posso ajudar?'); // ------------------------ Add the Assistent message to the chat
-                                        sendToVoice("Olá, posso ajudar?"); // -------------------------------------- Send the voice to the user saying "Olá, posso ajudar?"
+                                        await sendToVoice("Olá, posso ajudar?"); // -------------------------------------- Send the voice to the user saying "Olá, posso ajudar?"
                                         if (!alerted){ // ------------------------------------------------------------------------------ Check if the email was already sent
                                             // check if the product is near the expiration date
                                             let product_list = await get_pantry_products(); // ----------------------------------------- Get all the products in the pantry
@@ -1986,9 +2028,9 @@
                                         }
                                         s_list = await get_shopping_list(); // ------------------------------------------------ Get the shopping list
                                         p_list = await get_pantry_products(); // ------------------------------------------------ Get the pantry products
-                                        addRecipeName("Despensa"); // ------------------------------------------------------ Add the recipe name to the page as <h2>
-                                        addPantryTable(p_list); // ------------------------------------------------------------ Add the pantry table to the page
-                                        addShoopingListTable(s_list); // ------------------------------------------------------ Add the shopping list table to the page
+                                        await addRecipeName("Despensa"); // ------------------------------------------------------ Add the recipe name to the page as <h2>
+                                        await addPantryTable(p_list); // ------------------------------------------------------------ Add the pantry table to the page
+                                        await addShoopingListTable(s_list); // ------------------------------------------------------ Add the shopping list table to the page
                                         break;
                                     case "goodbye":
                                         console.log("GOODBYE -----------------------------");
@@ -1998,6 +2040,7 @@
                                         clearContent(); // --------------------------------------------------------- Clear the content from "conteudo" div
                                         sendToVoice("Espero ter ajudado, até à próxima!!"); // ------------------------------------------- Send the voice to the user saying "Até à próxima"
                                         active_assistant = false; // ------------------------------------------------ Deactivate the assistant
+                                        reset_product(); // ---------------------------------------------------------- Reset the product dictionary
                                         break;
                                     case "affirm":
                                         break;

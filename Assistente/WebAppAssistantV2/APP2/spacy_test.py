@@ -7,18 +7,19 @@ def get_unit(sentence, lista):
     # Process the sentence using spaCy to tokenize and lemmatize the text
     doc = nlp(sentence.lower())
 
-    # Convert list to lemmas
-    lemmatized_list = {nlp(word)[0].lemma_ for word in lista}
+    # Convert list to a set of lemmas and original text to improve matching chances
+    lemmatized_list = {nlp(word.lower())[0].lemma_ for word in lista}
+    original_list = set(lista)
 
-    # Check for multi-word units first (assumes lista is already lemmatized if necessary)
+    # Check for multi-word units first
     for unit in [unit for unit in lista if ' ' in unit]:
-        if unit in sentence:
+        if unit.lower() in sentence.lower():
             return unit
 
-    # Check for single-word units using lemmatization
+    # Check for single-word units using lemmatization and direct match
     for token in doc:
-        if token.lemma_ in lemmatized_list:
-            return token.text  # return the original text
+        if token.lemma_ in lemmatized_list or token.text in original_list:
+            return token.text  # return the original text from the doc
 
     return None  # If no unit is found
 
@@ -94,5 +95,5 @@ food_list = [
     "mostarda", "maionese", "picles", "polpa de tomate", "biscoitos"
 ]
 
-sentence = "Usei 2 kg de medalhões de pescada"
-print(get_unit(sentence, food_list))  # Expected to handle plural 'lula' correctly as 'lulas'
+sentence = "confirma se tenho vinagre"
+print(get_unit(sentence, food_list))  

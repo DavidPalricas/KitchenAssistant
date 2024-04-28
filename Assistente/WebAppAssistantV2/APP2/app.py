@@ -290,6 +290,17 @@ def clear_pantry():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# ----------------------------------------------------------------------------------------- > CHECK IF A <GIVEN PRODUCT> EXISTS IN GROCERY LIST
+@app.route('/pantry/check-grocery/<product_name>', methods=['GET'])
+def check_grocery(product_name):
+    try:
+        result = pdb.searchStock(product_name)
+        return jsonify({'message': result}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
 # ----------------------------------- > [ SHOPPING LIST DATABASE -> ENDPOINTS]
 
 # ----------------------------------------------------------------------------------------- > ADD PRODUCT INTO GROCERY LIST
@@ -342,6 +353,8 @@ def clear_grocery():
         return jsonify({'message': result}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
 
 # ----------------------------------- > [ BARCODE -> ENDPOINTS]
 

@@ -100,7 +100,8 @@ def get_ingredient(sentence):
 
     # Convert list to lemmas
     lemmatized_list = {nlp(word)[0].lemma_ for word in food_list}
-
+    original_list = set(food_list)
+    
     # Check for multi-word units first (assumes lista is already lemmatized if necessary)
     for unit in [unit for unit in food_list if ' ' in unit]:
         if unit in sentence:
@@ -108,7 +109,7 @@ def get_ingredient(sentence):
 
     # Check for single-word units using lemmatization
     for token in doc:
-        if token.lemma_ in lemmatized_list:
+        if token.lemma_ in lemmatized_list or token.text in original_list:
             return token.text  # return the original text
 
     return None  # If no unit is found

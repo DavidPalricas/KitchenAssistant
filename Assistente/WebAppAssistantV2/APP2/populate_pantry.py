@@ -26,16 +26,16 @@ products = [
     ("requeijão", "g"),
 
     # Vegetables
-    ("batata", "kg"),
+    ("batatas", "kg"),
     ("tomates", "kg"),
-    ("cenoura", "kg"),
+    ("cenouras", "kg"),
     ("espinafres", "molho"),
     ("abóbora", "kg"),
 
     # Fruits
-    ("laranja", "kg"),
-    ("maçã", "kg"),
-    ("banana", "kg"),
+    ("laranjas", "kg"),
+    ("maçãs", "kg"),
+    ("bananas", "kg"),
     ("uvas", "kg"),
     ("melancia", "kg"),
 
@@ -56,9 +56,9 @@ products = [
     # Nuts
     ("amêndoa", "kg"),
     ("noz", "kg"),
-    ("castanha", "kg"),
-    ("pistácio", "kg"),
-    ("amendoim", "kg"),
+    ("castanhas", "kg"),
+    ("pistácios", "kg"),
+    ("amendoins", "kg"),
 
     # Oils and others
     ("azeite", "l"),
