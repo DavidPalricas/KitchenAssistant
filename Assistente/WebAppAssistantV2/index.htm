@@ -447,7 +447,7 @@
                     recipe = data.entities[i].value;
                     console.log("RECIPE: "+recipe);
                 }*/
-                var message = {'intent':'ask_spefific_recipe','recipe':data.entities[0].value , 'audioReconized': final_transcript }
+                var message = {'intent':'ask_spefific_recipe','recipe':findValueByKey(data.entities, "receita"), 'audioReconized': final_transcript }
                 var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
                 var result = { "recognized" : ["SPEECH", "SPEECHIN", "APP"], "text": messaget, "nlu": message };
                 mmiCli_1.sendToIM(new LifeCycleEvent("SPEECHIN", "IM", "text-1", "ctx-1").

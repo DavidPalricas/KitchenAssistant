@@ -2021,10 +2021,10 @@
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         console.log("ASK SPECIFIC RECIPE: ");
                                         //console.log("ASK SPECIFIC RECIPE_VALUE: "+c.nlu.recipe);
-                                        let tag = c.nlu.audioReconized; // ------------------------------------------------- Get the recipe tag
+                                        let tag = c.nlu.recipe; // ------------------------------------------------- Get the recipe tag
                                         console.log("TAG: ", tag);
-                                        tag = await get_product_name(tag); // ------------------------------------------------ Get the product name
-                                        let temp_img = await getRecipesByTag(tag["message"]); // ------------------------------ Get the recipe_id for the specific recipe
+                                        //tag = await get_product_name(tag); // ------------------------------------------------ Get the product name
+                                        let temp_img = await getRecipesByTag(tag); // ------------------------------ Get the recipe_id for the specific recipe
                                         recipe_id = temp_img.recipe_ids[0]; // ------------------------------------- Set the recipe_id for the specific recipe
                                         console.log("RECIPE_ID: ", recipe_id);
                                         step = 1; // --------------------------------------------------------------- Set the step to 1 - to reset the var step
