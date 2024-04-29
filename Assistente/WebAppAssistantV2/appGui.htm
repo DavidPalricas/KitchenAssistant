@@ -2228,6 +2228,7 @@
                                         break;
                                     case "add_pantry_barcode":
                                         console.log("ADD PANTRY BARCODE -----------------------------");
+                                        sendToVoice("Passe o código de barras do produto na câmera par lê-lo"); // ---------------------- SEND THE VOICE TO THE USER
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
