@@ -1,8 +1,31 @@
+"""
+@file get_product.py
+@brief Módulo para extrair ingredientes e unidades de medida de sentenças em português utilizando o modelo linguístico do spaCy.
+
+Este módulo define funções para identificar ingredientes e unidades de medida em sentenças, baseando-se em listas predefinidas de alimentos e unidades comuns na culinária. O módulo utiliza o processamento de linguagem natural com o modelo "pt_core_news_sm" do spaCy para lematização e tokenização, aumentando a precisão na identificação de ingredientes em diferentes formas flexionadas.
+
+@details As funções principais do módulo são:
+- `get_ingredient(sentence)`: Identifica e retorna o ingrediente presente na sentença, se houver.
+- `get_unit(sentence)`: Identifica e retorna a unidade de medida presente na sentença, se houver.
+
+Os ingredientes e unidades são identificados mesmo que estejam flexionados, graças à lematização feita pelo spaCy, o que permite que o módulo funcione de maneira eficaz em textos reais e variados.
+
+@example
+    sentence = "Adicione 200g de açúcar e 500ml de leite ao preparo."
+    ingredient = get_ingredient(sentence)
+    unit = get_unit(sentence)
+    print(f"Ingrediente: {ingredient}, Unidade: {unit}")
+    # Output: Ingrediente: açúcar, Unidade: g
+
+@note É necessário instalar o spaCy e baixar o modelo de linguagem português para o funcionamento adequado deste módulo.
+    - pip install spacy
+    - python -m spacy download pt_core_news_sm
+"""
 import spacy
 # pip install spacy
 # python -m spacy download pt_core_news_sm
 
-
+# List of common units of measure in Portuguese
 unit_list = [
     "l", "ml", "cl", "dl", "kg", "g", "mg", 
     "uni", "lata", "colher de sopa", 
@@ -12,6 +35,7 @@ unit_list = [
     "ramo", "talo"
 ]
 
+# Comprehensive list of food items categorized by type (e.g., Seafood, Meats, Dairy)
 food_list = [
     # Seafood
     "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
@@ -95,6 +119,13 @@ nlp = spacy.load("pt_core_news_sm")
 #        if food_product in lista:
 #            return food_product
 def get_ingredient(sentence):
+    """
+    Processa uma frase para identificar e retornar o ingrediente mencionado, se houver.
+    
+    @param sentence <string> contendo a sentença a ser analisada.
+    @return <string> com o ingrediente identificado ou None se nenhum ingrediente for encontrado.
+    """
+    
     # Process the sentence using spaCy to tokenize and lemmatize the text
     doc = nlp(sentence.lower())
 
@@ -115,6 +146,12 @@ def get_ingredient(sentence):
     return None  # If no unit is found
             
 def get_unit(sentence):
+    """
+    Processa uma frase para identificar e retornar a unidade de medida mencionada, se houver.
+    
+    @param sentence <string> contendo a sentença a ser analisada.
+    @return <string> com a unidade de medida identificada ou None se nenhuma unidade for encontrada.
+    """
     words = sentence.split() # --------------------------------------- Split the sentence into words
     multi_word_units = [unit for unit in unit_list if ' ' in unit] # ----- Get multi-word units
 

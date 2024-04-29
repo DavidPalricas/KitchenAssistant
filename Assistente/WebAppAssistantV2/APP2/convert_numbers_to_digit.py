@@ -1,8 +1,30 @@
+"""
+@file convert_numbers_to_digit.py
+@brief Este módulo contém funções para converter palavras em números e unidades de medida do Português para os seus respectivos dígitos e abreviações.
+
+Este módulo é útil para processar texto em Português que contenha números por extenso e unidades de medida, convertendo-os para uma forma mais compacta e padronizada. 
+Este processo facilita outras tarefas de processamento de texto que dependam de valores numéricos ou medidas padronizadas.
+
+@details As funções principais deste módulo lidam com a conversão de palavras para números e de unidades completas para as suas abreviações. 
+Os dicionários `numbers_dict` e `uni_dict` contêm as correspondências usadas nas conversões.
+
+@author Pedro Carneiro
+"""
 import re
 import sys
 # working with numbers in Portuguese based on a exercicie made in the course "Compiladores"
 
 def convert_number_words_to_digits(words):
+    """
+    Converte uma lista de palavras que representam números por extenso em Português para um valor numérico inteiro.
+    
+    @param words Lista de strings, onde cada string é uma palavra representando um número ou a conjunção 'e'.
+    
+    @return Um inteiro representando o valor numérico das palavras, ou None se alguma palavra não puder ser convertida.
+    
+    @details Esta função itera sobre cada palavra na lista, somando os valores conforme necessário para construir o número final. A função ignora a palavra 'e'. 
+    Se uma palavra inválida for encontrada, a função imprime uma mensagem de erro e retorna None.
+    """
     result = 0
     temp_number = 0
     for word in words:
@@ -23,12 +45,31 @@ def convert_number_words_to_digits(words):
     return result + temp_number
 
 def convert_units(word):
+    """
+    Converte palavras que representam unidades de medida para suas respectivas abreviações.
+    
+    @param word Uma string que representa uma unidade de medida.
+    
+    @return A abreviação correspondente da unidade de medida, se disponível; caso contrário, retorna a palavra original.
+    
+    @details Utiliza o dicionário `uni_dict` para encontrar a abreviação correspondente para a unidade de medida fornecida. 
+    Se a unidade não estiver no dicionário, a palavra original é retornada.
+    """
     if word in uni_dict:
         return uni_dict[word]
     return word
     
 def extract_and_convert_numeric_phrases(sentence):
-    # Simplified approach: directly replace words with their numeric equivalents
+    """
+    Extrai frases numéricas de uma frase e converte as palavras numéricas e unidades de medida para seus respectivos valores numéricos e abreviações.
+    
+    @param sentence Uma string com a frase em Português.
+    
+    @return Uma string com os números e unidades de medida convertidos.
+    
+    @details Esta função divide a frase em palavras e processa-as individualmente. 
+    As palavras reconhecidas como parte de uma frase numérica são acumuladas e convertidas num conjunto.
+    """
     words = sentence.split()
     converted_words = []
     number_phrase = []
@@ -78,6 +119,11 @@ uni_dict = {
 }
 
 def main(argv):
+    """
+    Função principal que processa a linha de comando para converter frases.
+    
+    @param argv Lista de argumentos da linha de comando.
+    """
     if len(argv) != 2:
         print("Usage: python convert_text_to_digit.py 'sentence with number words'")
         return

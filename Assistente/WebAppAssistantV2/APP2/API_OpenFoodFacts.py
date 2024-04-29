@@ -1,6 +1,21 @@
 import requests
 
 def get_product_name(barcode):
+    """
+    Obtém o nome, a quantidade e a imagem de um produto a partir do seu código de barras
+    usando a API Open Food Facts de Portugal.
+
+    @param barcode O código de barras do produto para consulta.
+    
+    @return Um tuplo com o nome , a quantidade e a URL da imagem 
+            Retorna None para cada campo caso o produto não seja encontrado.
+
+    @details Esta função faz uma requisição [GET] à API Open Food Facts de Portugal utilizando
+             o código de barras fornecido.
+    
+    @exception Se ocorrer uma exceção durante a requisição à API, uma mensagem de erro é impressa
+               indicando o problema encontrado.
+    """
     product_name = None
     product_quantity = None
     produtct_image = None

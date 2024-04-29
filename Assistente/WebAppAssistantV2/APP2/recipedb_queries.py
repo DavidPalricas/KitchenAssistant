@@ -1,8 +1,40 @@
+"""
+@file recipedb_queries.py
+@brief Módulo de interação com a base de dados de receitas.
+
+Este módulo oferece várias funções para aceder e manipular dados armazenados na base de dados de receitas.
+As funções cobrem a procura de receitas, ingredientes, ferramentas usadas nas receitas e instruções de cozinha.
+
+@details As funções utilizam a biblioteca `mysql.connector` para conectar-se e realizar consultas na base de dados.
+Cada função é responsável por uma tarefa específica, como buscar receitas por nome ou tag, listar ingredientes de uma
+receita, ou obter a próxima instrução de cozinha para uma receita.
+
+Dependencies:
+- mysql.connector
+- random
+
+Usage:
+- As funções podem ser importadas e usadas em outros scripts para criar, acessar e manipular dados de receitas.
+- O uso efetivo das funções requer uma base de dados MariaDB configurada conforme esperado pelo módulo.
+
+@example
+    import recipes_queries as rq
+    recipe_id = rq.getRecipe('Pizza Margherita')
+    ingredients = rq.getIngredients(recipe_id)
+    print(ingredients)
+
+@note As funções assumem que a base de dados está corretamente configurada com as tabelas e conexões apropriadas.
+"""
 import mysql.connector
 from mysql.connector import Error
 import random
 
 def create_connection():
+    """ 
+    Estabelece conexão com a base de dados MariaDB.
+    
+    @return Retorna a conexão se bem sucedida; None se houver erro.
+    """
     try:
         connection = mysql.connector.connect(
             host="localhost",
@@ -17,6 +49,11 @@ def create_connection():
 
 # Returns a list of tuples with the name, number of servings and cooking time of all recipes
 def getRecipes():
+    """
+    Procura todas as receitas disponíveis na base de dados.
+    
+    @return Lista de dicionários contendo nome, número de porções e tempo de confeção de cada receita.
+    """
     conn = create_connection()
     if conn is None:
         return []
@@ -36,7 +73,13 @@ def getRecipes():
 
 # Returns the recipe_id of a recipe given its tag
 def getRecipeByTag(tag):
-    """Obtém IDs de receitas pelo nome da tag."""
+    """
+    Procura IDs de receitas associadas a uma tag específica.
+    
+    @param tag Nome da tag a ser procurada.
+    @return <list> Lista de IDs de receitas; None se não encontradas ou em caso de erro.
+    """
+    # Obtém IDs de receitas pelo nome da tag."""
     conn = create_connection()
     if conn is None:
         return None
@@ -61,6 +104,12 @@ def getRecipeByTag(tag):
 
 # Returns the recipe_id of a recipe given its name
 def getRecipe(name):
+    """
+    Procura o ID de uma receita pelo seu nome.
+    
+    @param name Nome da receita a ser procurada.
+    @return ID da receita se encontrada; None caso contrário.
+    """
     conn = create_connection()
     if conn is None:
         return None
@@ -79,6 +128,13 @@ def getRecipe(name):
 
 # Returns a list of tuples with the name, quantity and unit of all ingredients of a recipe
 def getIngredients(recipe_id):
+    """
+    Procura os ingredientes de uma receita pelo seu ID.
+    
+    @param recipe_id ID da receita.
+    @return Lista de ingredientes com nome, quantidade e unidade; lista vazia em caso de erro.
+    """
+
     conn = create_connection()
     if conn is None:
         return []
@@ -97,6 +153,13 @@ def getIngredients(recipe_id):
 
 # Returns a list of tuples with the name of all tools used in a recipe
 def getTools(recipe_id):
+    """
+    Procura os ingredientes de uma receita pelo seu ID.
+    
+    @param recipe_id ID da receita.
+    @return Lista de ingredientes com nome, quantidade e unidade; lista vazia em caso de erro.
+    """
+
     conn = create_connection()
     if conn is None:
         return []
@@ -120,6 +183,11 @@ def getTools(recipe_id):
 
 # Returns a list of tuples with the description of all instructions of a recipe
 def getRandomRecipe():
+    """
+    Escolhe aleatoriamente uma receita da base de dados e retorna seu ID.
+    
+    @return ID de uma receita escolhida aleatoriamente; None em caso de erro.
+    """
     conn = create_connection()
     if conn is None:
         return None
@@ -139,6 +207,12 @@ def getRandomRecipe():
 
 # Returns the name of a recipe given its recipe_id
 def getRecipeName(recipe_id):
+    """
+    Procura o nome de uma receita pelo seu ID.
+    
+    @param recipe_id ID da receita.
+    @return Nome da receita se encontrada; None caso contrário.
+    """
     conn = create_connection()
     if conn is None:
         return None
@@ -157,7 +231,14 @@ def getRecipeName(recipe_id):
 
 # Returns a list with the description of the next instruction of a recipe
 def getNextInstruction(recipe_id, step):
-    """Obtém a descrição do próximo passo para um recipe_id e step dado."""
+    """
+    Procura a descrição da próxima instrução de cozinha para uma receita e passo dados.
+    
+    @param recipe_id ID da receita.
+    @param step Número do passo atual.
+    @return Descrição da próxima instrução; None se não encontrada ou primeiro passo.
+    """
+    #Obtém a descrição do próximo passo para um recipe_id e step dado
     conn = create_connection()
     query = """
     SELECT description FROM recipe_instructions
@@ -178,7 +259,15 @@ def getNextInstruction(recipe_id, step):
 
 # Returns a list with the description of the previous instruction of a recipe
 def getPreviousInstruction(recipe_id, step):
-    """Obtém a descrição do passo anterior para um recipe_id e step dado."""
+    """
+    Procura a descrição da instrução anterior de uma receita dado o seu ID e o número do passo.
+    
+    @param recipe_id ID da receita.
+    @param step Número do passo atual.
+    @return Descrição da instrução anterior; None se não encontrada ou primeiro passo.
+    """
+
+    #btém a descrição do passo anterior para um recipe_id e step dado.
     conn = create_connection()
     if step == 1:  # Não existe instrução anterior ao primeiro passo
         return None
@@ -201,7 +290,14 @@ def getPreviousInstruction(recipe_id, step):
         
 # Returns a list with the actual instruction of a recipe
 def getActualInstruction(recipe_id, step):
-    """Obtém a descrição do passo anterior para um recipe_id e step dado."""
+    """
+    Obtém a descrição da instrução atual de uma receita dado o seu ID e o número do passo.
+    
+    @param recipe_id ID da receita.
+    @param step Número do passo atual.
+    @return Descrição da instrução atual; None se não encontrada ou passo zero.
+    """
+    #Obtém a descrição do passo anterior para um recipe_id e step dado.
     conn = create_connection()
     if step == 0:  # Não existe instrução anterior ao primeiro passo
         return None
@@ -222,6 +318,12 @@ def getActualInstruction(recipe_id, step):
         conn.close()
 
 def getImg_url(recipe_id):
+    """
+    Procura a URL da imagem de uma receita pelo seu ID.
+    
+    @param recipe_id ID da receita.
+    @return URL da imagem se encontrada; None caso contrário.
+    """
     conn = create_connection()
     if conn is None:
         return None

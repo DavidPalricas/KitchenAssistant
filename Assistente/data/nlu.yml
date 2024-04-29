@@ -86,10 +86,12 @@ nlu:
 - intent: ask_specific_recipe
   examples: |
     - Quero uma receita de [bacalhau](receita)
+    - Quero 1 receita de [lasanha](receita)
     - Hoje quero fazer receita de [lasanha](receita)
     - Quero fazer receita de [pasta](receita)
     - Quero fazer receita de [bolo](receita)
     - Mostra-me uma receita de [peixe](receita)
+    - Mostra-me 1 receita de [carne](receita)
 - regex: receita
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*)
@@ -216,13 +218,6 @@ nlu:
 - regex: ingrediente 
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\s(?:à|na|da)\ despensa)
-    - (?:o|os|a|as)\s+(\w+(?:\s+\w+)*?)\s*(?:todo|todos|todas|toda)?
-    - (?<=(?:comi|usei)\s)\s+\d+\s+(?:{unidade})\s+de\s+(\S+(?:\s+\S+)*?)
-    - (?<=(?:comi|usei)\s)\s+\d+\s+(\w+)
-    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sdo\ supermercado)
-    - (?<=de\s)(\S+(?:\s+\S+)*?)(?=\sà\ lista)
-    - \bComprei\s+\d+\s+(?:{unidade})\s+de\s+([\w\s]+)\b
-    - \btenho\s+(?:se\s+)?([\w\s]+?)(?:\s+na|\s+tenho|$)
 #    - ((?:\b\w+\b\s?)+)(?=\sà\sdespensa)
 
 # regex to extract the expiration date - simplistic way only validating the number of digits

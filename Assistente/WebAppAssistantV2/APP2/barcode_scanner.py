@@ -5,9 +5,18 @@ import base64
 
 
 def barcode_scanner(frame):
+    """
+    Analisa um frame codificado para detectar códigos de barras presentes numa imagem.
+
+    @param frame {string} String codificada em correspondente à imagem a ser analisada.
+    
+    @return Retorna o código de barras descodificado como uma string ou None se nenhum código de barras for detectado.
+
+    @exception Se ocorrer uma exceção durante a análise da imagem, uma mensagem de erro é impressa
+    """
     product_barcode = None
 
-    # Decodifique a string base64 para bytes
+    # Descodifique a string base64 para bytes
     frame_bytes = base64.b64decode(frame)
 
     # Converta os bytes em um array numpy

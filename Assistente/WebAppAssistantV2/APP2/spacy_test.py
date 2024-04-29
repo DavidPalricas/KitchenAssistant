@@ -1,9 +1,40 @@
+"""
+@file spacy_test.py
+@brief Módulo para identificação de ingredientes em frases.
+
+Este módulo utiliza o modelo de linguagem portuguesa do spaCy para processar texto e identificar ingredientes mencionados numa frase. 
+A função principal analisa uma frase e retorna o ingrediente encontrado, baseado numa lista fornecida.
+
+@details A função `get_unit` processa uma frase para identificar palavras que correspondam a itens em uma lista de ingredientes, 
+tendo em conta variações lexicais e lematização para melhorar a precisão da correspondência.
+
+Dependencies:
+- spacy
+
+Usage:
+- Este módulo pode ser usado em contextos onde é necessário extrair ingredientes de textos, como em sistemas de recomendação de receitas ou análises de listas de compras.
+
+@example
+    import spacy_test as st
+    found_ingredient = st.get_unit("confirma se tenho vinagre", st.food_list)
+    print(found_ingredient)
+
+@note É necessário ter o modelo 'pt_core_news_sm' do spaCy instalado e carregado corretamente para que o módulo funcione.
+"""
 import spacy
 
 # Load the Portuguese language model
 nlp = spacy.load("pt_core_news_sm")
 
 def get_unit(sentence, lista):
+    """
+    Identifica um ingrediente numa frase dada uma lista de possíveis ingredientes.
+
+    @param sentence A sentença a ser analisada.
+    @param lista Lista de ingredientes conhecidos.
+    
+    @return O ingrediente identificado na sentença; None se nenhum correspondente for encontrado.
+    """
     # Process the sentence using spaCy to tokenize and lemmatize the text
     doc = nlp(sentence.lower())
 

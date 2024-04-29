@@ -1025,9 +1025,10 @@
             * EN: Add a product to the shopping list the product is passed through the product object
             * - sends a [POST] request to the server
             *
+            * @param {string} name - O nome do produto a adicionar
             * @return {string} data - A mensagem de sucesso ou erro
         */
-        async function insert_shooping_list(){
+        async function insert_shooping_list(name){
             try {
                 const response = await fetch("http://127.0.0.1:5000/pantry/insert-grocery", {
                     method: "POST",
@@ -2349,12 +2350,13 @@
                                         let name_shopping = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
                                         console.log("NAME SHOPPING: ", name_shopping);
                                         if(name_shopping){
-                                            name_shopping = await get_product_name(name); // -------------------------------------- Get the type of the product
+                                            name_shopping = await get_product_name(name_shopping); // -------------------------------------- Get the type of the product
                                             console.log("NAME SHOPPING ---> : ", name_shopping["message"]);
                                             product["name"] = name_shopping["message"]; // ----------------------------------------------- Store the ingredient
+                                            console.log("PRODUCT NAME: ", product["name"]);
                                         }
 
-                                        if (product["name"]){
+                                        if (product["name"] != null){
                                             await insert_shooping_list(product["name"]); // -------------------------------------- Insert the product to the shopping list
                                             await clearContent(); // -------------------------------------------------------- Clear the content
                                             s_list = await get_shopping_list(); // -------------------------------------- Get the shopping list

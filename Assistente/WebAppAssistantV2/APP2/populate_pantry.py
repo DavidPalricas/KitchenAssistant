@@ -1,3 +1,24 @@
+"""
+@file populate_pantry.py
+@brief Script para povoar a base de dados despensa e a lista de compras.
+
+Este script utiliza o módulo `pantrydb_queries` para inserir uma série de produtos alimentares e itens na lista de compras 
+de uma base de dados. É adequado para a inicialização de dados no sistema ( PANTRY_DB ).
+
+@details Os produtos são definidos numa lista de tuplos, cada um contendo o nome do produto e a unidade de medida.
+A lista de compras é composta por itens que serão adicionados diretamente à lista de compras na base de dados.
+
+O script executa duas funções principais:
+- `populate_pantry()`: Insere produtos na base de dados com quantidades e datas de validade aleatórias.
+- `populate_shopping_list()`: Insere itens na lista de compras.
+
+@example
+    # Executar este script irá povoar a base de dados com produtos e adicionar itens à lista de compras.
+    populate_pantry()
+    populate_shopping_list()
+
+@note É necessário que a base de dados esteja configurada e acessível conforme especificado no módulo `pantrydb_queries`.
+"""
 import pantrydb_queries as pdb
 from datetime import datetime, timedelta
 import random
@@ -86,6 +107,12 @@ grocery_items = [
 
 # Function to populate the pantry database
 def populate_pantry():
+    """
+    Insere produtos na base de dados com quantidades e datas de validade aleatórias.
+    
+    Cada produto pode ter entre 0 e 1 entradas com quantidades de 1 a 4 e datas de validade
+    que variam de 30 a 730 dias a partir da data atual.
+    """
     today = datetime.now()
     for name, unit in products:
         # Randomize the quantity and create between 1 and 3 entries per product
@@ -98,11 +125,16 @@ def populate_pantry():
             pdb.insertStock(name, quantity, unit, expiration_date_str)
             
 def populate_shopping_list():
+    """
+    Adiciona itens especificados à lista de compras na base de dados.
+    
+    Cada inserção é registada e o resultado da operação é impresso, indicando sucesso ou falha.
+    """
     for name in grocery_items:
         message = pdb.insertGrocery(name)
         print(message)  # This will print the outcome of each insert operation
 
 
 # Call the function to populate the database
-populate_pantry()
-populate_shopping_list()
+#populate_pantry()
+#populate_shopping_list()
