@@ -30,23 +30,48 @@ Antes de correr o projeto :
 KitchenAssistant/
 │
 ├── Assistente/
-|
 │ ├── FusionEngine/
-│ │ └── FusionEngine.jar
-│ ├── mmiframeworkV2/
-│ │ └── mmiframeworkV2.jar
-│ └── Rasa/
-│ ├── activate
-│ ├── rasa train
-│ └── rasa run
-│
-├── WebAppAssistantV2/
-│ ├── APP2/
-│ │ └── app.py
-│ └── http-server
-│ └── http-server -p 8082 -S -C cert.pem -K key.pem
-│
-└── index.html
+│ │ └── 1º : Correr o FusionEngine
+│ │   └── java -jar FusionEngine.jar
+| |
+│ └── mmiframeworkV2/
+│   └── 2º : Correr o IM
+│     └── java -jar mmiframeworkV2.jar
+|
+├── Assistente/
+│ └── 3º : Correr o RASA
+│   ├── 3.1 : Ativar o ambiente virtual
+│   | ├── MacOS: 
+|   | | └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
+│   | └── Windows: Abrir o terminal 'miniconda'
+|   |   └── activate rasa-env
+|   |
+│   ├── 3.2 : Treinar o modelo de .nlu
+│   | ├── MacOS: 
+|   | | └── rasa train
+│   | └── Windows: No terminal 'miniconda'
+|   |   └── rasa train
+|   |
+│   └── 3.3 : 
+│     ├── MacOS: 
+|     | └── rasa run --enable-api --cors="*"
+│     └── Windows: No terminal 'miniconda'
+|       └── rasa run --enable-api --cors="*"
+|   
+└── WebAppAssistantV2/
+  ├── APP2/
+  │ └── 4º : Correr o servidor de todos os endpoints:
+  │   └── python app.py
+  |
+  ├── 5º : Correr o Assistente 
+  | └── http-server -p 8082 -S -C cert.pem -K key.pem
+  |
+  ├── 6º : Abrir o IM
+  | └── https://127.0.0.1:8082/index.htm
+  |
+  └── 7º : Abrir o Assistente
+    └── https://127.0.0.1:8082/appGui.htm
+    
 ```
 
 ## Primeiro Passo: Correr o FusionEngine
