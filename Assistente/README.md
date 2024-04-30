@@ -61,6 +61,52 @@ KitchenAssistant/
 
 ```
 
+KitchenAssistant/
+│
+├── <span style="color: blue;">Assistente/</span>
+│ ├── <span style="color: green;">FusionEngine/</span>
+│ │ └── 1º : <span style="color: red;">Correr o FusionEngine</span>
+│ │   └── java -jar FusionEngine.jar
+| |
+│ └── <span style="color: green;">mmiframeworkV2/</span>
+│   └── 2º : <span style="color: red;">Correr o IM</span>
+│     └── java -jar mmiframeworkV2.jar
+|
+├── <span style="color: blue;">Assistente/</span>
+│ └── 3º : <span style="color: red;">Correr o RASA</span>
+│   ├── 3.1 : Ativar o ambiente virtual
+│   | ├── <span style="color: orange;">MacOS:</span> 
+|   | | └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
+│   | └── <span style="color: orange;">Windows:</span> Abrir o terminal 'miniconda'
+|   |   └── activate rasa-env
+|   |
+│   ├── 3.2 : Treinar o modelo de .nlu
+│   | ├── <span style="color: orange;">MacOS:</span> 
+|   | | └── rasa train
+│   | └── <span style="color: orange;">Windows:</span> No terminal 'miniconda'
+|   |   └── rasa train
+|   |
+│   └── 3.3 : 
+│     ├── <span style="color: orange;">MacOS:</span> 
+|     | └── rasa run --enable-api --cors="*"
+│     └── <span style="color: orange;">Windows:</span> No terminal 'miniconda'
+|       └── rasa run --enable-api --cors="*"
+|   
+└── <span style="color: blue;">WebAppAssistantV2/</span>
+  ├── <span style="color: green;">APP2/</span>
+  │ └── 4º : <span style="color: red;">Correr o servidor de todos os endpoints:</span>
+  │   └── python app.py
+  |
+  ├── 5º : <span style="color: red;">Correr o Assistente</span>
+  | └── http-server -p 8082 -S -C cert.pem -K key.pem
+  |
+  ├── 6º : <span style="color: red;">Abrir o IM</span>
+  | └── https://127.0.0.1:8082/index.htm
+  |
+  └── 7º : <span style="color: red;">Abrir o Assistente</span>
+    └── https://127.0.0.1:8082/appGui.htm
+
+
 ## Primeiro Passo: Correr o FusionEngine
 
 O FusionEngine é um bloco que permite adicionar diferentes módulos.
