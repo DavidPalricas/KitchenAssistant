@@ -30,6 +30,7 @@ Antes de correr o projeto :
 KitchenAssistant/
 │
 ├── Assistente/
+|
 │ ├── FusionEngine/
 │ │ └── FusionEngine.jar
 │ ├── mmiframeworkV2/
