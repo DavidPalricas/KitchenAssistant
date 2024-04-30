@@ -23,7 +23,7 @@ KitchenAssistant/
 │
 └── Assistente/
   └── FusionEngine/
-    └── '1º' : Correr o FusionEngine
+    └── '1º : Correr o FusionEngine'
       └── java -jar FusionEngine.jar
 ```
 
@@ -35,7 +35,7 @@ KitchenAssistant/
 └── Assistente/
   │
   └── mmiframeworkV2/
-    └── '2º' : Correr o IM
+    └── '2º : Correr o IM'
       └── java -jar mmiframeworkV2.jar
 ```
 
@@ -47,7 +47,7 @@ O Rasa usa para dar reconhecer as entidades e intents.
 KitchenAssistant/
 │
 └── Assistente/
-  └── '3º' : Correr o RASA
+  └── '3º : Correr o RASA'
     ├── 3.1 : Ativar o ambiente virtual
     │ ├── MacOS: 
     │ │ └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
@@ -74,7 +74,7 @@ KitchenAssistant/
 │   
 └── WebAppAssistantV2/
   └── APP2/
-    └── [4º] : Correr o servidor de todos os endpoints:
+    └── '4º : Correr o servidor de todos os endpoints'
       └── python app.py
 ```
 
@@ -84,7 +84,7 @@ KitchenAssistant/
 KitchenAssistant/
 │   
 └── WebAppAssistantV2/
-  └── '5º' : Correr o Assistente 
+  └── '5º : Correr o Assistente' 
     └── http-server -p 8082 -S -C cert.pem -K key.pem
 ```
 
@@ -94,7 +94,7 @@ KitchenAssistant/
 KitchenAssistant/
 │  
 └── WebAppAssistantV2/
-  └── '6º' : Abrir o IM
+  └── '6º : Abrir o IM'
     └── https://127.0.0.1:8082/index.htm
 ```
 
@@ -104,7 +104,7 @@ KitchenAssistant/
 KitchenAssistant/
 │   
 └── WebAppAssistantV2/
-  └── '7º' : Abrir o Assistente
+  └── '7º : Abrir o Assistente'
     └── https://127.0.0.1:8082/appGui.htm
 ```
 
