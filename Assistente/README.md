@@ -11,6 +11,15 @@ Antes de correr o projeto :
 | Doxygen    | `brew install doxygen`       | [Doxygen's Website](https://www.doxygen.nl/index.html) |
 
 
+## Como usar o Assisteste:
+
+| Steps | Descrição                         | Mac Commands                       | Win Commands                       |  
+|-------|-----------------------------------|------------------------------------|------------------------------------|
+|   1   | Correr o FusionEngine             | cd ../Assistente/FusionEngine      | cd ../Assistente/FusionEngine      |
+|       |                                   | java -jar FusionEngine.jar         | java -jar FusionEngine.jar         |
+|-------|-----------------------------------|------------------------------------|------------------------------------|
+
+
 ## Primeiro Passo: Correr o FusionEngine
 
 O FusionEngine é um bloco que permite adicionar diferentes módulos.
