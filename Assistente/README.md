@@ -6,7 +6,7 @@ Este documento descreve os passos necessários para executar os componentes do s
 
 Antes de correr o projeto :
 
-| Dependencias  | macOS                                                    | Windows                                               |
+| Dependencias  | macOS                                                                               | Windows                                               |
 |-------------|---------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | Java v.21      | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
 | NodeJs         | [nodeJS's Website](https://nodejs.org/en)                            | [nodeJS's Website](https://nodejs.org/en)                        |
