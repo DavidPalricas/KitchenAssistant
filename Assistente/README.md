@@ -13,10 +13,10 @@ Antes de correr o projeto :
 
 ## Como usar o Assisteste:
 
-| Steps | Descrição                         | Mac Commands                       | Win Commands                       |  
-|-------|-----------------------------------|------------------------------------|------------------------------------|
-|   1   | Correr o FusionEngine             | ```bash cd ../Assistente/FusionEngine```      | ```cd ../Assistente/FusionEngine```      |
-|       |                                   | java -jar FusionEngine.jar         | java -jar FusionEngine.jar         |
+| Steps | Descrição                  | dir                          | Mac Commands                       | Win Commands                       |  
+|-------|----------------------------|------------------------------|------------------------------------|------------------------------------|
+|   1   | Correr o FusionEngine      | ../Assistente/FusionEngine   | `java -jar FusionEngine.jar`        | `java -jar FusionEngine.jar`       |
+|   2   | Correr o IM                | ../Assistente/mmiframeworkV2 | `java -jar mmiframeworkV2.jar`      | `java -jar mmiframeworkV2.jar`     |
 |-------|-----------------------------------|------------------------------------|------------------------------------|
 
 
