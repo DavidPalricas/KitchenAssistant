@@ -6,18 +6,6 @@ Este documento descreve os passos necessários para executar os componentes do s
 
 Antes de correr o projeto :
 
-| Dependency | macOS Installation           | Windows Installation                           |
-|------------|------------------------------|-----------------------------------------------|
-| Java v.21  | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
-| NodeJs     | [nodeJS's Website](https://nodejs.org/en) | [nodeJS's Website](https://nodejs.org/en) |
-|    └───────| `npm install -g http-server` | `npm install -g http-server` |
-| Miniconda  | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) |
-|    └───────| `conda create --name /usr/local/Caskroom/miniconda/base/envs/rasa-env python=3.10` | `conda create --name rasa-env python=3.10` |
-|    └───────| `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env` | `conda activate rasa-env` |
-|    └───────| `conda install rasa` | `pip install rasa` |
-| Doxygen    | `brew install doxygen`       | [Doxygen's Website](https://www.doxygen.nl/index.html) |
-
-
 | Dependency  | macOS Installation                                                   | Windows Installation                                              |
 |-------------|----------------------------------------------------------------------|-------------------------------------------------------------------|
 | Java v.21      | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
@@ -34,7 +22,6 @@ Antes de correr o projeto :
 | pyzbar         | `pip install pyzbar`                                                  | `pip install pyzbar`                                             |
 | numpy          | `pip install numpy`                                                   | `pip install numpy`                                               |
 | email_validator| `pip install email-validator`                                         | `pip install email-validator`                                     |
-| datetime       | Included in Python standard library                                   | Included in Python standard library                               |
 | spacy          | `pip install spacy`                                                   | `pip install spacy`                                               |
 |   └────────────| `python -m spacy download pt_core_news_sm`                           | `python -m spacy download pt_core_news_sm`                       |
 | mysql.connector| `pip install mysql-connector-python`                                  | `pip install mysql-connector-python`                             |
@@ -42,8 +29,7 @@ Antes de correr o projeto :
 
 ## Execução do Assisteste:
 
-
-## 1º Passo: 
+### 1º Passo: 
 
 Correr o FusionEngine
 
@@ -56,7 +42,7 @@ KitchenAssistant/
       └── java -jar FusionEngine.jar
 ```
 
-## 2º Passo: 
+### 2º Passo: 
 
 Correr o IM (Interaction Manager)
 
@@ -70,7 +56,7 @@ KitchenAssistant/
       └── java -jar mmiframeworkV2.jar
 ```
 
-## 3º Passo: 
+### 3º Passo: 
 
 Correr o Rasa
 
@@ -98,7 +84,7 @@ KitchenAssistant/
         └── rasa run --enable-api --cors="*"
 ```
 
-## 4º Passo: 
+### 4º Passo: 
 
 Correr o client-side 
 
@@ -111,7 +97,7 @@ KitchenAssistant/
       └── python app.py
 ```
 
-## 5º Passo: 
+### 5º Passo: 
 
 Correr a APP
 
@@ -123,7 +109,7 @@ KitchenAssistant/
     └── http-server -p 8082 -S -C cert.pem -K key.pem
 ```
 
-## 6º Passo: 
+### 6º Passo: 
 
 Abrir Uma janela do Chrome para correr o IM         
 
@@ -135,7 +121,7 @@ KitchenAssistant/
     └── https://127.0.0.1:8082/index.htm
 ```
 
-## 7º Passo: 
+### 7º Passo: 
 
 Abrir Uma janela do Chrome para correr o Assistente 
 
