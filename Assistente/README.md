@@ -61,6 +61,7 @@ KitchenAssistant/
 
 ```
 
+```
 KitchenAssistant/
 │
 ├── <span style="color: blue;">Assistente/</span>
@@ -105,7 +106,7 @@ KitchenAssistant/
   |
   └── 7º : <span style="color: red;">Abrir o Assistente</span>
     └── https://127.0.0.1:8082/appGui.htm
-
+```
 
 ## Primeiro Passo: Correr o FusionEngine
 
