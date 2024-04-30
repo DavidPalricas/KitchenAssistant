@@ -21,7 +21,7 @@ Antes de correr o projeto :
 | 3.1 | Ativar o ambiente virtual  | ../Assistente     | `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env` | `activate rasa-env` |
 | 3.2 | Treinar o modelo de nlu    | ../Assistente     | `rasa train` | `rasa train` |
 | 3.3 | Correr o RASA | ../Assistente | `rasa run --enable-api --cors="*"` | `rasa run --enable-api --cors="*"` |
-| 4 | Correr o Servidor de endpoints | ../Assistente/WebAppAssistantV2/APP2 | `python app.py` | `python app.py` |
+| 4 | Correr o Servidor de endpoints | ../WebAppAssistantV2/APP2 | `python app.py` | `python app.py` |
 | 5 | Correr o Assistente | ../Assistente/WebAppAssistantV2 | `http-server -p 8082 -S -C cert.pem -K key.pem` | `http-server -p 8082 -S -C cert.pem -K key.pem` |
 | 6 | Abrir o IM | GoogleChrome browser | `https://127.0.0.1:8082/index.htm` | `https://127.0.0.1:8082/index.htm` |
 | 7 | Abrir o Assistente | GoogleChrome browser | `https://127.0.0.1:8082/appGui.htm` | `https://127.0.0.1:8082/appGui.htm` |
