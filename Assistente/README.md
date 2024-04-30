@@ -20,25 +20,24 @@ Antes de correr o projeto :
 
 | Dependency  | macOS Installation                                                   | Windows Installation                                              |
 |-------------|----------------------------------------------------------------------|-------------------------------------------------------------------|
-| Java v.21       | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
-| NodeJs          | [nodeJS's Website](https://nodejs.org/en)                            | [nodeJS's Website](https://nodejs.org/en)                        |
-| └───────────────| `npm install -g http-server`                                         | `npm install -g http-server`                                     |
-| Miniconda       | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) |
-| └───────────────| `conda create --name /usr/local/Caskroom/miniconda/base/envs/rasa-env python=3.10` | `conda create --name rasa-env python=3.10`                       |
-| └───────────────| `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env`    | `conda activate rasa-env`                                        |
-| └───────────────| `conda install rasa`                                                  | `pip install rasa`                                               |
-| Doxygen         | `brew install doxygen`                                                | [Doxygen's Website](https://www.doxygen.nl/index.html)           |
-| Flask           | `pip install Flask`                                                   | `pip install Flask`                                               |
-| requests        | `pip install requests`                                                | `pip install requests`                                            |
-| OpenCV (cv2)    | `pip install opencv-python`                                           | `pip install opencv-python`                                      |
-| pyzbar          | `pip install pyzbar`                                                  | `pip install pyzbar`                                             |
-| numpy           | `pip install numpy`                                                   | `pip install numpy`                                               |
-| email_validator | `pip install email-validator`                                         | `pip install email-validator`                                     |
-| datetime        | Included in Python standard library                                   | Included in Python standard library                               |
-| spacy           | `pip install spacy`                                                   | `pip install spacy`                                               |
-| └───────────────| `python -m spacy download pt_core_news_sm`                           | `python -m spacy download pt_core_news_sm`                       |
-| mysql.connector | `pip install mysql-connector-python`                                  | `pip install mysql-connector-python`                             |
-| pantrydb_queries| Assuming this is a custom module, install as required                | Assuming this is a custom module, install as required            |
+| Java v.21      | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
+| NodeJs         | [nodeJS's Website](https://nodejs.org/en)                            | [nodeJS's Website](https://nodejs.org/en)                        |
+|   └────────────| `npm install -g http-server`                                         | `npm install -g http-server`                                     |
+| Miniconda      | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) | [Miniconda's Website](https://docs.conda.io/projects/miniconda/en/latest/) |
+|   └────────────| `conda create --name /usr/local/Caskroom/miniconda/base/envs/rasa-env python=3.10` | `conda create --name rasa-env python=3.10`                       |
+|   └────────────| `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env`    | `conda activate rasa-env`                                        |
+|   └────────────| `conda install rasa`                                                  | `pip install rasa`                                               |
+| Doxygen        | `brew install doxygen`                                                | [Doxygen's Website](https://www.doxygen.nl/index.html)           |
+| Flask          | `pip install Flask`                                                   | `pip install Flask`                                               |
+| requests       | `pip install requests`                                                | `pip install requests`                                            |
+| OpenCV (cv2)   | `pip install opencv-python`                                           | `pip install opencv-python`                                      |
+| pyzbar         | `pip install pyzbar`                                                  | `pip install pyzbar`                                             |
+| numpy          | `pip install numpy`                                                   | `pip install numpy`                                               |
+| email_validator| `pip install email-validator`                                         | `pip install email-validator`                                     |
+| datetime       | Included in Python standard library                                   | Included in Python standard library                               |
+| spacy          | `pip install spacy`                                                   | `pip install spacy`                                               |
+|   └────────────| `python -m spacy download pt_core_news_sm`                           | `python -m spacy download pt_core_news_sm`                       |
+| mysql.connector| `pip install mysql-connector-python`                                  | `pip install mysql-connector-python`                             |
 
 
 ## Execução do Assisteste:
