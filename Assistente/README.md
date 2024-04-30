@@ -2,6 +2,19 @@
 
 Este documento descreve os passos necessários para executar os componentes do sistema.
 
+## PRE-REQUISITOS
+Antes de poder correr o projeto precisa de ter instalado:
+1. Doxygen
+### - MacOs
+```bash
+brew install doxygen
+```
+### - Windows
+Ir até ao website do Doxygen
+```
+https://www.doxygen.nl/index.html
+```
+
 ## Primeiro Passo: Correr o FusionEngine
 
 O FusionEngine é um bloco que permite adicionar diferentes módulos.
