@@ -15,7 +15,7 @@ Antes de correr o projeto :
 
 | Steps | Descrição                         | Mac Commands                       | Win Commands                       |  
 |-------|-----------------------------------|------------------------------------|------------------------------------|
-|   1   | Correr o FusionEngine             | ```cd ../Assistente/FusionEngine```      | ```cd ../Assistente/FusionEngine```      |
+|   1   | Correr o FusionEngine             | ```bash cd ../Assistente/FusionEngine```      | ```cd ../Assistente/FusionEngine```      |
 |       |                                   | java -jar FusionEngine.jar         | java -jar FusionEngine.jar         |
 |-------|-----------------------------------|------------------------------------|------------------------------------|
 
