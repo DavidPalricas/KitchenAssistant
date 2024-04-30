@@ -11,35 +11,22 @@ Antes de correr o projeto :
 | Doxygen    | `brew install doxygen`       | [Doxygen's Website](https://www.doxygen.nl/index.html) |
 
 
-## Como usar o Assisteste:
-
-| Steps | Descrição                  | dir               | Mac Commands                       | Win Commands                       |  
-|-------|----------------------------|-------------------|------------------------------------|------------------------------------|
-| 1 | Correr o FusionEngine      | ../FusionEngine   | `java -jar FusionEngine.jar`        | `java -jar FusionEngine.jar`       |
-| 2 | Correr o IM                | ../mmiframeworkV2 | `java -jar mmiframeworkV2.jar`      | `java -jar mmiframeworkV2.jar`     |
-| 3 | Correr o RASA              | ../Assistente     | 
-| 3.1 | Ativar o ambiente virtual  | ../Assistente     | `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env` | `activate rasa-env` |
-| 3.2 | Treinar o modelo de nlu    | ../Assistente     | `rasa train` | `rasa train` |
-| 3.3 | Correr o RASA | ../Assistente | `rasa run --enable-api --cors="*"` | `rasa run --enable-api --cors="*"` |
-| 4 | Correr o Servidor de endpoints | ../WebAppAssistantV2/APP2 | `python app.py` | `python app.py` |
-| 5 | Correr o Assistente | ../Assistente/WebAppAssistantV2 | `http-server -p 8082 -S -C cert.pem -K key.pem` | `http-server -p 8082 -S -C cert.pem -K key.pem` |
-| 6 | Abrir o IM | GoogleChrome browser | `https://127.0.0.1:8082/index.htm` | `https://127.0.0.1:8082/index.htm` |
-| 7 | Abrir o Assistente | GoogleChrome browser | `https://127.0.0.1:8082/appGui.htm` | `https://127.0.0.1:8082/appGui.htm` |
+## Execução do Assisteste:
 
 ```
 KitchenAssistant/
 │
 ├── Assistente/
 │ ├── FusionEngine/
-│ │ └── 1º : Correr o FusionEngine
+│ │ └── [1º] : Correr o FusionEngine
 │ │   └── java -jar FusionEngine.jar
 | |
 │ └── mmiframeworkV2/
-│   └── 2º : Correr o IM
+│   └── [2º] : Correr o IM
 │     └── java -jar mmiframeworkV2.jar
 |
 ├── Assistente/
-│ └── 3º : Correr o RASA
+│ └── [3º] : Correr o RASA
 │   ├── 3.1 : Ativar o ambiente virtual
 │   | ├── MacOS: 
 |   | | └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
@@ -60,18 +47,18 @@ KitchenAssistant/
 |   
 └── WebAppAssistantV2/
   ├── APP2/
-  │ └── 4º : Correr o servidor de todos os endpoints:
+  │ └── [4º] : Correr o servidor de todos os endpoints:
   │   └── python app.py
   |
-  ├── 5º : Correr o Assistente 
+  ├── [5º] : Correr o Assistente 
   | └── http-server -p 8082 -S -C cert.pem -K key.pem
   |
-  ├── 6º : Abrir o IM
+  ├── [6º] : Abrir o IM
   | └── https://127.0.0.1:8082/index.htm
   |
-  └── 7º : Abrir o Assistente
+  └── [7º] : Abrir o Assistente
     └── https://127.0.0.1:8082/appGui.htm
-    
+
 ```
 
 ## Primeiro Passo: Correr o FusionEngine
