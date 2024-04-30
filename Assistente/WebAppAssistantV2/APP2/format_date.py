@@ -1,5 +1,4 @@
 """
-@file format_date.py
 @brief Módulo para análise e formatação de datas em diferentes formatos em português para o padrão ISO.
 
 Este módulo fornece uma função para analisar strings de datas escritas em vários formatos em português e converte-las para o formato padrão ISO 8601 (YYYY-MM-DD). 
@@ -12,20 +11,28 @@ utilizando um dicionário para a tradução dos nomes dos meses. Os formatos sup
 - DD de Month de YYYY (ex: 21 de Maio de 2030)
 - Outros formatos similares onde o mês pode estar por extenso e o ano pode estar com ou sem a preposição 'de'.
 
-@warning Caso a string de data não corresponda a nenhum dos formatos predefinidos, a função retornará "Invalid date format".
+@note Caso a string de data não corresponda a nenhum dos formatos predefinidos, a função retornará "Invalid date format".
 
 """
 import re
 import sys
 from datetime import datetime
 
-# Dictionary of Portuguese month names to month numbers
+## @var month_to_number
+# @brief Dicionário que mapeia os nomes dos meses em português para seus respectivos números.
+# @details Este dicionário é utilizado para converter o nome do mês em português para o número correspondente,
+# permitindo a criação de objetos datetime com a data fornecida.
+#
 month_to_number = {
     "Janeiro": 1, "Fevereiro": 2, "Março": 3, "Abril": 4, "Maio": 5, "Junho": 6,
     "Julho": 7, "Agosto": 8, "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
 }
 
-# Regex patterns to match different date formats
+## @var date_patterns
+# @brief Dicionário que mapeia expressões regulares para formatos de datas em português.
+# @details Este dicionário contém as expressões regulares correspondentes a diferentes formatos de datas em português,
+# permitindo a identificação e extração dos componentes da data.
+#
 date_patterns = {
     r"(\d{1,2})/(\d{1,2})\s(\d{4})": "DD/MM YYYY",  # 24/3 2045
     r"(\d{1,2})/(\d{1,2})/(\d{4})": "DD/MM/YYYY",   # 21/05/2024
@@ -37,10 +44,15 @@ date_patterns = {
 
 def parse_date(date_string):
     """
-    Analisa uma string de data em diversos formatos em português e converte para o formato ISO 8601 (YYYY-MM-DD).
+    @brief Analisa uma string de data em diversos formatos em português e converte para o formato ISO 8601 (YYYY-MM-DD).
+    @details Esta função utiliza expressões regulares para identificar os formatos de datas suportados e extrair os componentes da data.
+    Em seguida, cria um objeto datetime com a data fornecida e a converte para o formato ISO 8601.
     
     @param date_string <string> contendo a data num dos formatos suportados.
+    
     @return <string> com a data no formato ISO ou uma mensagem indicando formato inválido.
+    
+    @note Caso a string de data não corresponda a nenhum dos formatos predefinidos, a função retornará "Invalid date format".
     """
     for pattern, date_format in date_patterns.items():
         match = re.match(pattern, date_string.strip())
@@ -57,7 +69,19 @@ def parse_date(date_string):
 
 def main():
     """
-    Função principal que recebe uma string de data como argumento de linha de comando.
+    @brief Função principal para execução do módulo como script.
+    @details Esta função é utilizada para executar o módulo como um script, recebendo a string de data como argumento da linha de comando.
+    
+    @param argv String de data fornecida como argumento da linha de comando.
+    
+    @code
+    // Exemplo de uso:
+    python format_date.py '21 de Maio de 2030'
+    // Output:
+    2030-05-21
+    @endcode
+    
+    @note A string de data deve ser fornecida como argumento da linha de comando.
     """
     if len(sys.argv) != 2:
         print("Usage: python format_date.py 'date string'")

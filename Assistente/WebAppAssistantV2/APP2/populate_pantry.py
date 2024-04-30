@@ -1,5 +1,4 @@
 """
-@file populate_pantry.py
 @brief Script para povoar a base de dados despensa e a lista de compras.
 
 Este script utiliza o módulo `pantrydb_queries` para inserir uma série de produtos alimentares e itens na lista de compras 
@@ -12,10 +11,11 @@ O script executa duas funções principais:
 - `populate_pantry()`: Insere produtos na base de dados com quantidades e datas de validade aleatórias.
 - `populate_shopping_list()`: Insere itens na lista de compras.
 
-@example
-    # Executar este script irá povoar a base de dados com produtos e adicionar itens à lista de compras.
+@code
+    //Executar este script irá povoar a base de dados com produtos e adicionar itens à lista de compras.
     populate_pantry()
     populate_shopping_list()
+@endcode
 
 @note É necessário que a base de dados esteja configurada e acessível conforme especificado no módulo `pantrydb_queries`.
 """
@@ -23,7 +23,13 @@ import pantrydb_queries as pdb
 from datetime import datetime, timedelta
 import random
 
-# List of products to be inserted into the pantry database
+
+## @var products
+# @brief Lista de produtos com as respetivas unidades de medida.
+# @details Esta lista contém uma variedade de produtos alimentares com as respetivas unidades de medida,
+# que serão inseridos na base de dados da despensa.
+#
+# @note Esta lista pode ser expandida conforme necessário para incluir mais produtos.
 products = [
    # Seafood
     ("bacalhau", "kg"),
@@ -89,6 +95,11 @@ products = [
     ("molho de tomate", "lata")
 ]
 
+## @var grocery_items
+# @brief Lista de itens a adicionar à lista de compras.
+# @details Esta lista contém uma série de itens que serão adicionados à lista de compras na base de dados.
+#
+# @note Esta lista pode ser expandida conforme necessário para incluir mais itens.
 grocery_items = [
     "vinho",
     "oléo",
@@ -108,10 +119,12 @@ grocery_items = [
 # Function to populate the pantry database
 def populate_pantry():
     """
-    Insere produtos na base de dados com quantidades e datas de validade aleatórias.
-    
+    @brief Função para povoar a base de dados pantry_db.
+    @details Insere produtos na base de dados com quantidades e datas de validade aleatórias.
     Cada produto pode ter entre 0 e 1 entradas com quantidades de 1 a 4 e datas de validade
     que variam de 30 a 730 dias a partir da data atual.
+    
+    @note Esta função utiliza a função `insertStock` do módulo `pantrydb_queries` para inserir os produtos na base de dados.
     """
     today = datetime.now()
     for name, unit in products:
@@ -126,9 +139,11 @@ def populate_pantry():
             
 def populate_shopping_list():
     """
-    Adiciona itens especificados à lista de compras na base de dados.
-    
+    @brief Função para adicionar itens à lista de compras.
+    @details  Adiciona itens especificados à lista de compras na base de dados.
     Cada inserção é registada e o resultado da operação é impresso, indicando sucesso ou falha.
+    
+    @note Esta função utiliza a função `insertGrocery` do módulo `pantrydb_queries` para inserir os itens na lista de compras.
     """
     for name in grocery_items:
         message = pdb.insertGrocery(name)
@@ -136,5 +151,5 @@ def populate_shopping_list():
 
 
 # Call the function to populate the database
-#populate_pantry()
-#populate_shopping_list()
+populate_pantry()
+populate_shopping_list()

@@ -1,5 +1,4 @@
 """
-@file get_product.py
 @brief Módulo para extrair ingredientes e unidades de medida de sentenças em português utilizando o modelo linguístico do spaCy.
 
 Este módulo define funções para identificar ingredientes e unidades de medida em sentenças, baseando-se em listas predefinidas de alimentos e unidades comuns na culinária. O módulo utiliza o processamento de linguagem natural com o modelo "pt_core_news_sm" do spaCy para lematização e tokenização, aumentando a precisão na identificação de ingredientes em diferentes formas flexionadas.
@@ -10,12 +9,14 @@ Este módulo define funções para identificar ingredientes e unidades de medida
 
 Os ingredientes e unidades são identificados mesmo que estejam flexionados, graças à lematização feita pelo spaCy, o que permite que o módulo funcione de maneira eficaz em textos reais e variados.
 
-@example
+@code
     sentence = "Adicione 200g de açúcar e 500ml de leite ao preparo."
     ingredient = get_ingredient(sentence)
     unit = get_unit(sentence)
     print(f"Ingrediente: {ingredient}, Unidade: {unit}")
-    # Output: Ingrediente: açúcar, Unidade: g
+    //Output: 
+    Ingrediente: açúcar, Unidade: g
+@endcode
 
 @note É necessário instalar o spaCy e baixar o modelo de linguagem português para o funcionamento adequado deste módulo.
     - pip install spacy
@@ -25,7 +26,11 @@ import spacy
 # pip install spacy
 # python -m spacy download pt_core_news_sm
 
-# List of common units of measure in Portuguese
+## @var unit_list
+# @brief Lista de unidades de medida comuns em português.
+# @details Esta lista contém as principais unidades de medida utilizadas em receitas e culinária, incluindo medidas de peso, volume e unidades específicas.
+#
+# @note Esta lista pode ser expandida conforme necessário para incluir mais unidades de medida.
 unit_list = [
     "l", "ml", "cl", "dl", "kg", "g", "mg", 
     "uni", "lata", "colher de sopa", 
@@ -35,7 +40,12 @@ unit_list = [
     "ramo", "talo"
 ]
 
-# Comprehensive list of food items categorized by type (e.g., Seafood, Meats, Dairy)
+
+## @var food_list
+# @brief Lista de ingredientes comuns em português.
+# @details Esta lista contém uma ampla variedade de ingredientes comuns utilizados em receitas e culinária, organizados por categorias
+#
+# @note Esta lista pode ser expandida conforme necessário para incluir mais ingredientes.
 food_list = [
     # Seafood
     "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
@@ -108,22 +118,24 @@ food_list = [
 ]
 
 
-# Load the Portuguese language model
+## @var nlp
+# @brief Modelo de processamento de linguagem natural do spaCy para o idioma português.
+# @details Este objeto representa o modelo de processamento de linguagem natural do spaCy para o idioma português, que inclui recursos de tokenização, lematização e análise sintática.
+#
 nlp = spacy.load("pt_core_news_sm")
 
-#def get_ingredient(sentence, lista):
-#    str = sentence.split(" ")
-#
-#    # ---------------------------------------------------------------- Check for multi-word ingredients
-#    for food_product in str:
-#        if food_product in lista:
-#            return food_product
 def get_ingredient(sentence):
     """
-    Processa uma frase para identificar e retornar o ingrediente mencionado, se houver.
+    @brief Processa uma frase para identificar e retornar o ingrediente mencionado.
+    @details Esta função utiliza o modelo de processamento de linguagem natural do spaCy para lematizar e analisar a sentença, identificando o ingrediente mencionado com base em uma lista predefinida de alimentos.
+    A função verifica se a sentença contém ingredientes completos ou suas formas lematizadas, retornando o ingrediente correspondente.
     
     @param sentence <string> contendo a sentença a ser analisada.
+    
     @return <string> com o ingrediente identificado ou None se nenhum ingrediente for encontrado.
+    
+    @note Caso não seja encontrado um ingrediente completo, a função tentará identificar ingredientes flexionados ou lematizados.
+    Se mesmo assim nenhum ingrediente for encontrado, a função retornará None.
     """
     
     # Process the sentence using spaCy to tokenize and lemmatize the text
@@ -147,10 +159,15 @@ def get_ingredient(sentence):
             
 def get_unit(sentence):
     """
-    Processa uma frase para identificar e retornar a unidade de medida mencionada, se houver.
+    brief Processa uma frase para identificar e retornar a unidade de medida mencionada, se houver.
+    @details Esta função verifica se a sentença contém uma unidade de medida comum, retornando a unidade identificada.
+    A função verifica primeiro as unidades de medida compostas (com mais de uma palavra) e, em seguida, as unidades de medida simples.
     
     @param sentence <string> contendo a sentença a ser analisada.
+    
     @return <string> com a unidade de medida identificada ou None se nenhuma unidade for encontrada.
+    
+    @note Caso não seja encontrada uma unidade de medida composta, a função tentará identificar unidades de medida simples.
     """
     words = sentence.split() # --------------------------------------- Split the sentence into words
     multi_word_units = [unit for unit in unit_list if ' ' in unit] # ----- Get multi-word units

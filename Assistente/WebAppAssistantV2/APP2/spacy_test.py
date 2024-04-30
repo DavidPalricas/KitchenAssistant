@@ -1,6 +1,8 @@
 """
-@file spacy_test.py
 @brief Módulo para identificação de ingredientes em frases.
+
+@note Este módulo serviu de base para a implementação do módulo `get_product.py` no Assistente.
+
 
 Este módulo utiliza o modelo de linguagem portuguesa do spaCy para processar texto e identificar ingredientes mencionados numa frase. 
 A função principal analisa uma frase e retorna o ingrediente encontrado, baseado numa lista fornecida.
@@ -8,27 +10,39 @@ A função principal analisa uma frase e retorna o ingrediente encontrado, basea
 @details A função `get_unit` processa uma frase para identificar palavras que correspondam a itens em uma lista de ingredientes, 
 tendo em conta variações lexicais e lematização para melhorar a precisão da correspondência.
 
-Dependencies:
+<b>Dependencies:</b>
 - spacy
 
-Usage:
+<b>Usage:</b>
 - Este módulo pode ser usado em contextos onde é necessário extrair ingredientes de textos, como em sistemas de recomendação de receitas ou análises de listas de compras.
 
-@example
+@code
     import spacy_test as st
     found_ingredient = st.get_unit("confirma se tenho vinagre", st.food_list)
     print(found_ingredient)
+@endcode
 
 @note É necessário ter o modelo 'pt_core_news_sm' do spaCy instalado e carregado corretamente para que o módulo funcione.
+Os comandos para instalar o modelo são:
+- pip install spacy
+- python -m spacy download pt_core_news_sm
+
 """
 import spacy
 
-# Load the Portuguese language model
+## @var nlp
+# @brief Modelo de linguagem do spaCy para processamento de texto em português.
+# @details Este modelo é utilizado para processar o texto da frase e identificar os ingredientes mencionados.
+#
+# @note O modelo 'pt_core_news_sm' deve ser instalado previamente para o funcionamento correto do módulo.
+#     - python -m spacy download pt_core_news_sm
+#
 nlp = spacy.load("pt_core_news_sm")
 
 def get_unit(sentence, lista):
     """
-    Identifica um ingrediente numa frase dada uma lista de possíveis ingredientes.
+    @brief Extrai o ingrediente de um frase.
+    @details Identifica um ingrediente numa frase dada uma lista de possíveis ingredientes.
 
     @param sentence A sentença a ser analisada.
     @param lista Lista de ingredientes conhecidos.
@@ -54,7 +68,11 @@ def get_unit(sentence, lista):
 
     return None  # If no unit is found
 
-# Example usage with your food list
+## @var food_list
+# @brief Lista de ingredientes conhecidos.
+# @details Esta lista contém uma variedade de ingredientes alimentares comuns que podem ser encontrados numa despensa.
+#
+# @note Esta lista pode ser expandida conforme necessário para incluir mais ingredientes.
 food_list = [
     # Seafood
     "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
@@ -126,5 +144,10 @@ food_list = [
     "mostarda", "maionese", "picles", "polpa de tomate", "biscoitos"
 ]
 
+## @var sentence
+# @brief Frase de exemplo para teste.
+# @details Esta frase contém um ingrediente que pode ser identificado pela função `get_unit`.
+#
+# @note Esta frase pode ser alterada para testar a função com diferentes ingredientes.
 sentence = "confirma se tenho vinagre"
 print(get_unit(sentence, food_list))  

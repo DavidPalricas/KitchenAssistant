@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['active_5fassistant_0',['active_assistant',['../app_gui_8js.html#a724d26b11002077c3e27da96a23810b5',1,'appGui.js']]],
+  ['add_5fpdb_5fflag_1',['add_pdb_flag',['../app_gui_8js.html#a29060a9f71747fbfcc894afc83794ce6',1,'appGui.js']]],
+  ['addimage_2',['addImage',['../app_gui_8js.html#acb2de96aa3adeadc52623a7d0e053cd1',1,'appGui.js']]],
+  ['addingredientstable_3',['addIngredientsTable',['../app_gui_8js.html#a6cb8b49363bd7c67a9c71190fcf2fce8',1,'appGui.js']]],
+  ['addmsgtochat_4',['addMsgToChat',['../app_gui_8js.html#a5380046892a2d9eba85259b10a05ef2f',1,'appGui.js']]],
+  ['addpantrytable_5',['addPantryTable',['../app_gui_8js.html#a2365f5f1ac6d801a94023a8b190cd02d',1,'appGui.js']]],
+  ['addrecipename_6',['addRecipeName',['../app_gui_8js.html#a0fa69b93fb364f1c7e4ccab3cd170fb9',1,'appGui.js']]],
+  ['addrecipestable_7',['addRecipesTable',['../app_gui_8js.html#abe546493015960f1de08fac3e23152f8',1,'appGui.js']]],
+  ['addshoopinglisttable_8',['addShoopingListTable',['../app_gui_8js.html#aed4a1dc1e3ac791febc93b76f01fba1f',1,'appGui.js']]],
+  ['addtoolstable_9',['addToolsTable',['../app_gui_8js.html#aa57b9fc1923a31651acdfa2f1b3c21e7',1,'appGui.js']]],
+  ['alert_5fexpiration_5fdate_10',['alert_expiration_date',['../app_gui_8js.html#a921fabba443ce4004f285f03b6d3a55f',1,'appGui.js']]],
+  ['alerted_11',['alerted',['../app_gui_8js.html#a74e52eaa9b2c3db4e5317d04b2aab5fa',1,'appGui.js']]],
+  ['animal_5fproducts_12',['animal_products',['../app_gui_8js.html#a22c8c38297c7e47f6f986db7707507b8',1,'appGui.js']]],
+  ['answer_13',['answer',['../app_gui_8js.html#adc38d8f4c5a5810f17cccf6ff46fb92b',1,'appGui.js']]],
+  ['api_5fopenfoodfacts_14',['API_OpenFoodFacts',['../namespace_a_p_i___open_food_facts.html',1,'']]],
+  ['api_5fopenfoodfacts_2epy_15',['API_OpenFoodFacts.py',['../_a_p_i___open_food_facts_8py.html',1,'']]],
+  ['app_16',['app',['../namespaceapp.html',1,'app'],['../namespaceapp.html#a675b4ea702c13dc4b8c05f985a25b496',1,'app.app']]],
+  ['app_2epy_17',['app.py',['../app_8py.html',1,'']]],
+  ['appgui_2ejs_18',['appGui.js',['../app_gui_8js.html',1,'']]]
+];

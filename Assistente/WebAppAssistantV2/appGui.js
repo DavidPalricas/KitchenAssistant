@@ -1,27 +1,49 @@
+/**
+ * @file appGui.js
+ * @brief Este ficheiro contém o código JavaScript que é executado no lado do cliente. 
+ * @details Define funções para manipular a interface do utilizador e interagir com o Assistente.
+ * Recebendo a intenção do utilizador e processando o comportamento do Assistente
+ * 
+ * @note Este ficheiro é utilizado para interagir com o Assistente e a interface do utilizador.
+ * Onde é definida toda a lógica de interação com o Assistente e a interface do utilizador.
+ * 
+ */
+
+/**
+ * @var {string} mmiCli_Out_add
+ * @brief Endereço para a conexão do socket do cliente MMI.
+ * @details Este endereço é utilizado para configurar a conexão WebSocket do cliente MMI, especificando o protocolo, o host e a porta juntamente com o identificador do usuário.
+ * 
+ * @note Este endereço é utilizado para estabelecer a comunicação entre o cliente e o servidor.
+ */
 var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
+/**
+ * @var {MMIClientSocket|null} mmiCli_Out
+ * @brief Instância do cliente MMI para gestão de comunicações.
+ * @details Esta variável é utilizada para armazenar a instância do MMIClientSocket que gerencia a comunicação entre o cliente e o servidor. Inicialmente é definida como null e configurada posteriormente durante a inicialização.
+ * 
+ * 
+ */
 var mmiCli_Out = null;
+
 
 /**
     * @typedef {Object} Product
+    * @brief Um objeto para armazenar informações detalhadas sobre um produto.
     * 
-    * @property {string|null} name - [PT] O nome do produto / [EN] The name of the product
-    * @property {number|null} quantity - [PT] A quantidade do produto / [EN] The quantity of the product
-    * @property {string|null} unit - [PT] A unidade do produto / [EN] The unit of the product
-    * @property {Date|string|null} expiration_date - [PT] A data de validade do produto / [EN] The expiration date of the product
+    * @property {string|null} name -  O nome do produto
+    * @property {number|null} quantity - A quantidade do produto 
+    * @property {string|null} unit - A unidade do produto 
+    * @property {Date|string|null} expiration_date - A data de validade do produto
 */
-
 
 
 /**
-    * PT: Um objeto para armazenar informações detalhadas sobre um produto. Este objeto é usado
-    * para rastrear detalhes do produto em diferentes partes da aplicação
-    *
-    * EN: An object to store detailed information about a product. This object is used
-    * to track product details across different parts of the application
-    *
-    * @type {Product}
-    *
-*/
+ * @brief Objeto para armazenar informações detalhadas sobre um produto.
+ * @details Este objeto é usado para rastrear detalhes do produto em diferentes partes da aplicação.
+ * @type {Product}
+ * 
+ */
 let product = {
     name: null,
     quantity: null,
@@ -29,27 +51,24 @@ let product = {
     expiration_date: null
 };
 
-// Global email object to store the email configuration
 /**
-    * @typedef {Object} EmailConfig
-    * 
-    * @property {string} from_addr - [PT] endereço de email do Assistent / [EN]The email address of the Assistent.
-    * @property {string} to_addr - [PT] endereço de email do destinatário / [EN]The email address of the recipient.
-    * @property {string|null} subject - [PT] O assunto do email / [EN] The subject of the email.
-    * @property {string|null} body - [PT] O corpo do email / [EN] The body of the email.
-    * @property {string} smtp_server - [PT] O servidor SMTP para se conectar / [EN] The SMTP server to connect to.
-    * @property {number} smtp_port - [PT] A porta do servidor SMTP / [EN] The port of the SMTP server.
-    * @property {string} password - [PT] A senha do email do Assistent / [EN] The password of the Assistent email.
-*/
+ * @typedef {Object} EmailConfig
+ * @brief Configuração de e-mail.
+ * 
+ * @property {string} from_addr - O endereço de email do remetente.
+ * @property {string} to_addr - O endereço de email do destinatário.
+ * @property {string|null} subject - O assunto do email.
+ * @property {string|null} body - O corpo do email.
+ * @property {string} smtp_server - O servidor SMTP para conexão.
+ * @property {number} smtp_port - A porta do servidor SMTP.
+ * @property {string} password - A senha do email do remetente.
+ */
 
 /**
-    * PT: Objeto de email global para armazenar a configuração do email
-    * 
-    * EN: Global email object to store the email configuration
-    *
-    * @type {EmailConfig}
-    *       
-*/
+ * @brief Objeto global para armazenar a configuração de e-mail.
+ * @details Configurações usadas para enviar e-mails através do servidor SMTP especificado.
+ * @type {EmailConfig}
+ */
 let email = {
     from_addr: "kitchen_assistant@outlook.com",
     to_addr: "inesaguia@ua.pt",
@@ -61,34 +80,25 @@ let email = {
 };
 
 /**
-    * PT: Inicializa e configura o MMIClientSocket para lidar com mensagens e eventos de conexão.
-    * Este trecho de código cria uma nova instância de MMIClientSocket, anexa event listeners para
-    * manipulação de mensagens e connection open events, em seguida, abre o socket para iniciar a comunicação.
-    *
-    * EN: Initializes and sets up the MMIClientSocket for handling messages and connection events. 
-    * This snippet creates a new instance of MMIClientSocket, attaches event listeners for
-    * message handling and connection open events, and then opens the socket to start communication.
-    *
-    * @see MMIClientSocket - For further documentation on the MMIClientSocket class and its methods.
-*/
+ * @brief Inicializa e configura o MMIClientSocket para lidar com mensagens e eventos de conexão.
+ * @details Cria uma nova instância de MMIClientSocket, anexa listeners de eventos para
+ * manipulação de mensagens e eventos de conexão aberta, e então abre o socket para iniciar a comunicação.
+ * @see MMIClientSocket Para mais documentação sobre a classe MMIClientSocket e seus métodos.
+ */
 mmiCli_Out = new MMIClientSocket(mmiCli_Out_add + "APP");
 mmiCli_Out.onMessage.on(im1MessageHandler);
 mmiCli_Out.onOpen.on(socketOpenHandler);
 mmiCli_Out.openSocket();
 
 /**
-    * PT: Manipula o evento de abertura de conexão do socket.
-    * Este manipulador de evento é chamado quando um evento 'open' ocorre no socket. Ele verifica
-    * se o estado do socket é verdadeiramente 'OPEN', prevenindo a execução de ações subsequentes
-    * caso a conexão não esteja efetivamente aberta.
-    *
-    * EN: Handles the socket connection 'open' event.
-    * This event handler is called when an 'open' event is triggered on the socket. It checks
-    * if the socket's state is truly 'OPEN', preventing any subsequent actions if the connection
-    * is not actually open.
-    *
-    * @param {Event} event - The event object associated with the 'open' event.
-*/
+ * @brief Manipula o evento de abertura de conexão do socket.
+ * @details Chamado quando um evento 'open' é disparado no socket. Verifica se o estado do socket é 'OPEN',
+ * evitando ações subsequentes se a conexão não estiver efetivamente aberta.
+ * 
+ * @param {Event} event - O objeto de evento associado ao evento 'open'.
+ * 
+ * @note Função Já existente no Assistente/WebAppAssistantV2/index.js
+ */
 function socketOpenHandler(event) {
     console.log("---------------openSocketHandler---------------")
 
@@ -98,56 +108,58 @@ function socketOpenHandler(event) {
 }
 
 /**
-    * PT: Abre a caixa de Ajuda
-    * 
-    * EN: Open the Help Box
-*/
+ * @brief Abre a caixa de Ajuda
+ * @details Remove a classe 'd-none' da caixa de Ajuda para exibir o conteúdo. 
+ * Desta forma, a caixa de Ajuda é exibida na interface do utilizador.
+ */
 function openHelpBox() {
 $("#help-box").removeClass("d-none");
 }
 
 /**
-    * PT: Fecha a caixa de Ajuda
-    * 
-    * EN: Close the Help Box
-*/
+ * @brief Fecha a caixa de Ajuda
+ * @details Adiciona a classe 'd-none' à caixa de Ajuda para ocultar o conteúdo. 
+ * Desta forma, a caixa de Ajuda é ocultada na interface do utilizador.
+ */
 function closeHelpBox() {
 $("#help-box").addClass("d-none");
 }
 
 /**
-    * PT: Abre a caixa de Mensagens
-    * 
-    * EN: Open the Chat Box
-*/
+ * @brief Abre a caixa de Chat
+ * @details Remove a classe 'd-none' da caixa de Chat para exibir o conteúdo. 
+ * Desta forma, a caixa de Chat é exibida na interface do utilizador. 
+ * Podendo assim o utilizador ver as messagens escritas do Assistente.
+ */
 function openChatBox() {
 $("#chat-box").removeClass("d-none");
 }
 
 /**
-    * PT: Fecha a caixa de Mensagens
-    * 
-    * EN: Close the Chat Box
-*/
+ * @brief Fecha a caixa de Chat
+ * @details Adiciona a classe 'd-none' à caixa de Chat para ocultar o conteúdo.
+ * Desta forma, a caixa de Chat é ocultada na interface do utilizador.
+ */
 function closeChatBox() {
     $("#chat-box").addClass("d-none");
 }
 
 /**
-    * PT: Limpa as mensagens do chat
-    * 
-    * EN: Clear the chat messages
-*/
+ * @brief Limpa a caixa de Chat.
+ * @details Remove todas as mensagens da caixa de Chat, deixando-a vazia.
+ */
 function clearChatMessages() {
 $("#chat-messages").empty();
 }
 
-/**
-    * PT: Adiciona uma mensagem ao chat
-    * 
-    * EN: Add a message to the chat
-    * @param {string} user - O utilizador que enviou a mensagem
-    * @param {string} message - A mensagem a ser enviada
+/** 
+ * @brief Adiciona uma mensagem ao chat.
+ * @details Adiciona uma nova mensagem ao chat, exibindo o remetente e a mensagem na interface do utilizador.
+ * 
+ * @param {string} user - O utilizador que enviou a mensagem.
+ * @param {string} message - A mensagem a ser enviada.
+ * 
+ * @return {void} É acrescentado um novo elemento de mensagem ao chat com o 'user' e 'message' fornecidos.
 */
 function addMsgToChat(user, message){
 // Determine the sender
@@ -157,21 +169,22 @@ $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <spa
 }
 
 /**
-    * PT: Limpa o conteúdo da página
-    * 
-    * EN: Clear the content of the page
-*/
+ * @brief Limpa a homepage do Assistente.
+ * @details Remove todo o conteúdo da homepage do Assistente, deixando-a vazia.
+ * 
+ * @return {void} O conteúdo da homepage é removido.
+ */
 function clearContent() {
     document.getElementById("title").innerHTML = "";
     document.getElementById("image-container").innerHTML = "";
     document.getElementById("table-container").innerHTML = "";
     }
 
-/**
-    * PT: Adiciona o nome da receita ao título
-    * 
-    * EN: Add the recipe name to the title
-    * @param {string} recipe_name - O nome da receita
+/** 
+ * @brief Adiciona um título à homepage do Assistente.
+ * @details Adiciona um novo título à homepage do Assistente, exibindo-o na interface do utilizador.
+ * 
+ * @param {string} title - O título a ser exibido dentro da homepage num elemento h2.
 */
 function addRecipeName(recipe_name) {
 let container = document.getElementById("title");
@@ -189,11 +202,13 @@ if (existingH2) {
 }
 }
 
-/**
-    * PT: Adiciona uma imagem à página
-    * 
-    * EN: Add an image to the container
-    * @param {string} img_url - A URL da imagem
+/** 
+ * @brief Adiciona uma imagem à homepage do Assistente.
+ * @details Adiciona uma nova imagem à homepage do Assistente, exibindo-a na interface do utilizador.
+ * 
+ * @param {string} img_url - A URL da imagem a ser exibida.
+ * 
+ * @return {void} É criada uma nova imagem e adicionada ao container de imagem, substituindo a imagem existente se houver.
 */
 function addImage(img_url) {
 let container = document.getElementById("image-container");
@@ -211,11 +226,17 @@ if (existingImg) {
 }
 }
 
-/**
-    * PT: Adiciona uma tabela de ingredientes à página
-    * 
-    * EN: Add an ingredients table to the container
-    * @param {array} ingredients - A lista de ingredientes
+/** 
+ * @brief Adiciona uma tabela com 3 colunas à homepage do Assistente.
+ * @details Adiciona uma nova tabela com 3 colunas à homepage do Assistente, exibindo-a na interface do utilizador.
+ * As 3 colunas são: 
+ *  - Ingredientes, 
+ *  - Utensílios
+ *  - Passos.
+ * 
+ * @param {array} ingredients - A lista de nomes das colunas a serem exibidas na tabela.
+ * 
+ * @return {void} É criada uma nova tabela com 3 colunas e os dados fornecidos.
 */
 function addIngredientsTable(ingredients) {
     let container = document.getElementById("table-container");
@@ -267,11 +288,14 @@ function addIngredientsTable(ingredients) {
 }
 
 /**
-    * PT: Adiciona uma tabela de utensílios à página
-    * 
-    * EN: Add a tools table to the container
-    * @param {array} tools - A lista de utensílios
-*/
+ * @brief Adiciona uma tabela com Utensílios à homepage do Assistente.
+ * @details Adiciona uma nova tabela com Utensílios à homepage do Assistente, exibindo-a na interface do utilizador.
+ * 
+ * @param {array} tools - A lista de utensílios a serem exibidos na tabela.
+ * 
+ * @return {void} É criada uma nova tabela com os utensílios fornecidos, substituindo a tabela existente se houver.
+ * 
+ */
 function addToolsTable(tools) {
     let container = document.getElementById("table-container");
     // Verifica e remove a tabela existente de utensílios
@@ -306,11 +330,14 @@ function addToolsTable(tools) {
 }
 
 /**
-    * PT: Adiciona uma tabela com produtos na Lista de compras à página
-    * 
-    * EN: Add a shopping list table to the container
-    * @param {list} lista - A lista de Produtos na Lista de Compras
-*/
+ * @brief Adiciona uma tabela com a Lista de Compras do utilizador.
+ * @details Adiciona uma nova tabela com a Lista de Compras do utilizador à homepage do Assistente, exibindo-a na interface do utilizador.
+ * 
+ * @param {array} lista - A lista de compras do utilizador.
+ * 
+ * @return {void} É criada uma nova tabela com a lista de compras fornecida, substituindo a tabela existente se houver.
+ * 
+ */
 function addShoopingListTable(lista) {
     let container = document.getElementById("table-container");
     // Verifica e remove a tabela existente
@@ -345,11 +372,13 @@ function addShoopingListTable(lista) {
 }
 
 /**
-    * PT: Adiciona uma tabela com os produtos na Despensa à página
-    * 
-    * EN: Add a steps table to the container
-    * @param {list} lista - A lista de produtos na Despensa
-*/
+ * @brief Adiciona uma tabela com os produtos na despensa do utilizador.
+ * @details Adiciona uma nova tabela com os produtos na despensa do utilizador à homepage do Assistente, exibindo-a na interface do utilizador.
+ * 
+ * @param {array} lista - A lista de produtos na despensa do utilizador.
+ * 
+ * @return {void} É criada uma nova tabela com os produtos na despensa fornecidos, substituindo a tabela existente se houver.
+ */
 function addPantryTable(lista) {
     let container = document.getElementById("table-container");
     // Verifica e remove a tabela existente da despensa
@@ -409,11 +438,13 @@ function addPantryTable(lista) {
     container.appendChild(table);
 }
 
-/**
-    * PT: Adiciona uma tabela com as Receitas à página
-    * 
-    * EN: Add a suggested recipes table to the container
-    * @param {array} recipes - A lista de receitas
+/** 
+ * @brief Adiciona uma tabela com as receitas disponíveis.
+ * @details Adiciona uma nova tabela com as receitas disponíveis à homepage do Assistente, exibindo-a na interface do utilizador.
+ * 
+ * @param {array} recipes - A lista de receitas disponíveis.
+ * 
+ * @return {void} É criada uma nova tabela com as receitas fornecidas, substituindo a tabela existente se houver.
 */
 function addRecipesTable(recipes) {
     let container = document.getElementById("table-container");
@@ -465,10 +496,11 @@ function addRecipesTable(recipes) {
 }
 
 /**
-    * PT: Reseta o objeto 'product'
-    * 
-    * EN: Reset the 'product' object
-*/
+ * @brief Reseta o objeto de `product`.
+ * @details Reseta o objeto de `product` para os valores iniciais, limpando quaisquer valores anteriores.
+ * 
+ * @return {void} O objeto de `product` é redefinido com valores nulos.
+ */
 function reset_product() {
     product = {
         name: null,
@@ -479,14 +511,13 @@ function reset_product() {
 }
 
 /**
-    * PT: Averigua o tipo de produto (Planta, Animal ou Outros)
-    * 
-    * EN: Check the type of product (Plant, Animal or Others)
-    * 
-    * @param {string} product_name - O nome do produto
-    * 
-    * @returns {string} product_type - ( "plant", "animal", "others")
-*/
+ * @brief Verifica se o produto é um produto de origem animal ou vegetal.
+ * @details Verifica se o nome do produto fornecido corresponde a um produto de origem animal ou vegetal.
+ * 
+ * @param {string} product_name - O nome do produto a ser verificado.
+ * 
+ * @return {string} O tipo de produto ("animal", "plant" ou "others").
+ */
 function checkType(product_name) {
     for(const plant of plant_products){
         if (plant.includes(product_name)){
@@ -502,13 +533,13 @@ function checkType(product_name) {
 }
 
 /**
-    * PT: Cria uma data de validade para o produto , dia de hoje + ndays
-    * 
-    * EN: Create an expiration date for the product, today + ndays
-    * @param {string} ndays - Número de dias de validade do produto
-    *
-    * @return {string} expiration_date - Data de validade do produto com formato "YYYY-MM-DD"
-*/
+ * @brief Cria uma data no formato ISO 8601.
+ * @details Cria uma data no formato ISO 8601 com base no número de dias fornecido a partir da data atual.
+ * 
+ * @param {number} ndays - O número de dias a serem adicionados à data atual.
+ * 
+ * @return {string} A data de validade no formato ISO 8601.
+ */
 function set_expiration_date(ndays){
     let today = new Date();
     let expiration_date = today.setDate(today.getDate() + ndays);
@@ -518,14 +549,15 @@ function set_expiration_date(ndays){
     return expiration_date
 }
 
+
 /**
-    * PT: Alerta de produtos no final de validade para quando a validade estiver a 3 dias
-    * 
-    * EN: Alert of products near expiration date for when the expiration date is 3 days
-    * @param {string} expiration_date - A data de validade do produto
-    *
-    * @return {boolean} - True se a data de validade estiver a 3 dias, False caso contrário
-*/
+ * @brief Alerta de produtos no final de validade.
+ * @details Verifica se a data de validade do produto fornecida está a 3 dias de distância da data atual.
+ * 
+ * @param {string} expiration_date - A data de validade do produto.
+ * 
+ * @return {boolean} True se a data de validade estiver a 3 dias, False caso contrário.
+ */
 function alert_expiration_date(expiration_date){
     let today = new Date();
     expiration_date = new Date(expiration_date);
@@ -539,13 +571,13 @@ function alert_expiration_date(expiration_date){
 }
 
 /**
-    * PT: Obter produtos na despensa que estão perto do fim da validade
-    * 
-    * EN: Get products in the pantry that are near the expiration date
-    * @param {array} product_list - A lista de produtos na despensa
-    *
-    * @return {array} near_expiration_date_products - Lista de produtos perto do fim da validade
-*/
+ * @brief Obter produtos na despensa que estão perto do fim da validade.
+ * @details Verifica a data de validade de cada produto na lista fornecida e retorna os produtos que estão a 3 dias de distância da data atual.
+ * 
+ * @param {array} product_list - A lista de produtos na despensa.
+ * 
+ * @return {array} near_expiration_date_products - Lista de produtos perto do fim da validade.
+ */
 function get_near_expiration_date_products(product_list){
     let near_expiration_date_products = [];
     for (let i = 0; i < product_list.length; i++){
@@ -560,14 +592,14 @@ function get_near_expiration_date_products(product_list){
 }
 
 /**
-    * PT: Construir o corpo do email tanto para a lista de compras , como para a lista de produtos em fim de validade
-    *
-    * EN: Build the email body for both the shopping list and the near expiration date products
-    * @param {array} list - A lista de produtos
-    * @param {string} alertType - O tipo de alerta ("expiration" ou "shoopinglist")
-    *
-    * @return {string} body - Corpo de email formatado{html} de forma a ser usado no envio de email
-*/
+ * @brief Construir o corpo do email.
+ * @details Constrói o corpo do email com base no tipo de alerta fornecido e na lista de produtos.
+ * 
+ * @param {string} alertType - O tipo de alerta ("expiration" ou "shoopinglist").
+ * @param {array} list - A lista de produtos.
+ * 
+ * @return {string} body - O corpo do email formatado em HTML para ser usado no envio de email.
+ */
 function createEmailBody(alertType, list) {
     let body = `<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">`;
 
@@ -602,15 +634,15 @@ function createEmailBody(alertType, list) {
 }
 
 /**
-    * PT: Validar se o produto já existe na despensa
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Validate if the product already exists in the pantry
-    * - sends a [GET] request to the server
-    * @param {string} product_name - O nome do produto a pesquisar
-    *
-    * @return {string} data - A quantidade e a unidade do produto se existir{ message: "7 kg"}, caso contrário, retorna (message: "0 null")
-*/
+ * @brief Verifica se o produto já existe na despensa.
+ * @details Verifica se o produto fornecido já existe na despensa e retorna a quantidade e a unidade do produto se existir.
+ * 
+ * @param {string} product_name - O nome do produto a ser pesquisado.
+ * 
+ * @return {string} data - A quantidade e a unidade do produto se existir, caso contrário, retorna "0 null".
+ * 
+ * @see app.check_grocery(`product_name`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function check_shoppingList(product_name) {
     try {
         // URL encode the product_name to ensure it's safe to include in a URL
@@ -633,14 +665,16 @@ async function check_shoppingList(product_name) {
 }
 
 /**
-    * PT: Adicionar um produto à lista de compras o produto é passado atravez do objeto product
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Add a product to the shopping list the product is passed through the product object
-    * - sends a [POST] request to the server
-    *
-    * @return {string} data - A mensagem de sucesso ou erro
-*/
+ * @brief Adiciona um produto à lista de compras.
+ * @details Adiciona um produto à lista de compras, enviando um pedido [POST] para o servidor.
+ * O produto é passado através do objeto `product` previamente preenchido.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro.
+ * 
+ * @note o `product` tem de estar previamente preenchido com os valores do produto a adicionar( nome, quantidade, unidade).
+ * 
+ * @see app.insert_grocery(`name`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function insert_shooping_list(){
     try {
         const response = await fetch("http://127.0.0.1:5000/pantry/insert-grocery", {
@@ -662,15 +696,15 @@ async function insert_shooping_list(){
 }
 
 /**
-    * PT: Remover um produto da lista de compras
-    * - envia um pedido [DELETE] para o servidor
-    * 
-    * EN: Remove a product from the shopping list
-    * - sends a [DELETE] request to the server
-    * @param {string} name - O nome do produto a remover
-    *
-    * @return {string} data - A mensagem de sucesso ou erro
-*/
+ * @brief Remove um produto da lista de compras.
+ * @details Remove um produto da lista de compras, enviando um pedido [DELETE] para o servidor com seu o nome.
+ * 
+ * @param {string} name - O nome do produto a ser removido.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro na consola.
+ * 
+ * @see app.remove_grocery(`name`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function remove_shopping_list(name){
     try {
         const response = await fetch("http://127.0.0.1:5000/pantry/remove-grocery", {
@@ -692,14 +726,13 @@ async function remove_shopping_list(name){
 }
 
 /**
-    * PT: Limpar a lista de compras
-    * - envia um pedido [DELETE] para o servidor
-    * 
-    * EN: Clear the shopping list
-    * - sends a [DELETE] request to the server
-    *
-    * @return {string} data - A mensagem de sucesso ou erro
-*/
+ * @brief Limpa a lista de compras.
+ * @details Limpa a lista de compras, enviando um pedido [DELETE] para o servidor.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro na consola.
+ * 
+ * @see app.clear_grocery() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function clear_shoppingList(){
     try {
         const response = await fetch('http://127.0.0.1:5000/pantry/clear-grocery', {
@@ -714,15 +747,17 @@ async function clear_shoppingList(){
 }
 
 /**
-    * PT: Extrair a unidade de uma determinada frase
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Extract the unit from a given sentence
-    * - sends a [POST] request to the server
-    * @param {string} sentence - A frase a ser analisada
-    *
-    * @return {string} data - A unidade do produto {message: "kg"}
-*/
+ * @brief Extrair a unidade de uma determinada frase.
+ * @details Envia um pedido [POST] para o servidor para extrair a unidade de uma determinada frase.
+ * 
+ * @param {string} sentence - A frase a ser analisada.
+ * 
+ * @return {string} data - A unidade do produto {message: "kg"}.
+ * 
+ * @note A função retorna a unidade do produto com base na frase fornecida.
+ * 
+ * @see app.get_unit(`sentence`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function get_product_unit(sentence) {
     try {
         const response = await fetch("http://127.0.0.1:5000/get-unit", {
@@ -744,15 +779,15 @@ async function get_product_unit(sentence) {
 }
 
 /**
-    * PT: Extrair o nome do produto de uma determinada frase 
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Extract the product name from a given sentence 
-    * - sends a [POST] request to the server
-    * @param {string} sentence - A frase a ser analisada
-    *
-    * @return {string} data - O nome do produto {message: "azeite"}
-*/
+ * @brief Extrair o nome do produto de uma determinada frase.
+ * @details Envia um pedido [POST] para o servidor para extrair o nome do produto de uma determinada frase.
+ * 
+ * @param {string} sentence - A frase a ser analisada.
+ * 
+ * @return {string} data - O nome do produto {message: "azeite"}.
+ * 
+ * @see app.get_ingredient(`sentence`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function get_product_name(sentence){
     try {
         const response = await fetch("http://127.0.0.1.:5000/get-ingredient", {
@@ -775,14 +810,13 @@ async function get_product_name(sentence){
 }
 
 /**
-    * PT: Limpar a despensa - envia um pedido 
-    * - [DELETE] para o servidor
-    * 
-    * EN: Clear the pantry
-    * - sends a [DELETE] request to the server
-    *
-    * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
-*/
+ * @brief Limpar a despensa.
+ * @details Limpa a despensa, enviando um pedido [DELETE] para o servidor.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro na consola.
+ * 
+ * @see app.clear_pantry() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function clear_pantry(){
     try {
         const response = await fetch('http://127.0.0.1:5000/pantry/clear', {
@@ -797,16 +831,15 @@ async function clear_pantry(){
 }
 
 /**
-    * PT: Remover um produto na totalidade da despensa
-    * - envia um pedido [DELETE] para o servidor
-    * 
-    * EN: Remove a product entirely from the pantry
-    * - sends a [DELETE] request to the server
-    *
-    * @param {string} product_name - O nome do produto a remover
-    * 
-    * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
-*/
+ * @brief Remover um produto da despensa.
+ * @details Remove um produto da despensa, enviando um pedido [DELETE] para o servidor com o nome do produto.
+ * 
+ * @param {string} product_name - O nome do produto a ser removido.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro na consola.
+ * 
+ * @see app.remove_all_stock(`product_name`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function remove_a_product(product_name) {
     try {
         // Need to mount the URL with the product name
@@ -824,16 +857,15 @@ async function remove_a_product(product_name) {
 }
 
 /**
-    * PT: Converte a data para o formato {date} (SQL) 
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Convert the date to {date} format (SQL)
-    * - sends a [POST] request to the server
-    * 
-    * @param {string} transcript - A data a ser convertida
-    *
-    * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
-*/
+ * @brief Converte a data para o formato {date} (SQL).
+ * @details Envia um pedido [POST] para o servidor para converter a data fornecida para o formato {date} (SQL).
+ * 
+ * @param {string} transcript - A data a ser convertida.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
+ * 
+ * @see app.format_date(`transcript`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function convertDateToSQLFormat(transcript) {
     try {
         const response = await fetch("http://127.0.0.1:5000/format-date", {
@@ -856,18 +888,16 @@ async function convertDateToSQLFormat(transcript) {
 }
 
 /**
-    * PT: Enviar um email com a lista de produtos a expirar ou a lista de compras
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Send an email with the list of products to expire or the shopping list
-    * - sends a [POST] request to the server
-    *
-    * @param {string} alertType - O tipo de alerta ("expiration" | "shoopinglist")
-    * 
-    * @param {array} list - A lista de produtos
-    * 
-    * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
-*/
+ * @brief Enviar um email com a lista de produtos a expirar ou a lista de compras.
+ * @details Envia um pedido [POST] para o servidor para enviar um email com a lista de produtos a expirar ou a lista de compras.
+ * 
+ * @param {string} alertType - O tipo de alerta ("expiration" | "shoopinglist").
+ * @param {array} list - A lista de produtos.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro {message: "example message "}
+ * 
+ * @see app.send_email(`alertType`,`list`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function send_email(alertType, list){
     if (alertType === "expiration"){
         email["subject"] = "Produtos a expirar - Kitchen Assistant";
@@ -893,14 +923,13 @@ async function send_email(alertType, list){
 }
 
 /**
-    * PT: Obter os produtos na despensa
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the products in the pantry
-    * - sends a [GET] request to the server
-    *
-    * @return {array} data - A lista de produtos na despensa
-*/
+ * @brief Obter os produtos na despensa.
+ * @details Envia um pedido [GET] para o servidor para obter os produtos na despensa.
+ * 
+ * @return {array} data - A lista de produtos na despensa.
+ * 
+ * @see app.get_pantry_stock() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function get_pantry_products(){
     const response = await fetch('http://127.0.0.1:5000/pantry/stock');
     const data = await response.json();
@@ -909,14 +938,13 @@ async function get_pantry_products(){
 }
 
 /**
-    * PT: Obter a lista de compras
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the shopping list
-    * - sends a [GET] request to the server
-    *
-    * @return {array} data - A lista de produtos na lista de compras
-*/
+ * @brief Obter a lista de compras.
+ * @details Envia um pedido [GET] para o servidor para obter a lista de compras.
+ * 
+ * @return {array} data - A lista de produtos na lista de compras.
+ * 
+ * @see app.get_grocery_list() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function get_shopping_list(){
     const response = await fetch('http://127.0.0.1:5000/pantry/shopping-list');
     const data = await response.json();
@@ -925,14 +953,13 @@ async function get_shopping_list(){
 }
 
 /**
-    * PT: Inserir um produto na despensa usando o objeto Product preenchido previamente
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Insert a product into the pantry using the previously filled Product object
-    * - sends a [POST] request to the server
-    * 
-    * @return {array} data - A mensagem de sucesso ou erro
-*/
+ * @brief Inserir um produto na despensa.
+ * @details Insere um produto na despensa, enviando um pedido [POST] para o servidor com os detalhes do produto.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro.
+ * 
+ * @see app.insert_stock() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function insert_stock() {
     
     const response = await fetch('http://127.0.0.1:5000/pantry/insert-stock', {
@@ -947,14 +974,13 @@ async function insert_stock() {
 }
 
 /**
-    * PT: Remover um produto da despensa usando o objeto Product preenchido previamente
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Remove a product from the pantry using the previously filled Product object
-    * - sends a [POST] request to the server
-    * 
-    * @return {array} data - A mensagem de sucesso ou erro
-*/
+ * @brief Remover um produto da despensa.
+ * @details Remove um produto da despensa, enviando um pedido [POST] para o servidor com os detalhes do produto.
+ * 
+ * @return {string} data - A mensagem de sucesso ou erro.
+ * 
+ * @see app.remove_stock() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function remove_stock() {
     const response = await fetch('http://127.0.0.1:5000/pantry/remove-stock', {
         method: 'POST',
@@ -965,26 +991,23 @@ async function remove_stock() {
     });
 }
 
+
 /**
-    * PT: Obter uma receita aleatória
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get a random recipe
-    * - sends a [GET] request to the server
-    *
-    * @return {array} data - A receita aleatória 
-    * 
-    * {
-    * 
-    *       'recipe_id': recipe_id,
-    *  
-    *       'recipe_name': recipe_name, 
-    * 
-    *       'recipe_img': recipe_img
-    * 
-    * }
-    * 
-*/
+ * @brief Obter uma receita aleatória.
+ * @details Envia um pedido [GET] para o servidor para obter uma receita aleatória.
+ * 
+ * @return {array} data - A receita aleatória.
+ * 
+ * @code
+ *  {
+ *      'recipe_id': recipe_id,
+ *      'recipe_name': recipe_name,
+ *      'recipe_img': recipe_img
+ *  }
+ * @endcode
+ * 
+ * @see app.fetch_random_recipe() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getRandRecipe() {
     const response = await fetch('http://127.0.0.1:5000/recipe/random');
     const data = await response.json();
@@ -993,15 +1016,15 @@ async function getRandRecipe() {
 }
 
 /**
-    * PT: Envia uma imagem codificada em base64 para o servidor e obtém a resposta do scanner de produtos
-    * - envia um pedido [POST] para o servidor
-    * 
-    * EN: Send a base64 encoded image to the server and get the product scanner response
-    * - sends a [GET] request to the server
-    * @param {string} frame - A imagem codificada em base64 que representa uma imagem capturada para análise do scanner
-    *
-    * @return {array} data - Assume-se que o servidor retorne um objeto JSON com informações relevantes
-*/
+ * @brief Obter um produto do scanner.
+ * @details Envia um pedido [POST] para o servidor para obter informações do produto a partir de um frame.
+ * 
+ * @param {string} frame - O frame a ser analisado.
+ * 
+ * @return {array} data - As informações do produto {product_name, product_quantity, product_image}.
+ * 
+ * @see app.get_product_barcode() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getProduct_scanner(frame) {
     // Remove o prefixo de dados da string base64
     const frameData = frame.replace(/^data:image\/\w+;base64,/, "");
@@ -1019,26 +1042,13 @@ async function getProduct_scanner(frame) {
 }
 
 /**
-    * PT: Inicia a captura de vídeo da webcam, captura frames contínuos para análise
-    *
-    * Esta função cria dinamicamente elementos de vídeo e de texto na página,
-    * inicializa a webcam, captura imagens continuamente, e tenta obter informações
-    * do produto de cada frame capturado usando a função `getProduct_scanner`.
-    * Se informações válidas do produto são detectadas, elas são usadas para montar
-    * um "card" na interface com a imagem e detalhes do produto.
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Start the webcam video capture, capture continuous frames for analysis
-    *
-    * This function dynamically creates video and text elements on the page,
-    * initializes the webcam, captures images continuously, and tries to get product
-    * information from each captured frame using the `getProduct_scanner` function.
-    * If valid product information is detected, it is used to build a "card" on the interface
-    * with the product image and details.
-    * - sends a [GET] request to the server
-    *
-    * @return {array} data - A lista de produtos na despensa
-*/
+ * @brief Inicia a captura de vídeo da webcam.
+ * @details Inicia a captura de vídeo da webcam, captura frames contínuos para análise.
+ * Tentar obter informações do produto de cada frame capturado usando a função `getProduct_scanner`.
+ * Se informações válidas do produto são detectadas, elas são usadas para montar um "card" na interface com a imagem e detalhes do produto.
+ * 
+ * @return {array} product_info - As informações do produto {product_name, product_quantity, product_image}.
+ */
 async function takeSnapshot() {
     let product_info;
     const webcam_container = document.getElementById("webcam-container");
@@ -1139,28 +1149,24 @@ async function takeSnapshot() {
 }
 
 /**
-    * PT: Obter todas as receitas
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get all recipes
-    * - sends a [GET] request to the server
-    *
-    * @return {array} data - A lista de receitas 
-    * 
-    * [
-    *   {
-    * 
-    *       recipe_id: recipe_id, 
-    * 
-    *       recipe_name: recipe_name, 
-    * 
-    *       recipe_img: recipe_img
-    * 
-    *   }
-    *   ,
-    *    ...
-    * ]
-*/
+ * @brief Obter todas as receitas.
+ * @details Envia um pedido [GET] para o servidor para obter todas as receitas.
+ * 
+ * @return {array} data - A lista de receitas.
+ * 
+ * @code
+ * [
+ *  {
+ *      recipe_id: recipe_id,
+ *      recipe_name: recipe_name,
+ *      recipe_img: recipe_img
+ *  },
+ *   ...
+ * ]
+ * @endcode
+ * 
+ * @see app.fetch_recipes() Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getAllRecipes() {
 const response = await fetch('http://127.0.0.1:5000/recipes');
 const data = await response.json();
@@ -1168,27 +1174,25 @@ console.log("All Recipes: ", data);
 return data;
 }
 
+
 /**
-    * PT: Obter receitas por uma tag
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get recipes by a tag
-    * - sends a [GET] request to the server
-    * @param {string} tag - A tag da receita
-    *
-    * @return {array} data - A lista de receitas com a tag especificada 
-    * 
-    * {
-    * 
-    *       recipe_id: recipe_id, 
-    * 
-    *       recipe_name: recipe_name,
-    * 
-    *       recipe_img: recipe_img
-    * 
-    * }
-    * 
-*/
+ * @brief Obter receitas por uma tag.
+ * @details Envia um pedido [GET] para o servidor para obter receitas por uma tag.
+ * 
+ * @param {string} tag - A tag da receita.
+ * 
+ * @return {array} data - A lista de receitas com a tag especificada.
+ * 
+ * @code
+ *  {
+ *      recipe_id: recipe_id,
+ *      recipe_name: recipe_name,
+ *      recipe_img: recipe_img
+ *  }
+ * @endcode
+ * 
+ * @see app.fetch_recipe_by_tag(`tag`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getRecipesByTag(tag) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/tag/${tag}`);
 const data = await response.json();
@@ -1196,23 +1200,23 @@ console.log(`Recipes with tag ${tag}: `, data);
 return data;
 }
 
+
 /**
-    * PT: Obter uma receita por um nome
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get a recipe by a name
-    * - sends a [GET] request to the server
-    * @param {string} name - O nome da receita
-    *
-    * @return {array} data - A receita com o nome especificado 
-    * 
-    * {
-    * 
-    *       recipe_id: recipe_id
-    * 
-    * }
-    * 
-*/
+ * @brief Obter uma receita por um nome.
+ * @details Envia um pedido [GET] para o servidor para obter uma receita por um nome.
+ * 
+ * @param {string} name - O nome da receita.
+ * 
+ * @return {array} data - A receita com o nome especificado.
+ * 
+ * @code
+ * {
+ *     recipe_id: recipe_id
+ * }
+ * @endcode
+ * 
+ * @see app.fetch_recipe_by_name(`name`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getRecipeByName(name) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/name/${encodeURIComponent(name)}`);
 const data = await response.json();
@@ -1220,41 +1224,28 @@ console.log(`Recipe named ${name}: `, data);
 return data;
 }
 
+
 /**
-    * PT: Obter ingredientes por um ID de receita
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get ingredients by a recipe ID
-    * - sends a [GET] request to the server
-    * @param {string} recipeId - O ID da receita
-    *
-    * @return {array} data - A lista de ingredientes da receita
-    * 
-    * [
-    * 
-        *    {
-        * 
-        *        "name": "ingredient1",
-        * 
-        *        "quantity": "4.00",
-        * 
-        *        "unit": "uni"
-        * 
-        *    },
-    * 
-        *    {
-        * 
-        *        "name": "ingredient2",
-        * 
-        *        "quantity": "4.00",
-        * 
-        *        "unit": "uni"
-        * 
-        *    },
-    *    ... 
-    * ]
-    * 
-*/
+ * @brief Obter ingredientes por um ID de receita
+ * @details Envia um pedido [GET] para o servidor para obter ingredientes por um ID de receita.
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * 
+ * @return {array} data - A lista de ingredientes da receita.
+ * 
+ * @code
+ * [
+ *  {
+ *      name: ingredient_name,
+ *      quantity: ingredient_quantity,
+ *      unit: ingredient_unit
+ *  },
+ *   ...
+ * ]
+ * @endcode
+ * 
+ * @see app.fetch
+ */
 async function getIngredients(recipeId) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/ingredients`);
 const data = await response.json();
@@ -1262,26 +1253,25 @@ console.log(`Ingredients for recipe ID ${recipeId}: `, data);
 return data;
 }
 
+
 /**
-    * PT: Obter ferramentas por um ID de receita
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get tools by a recipe ID
-    * - sends a [GET] request to the server
-    * @param {string} recipeId - O ID da receita
-    *
-    * @return {array} data - A lista de ferramentas da receita
-    * 
-    * [
-    * 
-    *       ["tool1"],
-    * 
-    *       ["tool2"],
-    * 
-    *    ... 
-    * ]
-    * 
-*/
+ * @brief Obter ferramentas por um ID de receita.
+ * @details Envia um pedido [GET] para o servidor para obter ferramentas por um ID de receita.
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * 
+ * @return {array} data - A lista de ferramentas da receita.
+ * 
+ * @code
+ *  [
+ *      ["tool1"],
+ *      ["tool2"],
+ *    ...
+ *  ]
+ * @endcode
+ * 
+ * @see app.fetch_tools(`recipeId`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getTools(recipeId) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/tools`);
 const data = await response.json();
@@ -1289,33 +1279,29 @@ console.log(`Tools for recipe ID ${recipeId}: `, data);
 return data;
 }
 
+
 /**
-    * PT: Obter a próxima instrução por um ID de receita e passo
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the next instruction by a recipe ID and step
-    * - sends a [GET] request to the server
-    *
-    *   STEP = 0 -> FIRST INSTRUCTION (STEP 1)
-    * 
-    *   STEP = 1 -> SECOND INSTRUCTION (STEP 2)
-    * 
-    *   ...
-    * 
-    *   STEP = N -> N+1 INSTRUCTION (STEP N+1) -> RETURN NULL
-    *
-    * @param {string} recipeId - O ID da receita
-    * @param {string} step - O passo da receita
-    *
-    * @return {array} data - A próxima instrução da receita
-    * 
-    *   {
-    * 
-    *           "next_instruction": "instruction"
-    * 
-    *   }
-    * 
-*/
+ * @brief Obter a próxima instrução por um ID de receita e passo.
+ * @details Envia um pedido [GET] para o servidor para obter a próxima instrução por um ID de receita e passo.
+ * 
+ *  - STEP = 0 -> FIRST INSTRUCTION (STEP 1)
+ *  - STEP = 1 -> SECOND INSTRUCTION (STEP 2)
+ *  - ...
+ *  - STEP = N -> N+1 INSTRUCTION (STEP N+1) -> RETURN NULL
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * @param {string} step - O passo da receita.
+ * 
+ * @return {array} data - A próxima instrução da receita.
+ * 
+ * @code
+ *  {
+ *      next_instruction: instruction
+ *  }
+ * @endcode
+ * 
+ * @see app.fetch_next_instruction(`recipeId`,`step`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getNextInstruction(recipeId, step) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/next-instruction/${step}`);
 const data = await response.json();
@@ -1323,35 +1309,30 @@ console.log(`Next instruction for recipe ID ${recipeId} and step ${step}: `, dat
 return data;
 }
 
+
 /**
-    * PT: Obter a instrução anterior por um ID de receita e passo
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the previous instruction by a recipe ID and step
-    * - sends a [GET] request to the server
-    *
-    *   STEP = 0 -> FIRST INSTRUCTION (STEP -1) -> RETURN NULL
-    * 
-    *   STEP = 1 -> SECOND INSTRUCTION (STEP 0) -> RETURN NULL
-    * 
-    *   STEP = 2 -> THIRD INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
-    * 
-    *   ...
-    * 
-    *   STEP = N -> N-1 INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
-    *
-    * @param {string} recipeId - O ID da receita
-    * @param {string} step - O passo da receita
-    *
-    * @return {array} data - A instrução anterior da receita
-    * 
-    *   {
-    * 
-    *        "previous_instruction": "instruction"
-    * 
-    *   }
-    * 
-*/
+ * @brief Obter a instrução anterior por um ID de receita e passo.
+ * @details Envia um pedido [GET] para o servidor para obter a instrução anterior por um ID de receita e passo.
+ * 
+ * - STEP = 0 -> FIRST INSTRUCTION (STEP -1) -> RETURN NULL
+ * - STEP = 1 -> SECOND INSTRUCTION (STEP 0) -> RETURN NULL
+ * - STEP = 2 -> THIRD INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+ * - ...
+ * - STEP = N -> N-1 INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * @param {string} step - O passo da receita.
+ * 
+ * @return {array} data - A instrução anterior da receita.
+ * 
+ * @code
+ * {
+ *    previous_instruction: instruction
+ * }
+ * @endcode
+ * 
+ * @see app.fetch_previous_instruction(`recipeId`,`step`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getPreviousInstruction(recipeId, step) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/previous-instruction/${step}`);
 const data = await response.json();
@@ -1359,36 +1340,30 @@ console.log(`Previous instruction for recipe ID ${recipeId} and step ${step}: `,
 return data;
 }
 
+
 /**
-    * PT: Obter a instrução atual por um ID de receita e passo
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the actual instruction by a recipe ID and step
-    * - sends a [GET] request to the server
-    *
-    *   STEP = 0 -> 0 INSTRUCTION (STEP -1) -> RETURN NULL
-    * 
-    *   STEP = 1 -> FIRST INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
-    * 
-    *   STEP = 2 -> SECOND INSTRUCTION (STEP 2) -> RETURN SECOND INSTRUCTION
-    * 
-    *   ...
-    * 
-    *   STEP = N -> N INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
-    * 
-    *
-    * @param {string} recipeId - O ID da receita
-    * @param {string} step - O passo da receita
-    *
-    * @return {array} data - A instrução atual da receita
-    * 
-    *   {
-    * 
-    *       "actual_instruction": "instruction"
-    * 
-    *   }
-    * 
-*/
+ * @brief Obter a instrução atual por um ID de receita e passo.
+ * @details Envia um pedido [GET] para o servidor para obter a instrução atual por um ID de receita e passo.
+ * 
+ * - STEP = 0 -> 0 INSTRUCTION (STEP -1) -> RETURN NULL
+ * - STEP = 1 -> FIRST INSTRUCTION (STEP 1) -> RETURN FIRST INSTRUCTION
+ * - STEP = 2 -> SECOND INSTRUCTION (STEP 2) -> RETURN SECOND INSTRUCTION
+ * - ...
+ * - STEP = N -> N INSTRUCTION (STEP N) -> RETURN N INSTRUCTION
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * @param {string} step - O passo da receita.
+ * 
+ * @return {array} data - A instrução atual da receita.
+ * 
+ * @code
+ * {
+ *   actual_instruction: instruction
+ * }
+ * @endcode
+ * 
+ * @see app.fetch_actual_instruction(`recipeId`,`step`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getActualInstruction(recipeId, step) {
 const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/actual-instruction/${step}`);
 const data = await response.json();
@@ -1396,24 +1371,23 @@ console.log(`Actual instruction for recipe ID ${recipeId} and step ${step}: `, d
 return data;
 }
 
+
 /**
-    * PT: Obter o nome da receita por um ID de receita
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the recipe name by a recipe ID
-    * - sends a [GET] request to the server
-    * 
-    * @param {string} recipeId - O ID da receita
-    *
-    * @return {array} data - O nome da receita
-    * 
-    *   {
-    * 
-    *       "recipe_name": "name"
-    * 
-    *   }
-    * 
-*/
+ * @brief Obter o nome da receita por um ID de receita.
+ * @details Envia um pedido [GET] para o servidor para obter o nome da receita por um ID de receita.
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * 
+ * @return {array} data - O nome da receita.
+ * 
+ * @code
+ * {
+ *    recipe_name: recipe_name
+ * }
+ * @endcode
+ * 
+ * @see app.fetch_recipe_name(`recipeId`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getRecipeName(recipeId) {
     const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/name`);
     const data = await response.json();
@@ -1422,24 +1396,23 @@ async function getRecipeName(recipeId) {
     return data;
 }
 
+
 /**
-    * PT: Obter a imagem da receita por um ID de receita
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get the recipe image by a recipe ID
-    * - sends a [GET] request to the server
-    * 
-    * @param {string} recipeId - O ID da receita
-    *
-    * @return {array} data - A imagem da receita
-    * 
-    *   {
-    * 
-    *       "recipe_img": "url"
-    * 
-    *   }
-    * 
-*/
+ * @brief Obter a imagem da receita por um ID de receita.
+ * @details Envia um pedido [GET] para o servidor para obter a imagem da receita por um ID de receita.
+ * 
+ * @param {string} recipeId - O ID da receita.
+ * 
+ * @return {array} data - A imagem da receita.
+ * 
+ * @code
+ * {
+ *   recipe_img: "url"
+ * }
+ * @endcode
+ * 
+ * @see app.fetch_recipe_image(`recipeId`) Para mais detalhes sobre a função que lida com o pedido.
+ */
 async function getRecipeImage(recipeId) {
 try {
     const response = await fetch(`http://127.0.0.1:5000/recipe/${recipeId}/image`);
@@ -1455,109 +1428,110 @@ try {
 }
 }
 
+
 /**
-    * PT: Obter uma piada aleatória
-    * - envia um pedido [GET] para o servidor
-    * 
-    * EN: Get a random joke
-    * - sends a [GET] request to the server
-    *
-    * @return {string} joke - A piada aleatória
-*/
+ * @brief Obter uma piada aleatória.
+ * @details Vai buscar uma piada aleatória da lista de piadas (`jokes`).
+ * 
+ * @return {string} joke - A piada aleatória.
+ */
 function getRandJoke() {
         let joke = jokes[Math.floor(Math.random() * jokes.length)];
         console.log("Joke: ", joke);
         return joke;
 }
 
-/** 
-    * [PT] Identificador único para cada receita na aplicação.
-    * 
-    * [EN] Unique identifier for each recipe in the application.
-    * @type {number}
-*/
+
+/**
+ * @var {number} recipe_id
+ * @brief Identificador único para cada receita na aplicação.
+ * @details Identificador único para cada receita na aplicação para depois ser feita a pesquiza na base de dados.
+ */
 var recipe_id = 0;
 
-/** 
-    * [PT] Contador de etapas da receita atual.
-    * 
-    * [EN] Step counter for the current recipe.
-    * @type {number}
-*/
+/**
+ * @var {number} step
+ * @brief Contador de etapas da receita atual.
+ * @details Contador de etapas da receita atual, começa com o valor 1 e é incrementado ou decrementado conforme o utilizador avança ou retrocede nas etapas da receita.
+ */
 var step = 1;
 
-/** 
-    * [PT] Referência para a instância de voz utilizada para comandos de voz.
-    * 
-    * [EN] Reference to the voice instance used for voice commands.
-    * 
-    * @type {VoiceInstance|null}
-*/
+
+/**
+ * @var {VoiceInstance|null} voice
+ * @brief Referência para a instância de voz utilizada para comandos de voz.
+ */
 var voice;
 
-/** 
-    * [PT] Bandeira para determinar se novos produtos devem ser adicionados ao banco de dados.
-    * 
-    * [EN] Flag to determine whether new products should be added to the database.
-    * @type {boolean}
-*/
+
+/**
+ * @var {boolean} add_pdb_flag
+ * @brief Flag para determinar se pordutos novos podem ser inseridos.
+ * @details Flag para determinar se pordutos novos podem ser inseridos, se for verdadeiro, os produtos podem ser inseridos, caso contrário, não podem.
+ * Começa com o valor falso, só podendo ser alterado pelo utilizador quando o intenção é adicionar um produto.
+ */
 var add_pdb_flag = false;
 
-/** 
-    * [PT] Bandeira para determinar se produtos devem ser removidos do banco de dados.
-    * 
-    * [EN] Flag to determine whether products should be removed from the database.
-    * @type {boolean}
-*/
+/**
+ * @var {boolean} remove_pdb_flag
+ * @brief Flag para determinar se produtos podem ser removidos.
+ * @details Flag para determinar se produtos podem ser removidos, se for verdadeiro, os produtos podem ser removidos, caso contrário, não podem.
+ * Começa com o valor falso, só podendo ser alterado pelo utilizador quando o intenção é remover um produto.
+ */
 var remove_pdb_flag = false;
 
-/** 
-    * [PT] Indicador se um alerta foi disparado na aplicação.
-    * 
-    * [EN] Indicator if an alert has been triggered in the application.
-    * @type {boolean}
-*/
+/**
+ * @var {boolean} alerted
+ * @brief Indicador se o alerta de produto em fim de validade foi disparado na aplicação.
+ * @details Indicador se o alerta de produto em fim de validade foi disparado na aplicação. Se for verdadeiro, o alerta foi disparado, caso contrário, não foi.
+ * Começa com o valor falso, sendo alterado quando um produto está em fim de validade, ou seja quando a data de validade é inferior a 3 dias.
+ */
 var alerted = false;
 
-/** 
-    * [PT] Indicador se o assistente está ativo.
-    * 
-    * [EN] Indicator whether the assistant is active.
-    * @type {boolean}
-*/
+
+/**
+ * @var {boolean} active_assistant
+ * @brief Indicador se o assistente está ativo.
+ * @details Indicador se o assistente está ativo. Se for verdadeiro, o assistente está ativo, caso contrário, não está.
+ * Começa com o valor falso, sendo alterado quando o assistente é ativado com uma inteção de GREETING.
+ */
 var active_assistant = false;
 
-/** 
-    * [PT] Lista de compras temporária, utilizada para operações pendentes.
-    * 
-    * [EN] Temporary shopping list, used for pending operations.
-    * @type {Array|null}
-*/
+/**
+ * @var {Array|null} s_list
+ * @brief Lista de compras temporária, utilizada para operações pendentes.
+ * @details Lista de compras temporária, utilizada para operações pendentes. 
+ * Array de objetos com a estrutura {name: "product_name", quantity: "product_quantity", unit: "product_unit"}.
+ */
 var s_list = null;
 
-/** 
-    * [PT] Lista de produtos temporária, usada para gestão de estoque.
-    * 
-    * [EN] Temporary product list, used for inventory management.
-    * @type {Array|null}
-*/
+
+/**
+ * @var {Array|null} p_list
+ * @brief Lista de produtos na despensa temporária, usada para gestão de stock.
+ * @details Lista de produtos na despensa temporária, usada para gestão de stock.
+ * Array de objetos com a estrutura {name: "product_name", quantity: "product_quantity", unit: "product_unit"}.
+ */
 var p_list = null;
 
-/** 
-    * [PT] Armazena a resposta do usuário para interações que requerem confirmação.
-    * 
-    * [EN] Stores the user's response for interactions requiring confirmation.
-    * @type {string|null}
-*/
+
+/**
+ * @var {string|null} answer
+ * @brief Armazena a resposta do utilizador.
+ * @details Armazena a resposta do utilizador para interações que requerem pequenas configurações dependendo da intenção.
+ * É onde é armazenada a resposta do Assistente para posterior utilização.
+ */
 var answer = null;
 
 
 /**
-    * [PT] Lista de piadas relacionadas com comida 
-    * 
-    * [EN] List of food-related jokes
-    * @type {string[]}
-*/        
+ * @type {string[]} jokes
+ * @brief Lista de piadas relacionadas com comida.
+ * @details Lista de piadas relacionadas com comida, que poderão sr utilizadas para entreter o utilizador.
+ * As piadas são apresentadas de forma aleatória.
+ * 
+ * @see getRandJoke() Para mais detalhes sobre a função que obtém uma piada aleatória.
+ */
 const jokes = [
     'Eu gosto tanto de comida que meu super herói preferido é o super mercado.',
     'O que disse a farinha para o fermento? "Sem ti, a minha vida não cresce."',
@@ -1566,12 +1540,31 @@ const jokes = [
     'Qual o nome do peixe que caiu do vigésimo andar? Aaaaaaaaah, Tum!'
 ];
 
+
 /**
-    * [PT] Lista de todos os tipos de produtos vegetais (frutas/vegetais)
-    * 
-    * [EN] List of all types of plant products (fruits/vegetables)
-    * @type {string[]}
-*/        
+* @type {string[]} plant_products
+ * 
+ * @brief Lista de todos os tipos de produtos vegetais (frutas/vegetais).
+ * @details Lista de todos os tipos de produtos vegetais (frutas/vegetais) para que possam ser utilizados para a identificação de produtos.
+ * Apos identificação, é gerada uma data de validade com 7 dias para produtos desta lista.
+ * 
+ * 
+ * @code
+ *  if(checkType(product_name) == "animal")
+ *  {
+ *      product["expiration_date"] = set_expiration_date(3);
+ *  }
+ *  }else if(checkType(product_name) == "plant")
+ *  {
+ *      product["expiration_date"] = set_expiration_date(3);
+ *  }
+ * @endcode
+ * 
+ * @see checkType(`product_name`) Para mais detalhes sobre a função que verifica o tipo de produto.
+ * @see set_expiration_date(`days`) Para mais detalhes sobre a função que define a data de validade.
+ *
+ * 
+ */
 const plant_products = [
     // Vegetables
     "batata", "cenoura", "tomates", "alho", "cebola", "courgette", "abóbora",
@@ -1594,11 +1587,25 @@ const plant_products = [
 ];
 
 /**
-    * [PT] Lista de todos os tipos de produtos de origem animal (carne/peixe/lacticínios)
-    * 
-    * [EN] List of all types of animal products (meat/fish/dairy)
-    * @type {string[]}
-*/
+ * @type {string[]} animal_products
+ * @brief Lista de todos os tipos de produtos de origem animal (carne/peixe/lacticínios).
+ * @details Lista de todos os tipos de produtos de origem animal (carne/peixe/lacticínios) para que possam ser utilizados para a identificação de produtos.
+ * Apos identificação, é gerada uma data de validade com 3 dias para produtos desta lista.
+ * 
+ * 
+ * @code
+ * if(checkType(product_name) == "animal")
+ *  {
+ *     product["expiration_date"] = set_expiration_date(3);
+ * }else if(checkType(product_name) == "plant")
+ *  {
+ *    product["expiration_date"] = set_expiration_date(7);
+ *  }
+ * @endcode
+ * 
+ * @see checkType(`product_name`) Para mais detalhes sobre a função que verifica o tipo de produto.
+ * @see set_expiration_date(`days`) Para mais detalhes sobre a função que define a data de validade.
+ */
 const animal_products = [
     // Seafood
     "bacalhau", "sardinhas", "polvo", "amêijoas", "lulas", "robalo", "dourada",
@@ -1628,165 +1635,80 @@ const animal_products = [
 ];
 
 /**
-    * [PT] Gere as mensagens recebidas através do WebSocket e responde com ações específicas baseadas na intenção detectada (switch case).
-    * Esta função processa dados recebidos, verificando o conteúdo de cada mensagem. Dependendo da intenção identificada (`intent`),
-    * a função executa operações correspondentes, como manipulação de interface do usuário, consultas de dados,
-    * e execução de comandos de voz. Erros durante o processamento são capturados e registrados no console.
-    *
-    * [EN] Processes messages received through the WebSocket and responds with specific actions based on the detected intent (switch case).
-    * This function processes received data by checking the content of each message. Depending on the identified intent (`intent`),
-    * the function performs corresponding operations such as UI manipulation, data queries, and voice command execution.
-    * Errors during processing are caught and logged to the console.
-    *
-    * @param {string} data - Dados recebidos pelo WebSocket. Espera-se que seja um string JSON que representa
-    *                        informações de comando e estado.
-    * @returns {void}
-    * 
-    *  - case "ask_all_recipes": [PT ]Obter todas as receitas disponíveis 
-    * 
-    *                            [EN] Get all available recipes
-    * 
-    * 
-    *  - case "ask_for_tools":  [PT] Obter todas as ferramentas necessárias para uma receita 
-    * 
-    *    [NOT IMPLEMENTED]      [EN] Get all tools needed for a recipe
-    * 
-    * 
-    *  - case "ask_for_ingredients": [PT] Obter todos os ingredientes necessários para uma receita 
-    * 
-    *    [NOT IMPLEMENTED]           [EN] Get all ingredients needed for a recipe
-    * 
-    * 
-    *  - case "ask_spefific_recipe": [PT] Obter uma receita específica 
-    * 
-    *                                [EN] Get a specific recipe
-    * 
-    * 
-    *  - case "ask_help": [PT] Obter ajuda 
-    * 
-    *                     [EN] Get help
-    * 
-    * 
-    *  - case "ask_random_recipe": [PT] Obter uma receita aleatória 
-    * 
-    *                              [EN] Get a random recipe
-    * 
-    * 
-    *  - case "ask_repeat_step": [PT] Repetir a etapa atual 
-    * 
-    *                            [EN] Repeat the current step
-    * 
-    * 
-    *  - case "ask_first_step": [PT] Ir para a primeira etapa 
-    * 
-    *                           [EN] Go to the first step
-    * 
-    * 
-    *  - case "ask_next_step": [PT] Ir para a próxima etapa 
-    * 
-    *                          [EN] Go to the next step
-    * 
-    * 
-    *  - case "ask_pantry": [PT] Obter a lista de produtos na despensa 
-    * 
-    *                       [EN] Get the list of products in the pantry
-    * 
-    * 
-    *  - case "add_pantry": [PT] Adicionar um produto à despensa 
-    * 
-    *                       [EN] Add a product to the pantry
-    * 
-    * 
-    *  - case "add_pantry_barcode": [PT] Adicionar um produto à despensa usando um código de barras
-    *  
-    *                               [EN] Add a product to the pantry using a barcode
-    * 
-    * 
-    *  - case "remove_pantry_barcode": [PT] Remover um produto da despensa usando um código de barras 
-    * 
-    *                                  [EN] Remove a product from the pantry using a barcode
-    * 
-    * 
-    *  - case "remove_pantry": [PT] Remover um produto da despensa 
-    * 
-    *                          [EN] Remove a product from the pantry
-    * 
-    * 
-    *  - case "remove_all_pantry": [PT] Remover todos os produtos da despensa/ todo o produto especifico 
-    * 
-    *                              [EN] Remove all products from the pantry/ all specific product
-    * 
-    * 
-    *  - case "remove_all_shopping_list": [PT] Remover todos os produtos da lista de compras 
-    * 
-    *                                     [EN] Remove all products from the shopping list
-    * 
-    * 
-    *  - case "add_shopping_list": [PT] Adicionar um produto à lista de compras 
-    * 
-    *                              [EN] Add a product to the shopping list
-    * 
-    * 
-    *  - case "add_recipe_ingredients_pantry": [PT] Adicionar todos os ingredientes em falta de uma receita à despensa 
-    * 
-    *    [NOT IMPLEMENTED]                     [EN] Add all missing ingredients from a recipe to the pantry 
-    * 
-    * 
-    *  - case "ask_shopping_list": [PT] Obter a lista de compras 
-    * 
-    *                              [EN] Get the shopping list
-    * 
-    * 
-    *  - case "ask_specific_pantry": [PT] Verificar se um produto específico existe na despensa e caso exista a quantidade 
-    * 
-    *                                [EN] Check if a specific product exists in the pantry and if it exists the quantity
-    * 
-    * 
-    *  - case "send_shopping_list": [PT] Enviar a lista de compras por e-mail
-    * 
-    *                               [EN] Send the shopping list by email
-    * 
-    * 
-    *  - case "get_quantity_ingredient": [PT] Obter a quantidade de um ingrediente específico ( quantidade e unidade )
-    * 
-    *                                    [EN] Get the quantity of a specific ingredient ( quantity and unit )
-    * 
-    * 
-    *  - case "get_expiration_date": [PT] Obter a data de validade de um produto específico
-    * 
-    *                                [EN] Get the expiration date of a specific product
-    * 
-    * 
-    *  - case "greet": [PT] Cumprimentar o assistente de forma a ativar toda a dinamica do Assistente
-    * 
-    *                  [EN] Greet the assistant in order to activate the entire Assistant dynamic
-    * 
-    * 
-    *  - case "goodbye": [PT] Despedir-se do assistente e com isto encerrar o Assistente
-    * 
-    *                    [EN] Say goodbye to the assistant closing the Assistant
-    * 
-    * 
-    *  - case "affirm":    [PT] Responder afirmativamente a uma pergunta
-    * 
-    *    [NOT IMPLEMENTED] [EN] Answer affirmatively to a question
-    * 
-    * 
-    *  - case "deny":      [PT] Responder negativamente a uma pergunta
-    * 
-    *    [NOT IMPLEMENTED] [EN] Answer negatively to a question
-    * 
-    * 
-    *  - case "joke": [PT] Obter uma piada aleatória
-    * 
-    *                 [EN] Get a random joke
-    * 
-    * 
-    *  - case "default": [PT] Responder com uma mensagem padrão
-    * 
-    *                    [EN] Respond with a default message
-    * 
-    * 
+ * @brief Gere as mensagens recebidas através do WebSocket e responde com ações específicas baseadas na intenção detectada (switch case).
+ * @details Esta função processa dados recebidos, verificando o conteúdo de cada mensagem. Dependendo da intenção identificada (`intent`),
+ * a função executa operações correspondentes, como manipulação de interface do usuário, consultas de dados,
+ * e execução de comandos de voz. Erros durante o processamento são capturados e registrados no console.
+ *
+ * @param {string} data - Dados recebidos pelo WebSocket. Espera-se que seja um string JSON que representa
+ *                        informações de comando e estado.
+ * @returns {void} Retorna uma das ações possíveis com base na intenção identificada (switch case).
+ * 
+ * @remark <b>case "ask_all_recipes":</b> Obter todas as receitas disponíveis 
+ * 
+ * @remark <b>case "ask_for_tools":</b> Obter todas as ferramentas necessárias para uma receita 
+ *  
+ * @remark <b>case "ask_for_ingredients":</b> Obter todos os ingredientes necessários para uma receita 
+ * 
+ * @remark <b>case "ask_specific_recipe":</b>  Obter uma receita específica.
+ * 
+ * @remark <b>case "ask_help":</b>  Obter ajuda.
+ * 
+ * @remark <b>case "ask_random_recipe":</b>  Obter uma receita aleatória.
+ * 
+ * @remark <b>case "ask_repeat_step":</b>  Repetir a etapa atual.
+ * 
+ * @remark <b>case "ask_first_step":</b>  Ir para a primeira etapa.
+ * 
+ * @remark <b>case "ask_next_step":</b>  Ir para a próxima etapa.
+ * 
+ * @remark <b>case "ask_pantry":</b>  Obter a lista de produtos na despensa.
+ * 
+ * @remark <b>case "add_pantry":</b>  Adicionar um produto à despensa.
+ * 
+ * @remark <b>case "add_pantry_barcode":</b>  Adicionar um produto à despensa usando um código de barras.
+ * 
+ * @remark <b>case "remove_pantry_barcode":</b>  Remover um produto da despensa usando um código de barras.
+ * 
+ * @remark <b>case "remove_pantry":</b>  Remover um produto da despensa.
+ * 
+ * @remark <b>case "remove_all_pantry":</b>  Remover todos os produtos da despensa/todo o produto especifico.
+ * 
+ * @remark <b>case "remove_all_shopping_list":</b>  Remover todos os produtos da lista de compras.
+ * 
+ * @remark <b>case "add_shopping_list":</b>  Adicionar um produto à lista de compras.
+ * 
+ * @remark <b>case "add_recipe_ingredients_pantry":</b>  Adicionar todos os ingredientes em falta de uma receita à despensa.
+ * 
+ * @remark <b>case "ask_shopping_list":</b>  Obter a lista de compras.
+ * 
+ * @remark <b>case "ask_specific_pantry":</b>  Verificar se um produto específico existe na despensa e caso exista a quantidade.
+ * 
+ * @remark <b>case "send_shopping_list":</b>  Enviar a lista de compras por e-mail.
+ * 
+ * @remark <b>case "get_quantity_ingredient":</b>  Obter a quantidade de um ingrediente específico (quantidade e unidade).
+ * 
+ * @remark <b>case "get_expiration_date":</b>  Obter a data de validade de um produto específico.
+ * 
+ * @remark <b>case "greet":</b>  Cumprimentar o assistente de forma a ativar toda a dinâmica do Assistente.
+ * 
+ * @remark <b>case "goodbye":</b>  Despedir-se do assistente e com isto encerrar o Assistente.
+ * 
+ * @remark <b>case "affirm":</b>  Responder afirmativamente a uma pergunta.
+ * 
+ * @remark <b>case "deny":</b>  Responder negativamente a uma pergunta.
+ * 
+ * @remark <b>case "joke":</b>  Obter uma piada aleatória.
+ * 
+ * @remark <b>case "default":</b>  Responder com uma mensagem padrão.
+ *  
+ * @warning <b>case "ask_for_tools":</b> [NOT IMPLEMENTED]
+ * @warning <b>case "ask_for_ingredients":</b> [NOT IMPLEMENTED]
+ * @warning <b>case "add_recipe_ingredients_pantry":</b> [NOT IMPLEMENTED]
+ * @warning <b>case "add_recipe_ingredients_pantry":</b> [NOT IMPLEMENTED]
+ * @warning <b>case "affirm":</b> [NOT IMPLEMENTED]
+ * @warning <b>case "deny":</b> [NOT IMPLEMENTED]
+ * 
 */
 async function im1MessageHandler(data){
 
@@ -2401,16 +2323,38 @@ async function im1MessageHandler(data){
 
 /////
 
+/**
+ * @var {MMIClient} mmiCli_1 - variável que guarda a instância do cliente MMI
+ */
 var mmiCli_1 = null;
+
+/**
+ * @brief Cria uma instância do cliente MMI
+ * @details Cria uma instância do cliente MMI, que é responsável por enviar mensagens para o IM,
+ * e guarda essa instância na variável mmiCli_1
+ */
 mmiCli_1 = new MMIClient(null, "https://"+host+":8000/IM/USER1/APPSPEECH");
 
-
+/**
+ * @brief Função que envia um texto para ser lido pela voz
+ * @details Função que envia um texto para ser lido pela voz, utilizando a API de SpeechSynthesis da Google Cloud
+ * 
+ * @param {String} text - texto a ser lido
+ * 
+ */
 function speakText(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     speechSynthesis.speak(utterance);
 }
 
-
+/**
+ * @brief Função que envia um texto para ser lido pela voz
+ * @details Função que envia um texto para ser lido pela voz, utilizando a API de SpeechSynthesis da Google Cloud
+ * 
+ * @param {String} texto - texto a ser lido
+ * 
+ * @returns {void} o Assitente lê o texto enviado
+ */
 function sendToVoice(texto){
     //console.log("TESTE SEND TO VOICE: ", texto);
     //let speak = "&lt;speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd\" xml:lang=\"pt-PT\"&gt;&lt;p&gt;" + "quadrado" + "&lt;/p&gt;&lt;/speak&gt";
@@ -2430,6 +2374,13 @@ function sendToVoice(texto){
 
 
 // code to send a message to the IM -------------------------------------------------------------------
+
+/**
+ * @var {MMIClient} mmiCli_12 - variável que guarda a instância do cliente MMI
+ * @brief variável que guarda a instância do cliente MMI
+ * @details variável que guarda a instância do cliente MMI, que é responsável por enviar mensagens para o IM, 
+ * de forma a poder interagir com o modulo index.htm
+ */
 var mmiCli_12 = new MMIClient(null, "https://"+host+":8000/IM/USER1/SPEECH_ANSWER");
 
 

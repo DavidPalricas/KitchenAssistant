@@ -1,5 +1,4 @@
 """
-@file email_service.py
 @brief Módulo para envio de e-mails utilizando SMTP com suporte à validação de endereços de e-mail e conteúdo HTML.
 
 Este módulo fornece uma função para enviar e-mails através de um servidor SMTP, permitindo a inclusão de conteúdo HTML no corpo do e-mail. 
@@ -8,7 +7,7 @@ A função também valida os endereços de e-mail do remetente e do destinatári
 @details Antes de enviar um e-mail, a função valida os endereços de e-mail do remetente e do destinatário para garantir que são válidos. 
 A função utiliza TLS para garantir uma conexão segura ao servidor SMTP.
 
-@warning É necessário instalar a biblioteca `email-validator` para a validação de e-mails. Para instalar, utilize um dos comandos a seguir dependendo do seu ambiente:
+@note É necessário instalar a biblioteca `email-validator` para a validação de e-mails. Para instalar, utilize um dos comandos a seguir dependendo do seu ambiente:
 - pip install email-validator
 - pip3 install email-validator
 - conda install email-validator
@@ -23,7 +22,10 @@ from email_validator import validate_email, EmailNotValidError
 
 def send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, password):
     """
-    Envia um e-mail usando o servidor SMTP com suporte a conteúdo HTML e validação de e-mails.
+    @brief Envia um e-mail usando o servidor SMTP com suporte a conteúdo HTML e validação de e-mails.
+    @details Esta função primeiro valida os endereços de e-mail utilizando a biblioteca `email-validator`. 
+    Se os e-mails são válidos, a função procede com a configuração da mensagem e o envio através do SMTP. 
+    Durante o envio, a conexão é segurada com TLS para segurança.
     
     @param from_addr<string> Representa o endereço de e-mail do remetente.
     @param to_addr <string> Representa o endereço de e-mail do destinatário.
@@ -35,9 +37,11 @@ def send_email(from_addr, to_addr, subject, body, smtp_server, smtp_port, passwo
     
     @return <string> Indica se o e-mail foi enviado com sucesso ou se falhou, incluindo a mensagem de erro.
     
-    @details Esta função primeiro valida os endereços de e-mail utilizando a biblioteca `email-validator`. 
-    Se os e-mails são válidos, a função procede com a configuração da mensagem e o envio através do SMTP. 
-    Durante o envio, a conexão é segurada com TLS para segurança.
+    @note É necessário instalar a biblioteca `email-validator` para a validação de e-mails. Para instalar, utilize um dos comandos a seguir dependendo do seu ambiente:
+    - pip install email-validator
+    - pip3 install email-validator
+    - conda install email-validator
+    
     """
     try:
         # Validate email addresses

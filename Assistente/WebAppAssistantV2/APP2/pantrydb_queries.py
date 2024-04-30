@@ -1,5 +1,4 @@
 """
-@file pantrydb_queries.py
 @brief Módulo para gerir operações na base de dados de uma despensa, incluindo inserções, remoções e conversões de unidades.
 
 Este módulo utiliza o MySQL para gerir uma base de dados de itens de despensa, 
@@ -14,10 +13,12 @@ no sistema métrico e algumas unidades não-padrão com base em fatores de conve
 - `convert_measure()`: Converte quantidades entre diferentes unidades de medida usando fatores de conversão.
 - `insertGrocery()`, `removeGrocery()`, `showAllGrocery()`: Gere uma lista de compras separada.
 
-@example
+@code
     result = insertStock("Tomates", 5, "kg", "2025-12-01")
     print(result)
-    # Output: "Item 'Tomates' inserido com sucesso com data de validade '2025-12-01'"
+    //Output: 
+    "Item 'Tomates' inserido com sucesso com data de validade '2025-12-01'"
+@endcode
 
 @note Para a execução deste módulo é necessário ter instalado e configurado o MySQL, assim como a biblioteca mysql.connector do Python.
 
@@ -31,10 +32,15 @@ from decimal import Decimal
 
 def connectDatabase():
     """
-    Tenta conectar-se à base de dados 'pantry_database' usando as credenciais fornecidas. 
+    @brief Conecção à base de dados 'pantry_database'.
+    @details Tenta conectar-se à base de dados 'pantry_database' usando as credenciais fornecidas. 
     Retorna o objeto de conexão e cursor se bem sucedido.
     
     @return (conn, cursor) Tuplo contendo o objeto de conexão e o cursor se a conexão for bem sucedida, None caso contrário.
+    
+    @note As credenciais de acesso à base de dados estão definidas no corpo da função e podem ser alteradas conforme necessário.
+    
+    @warning Esta conecção não é segura e deve ser usada apenas para fins de demonstração e testes. 
     """
     try:
         conn = mysql.connector.connect(
@@ -52,13 +58,20 @@ def connectDatabase():
         print("Failed to connect to pantry database")
         return None, None
         
-# Extending Conversion Factors for Weight and Volume
-#   The basic idea is that:
+
+## @var conversion_factors
+# @brief Dicionário de fatores de conversão para unidades de volume e peso.
+# @details Este dicionário contém fatores de conversão para unidades de volume e peso,
+# permitindo a conversão entre diferentes unidades de medida com base em fatores predefinidos.
 #
-#   - 1 liter (l) of water = 1000 milliliters (ml) = 1000 grams (g)
-#   - 1 milliliter (ml) of water = 1 gram (g)
-#   - 1 kilogram (kg) of water = 1000 grams (g) = 1000 milliliters (ml)
+# @note Os fatores de conversão são baseados na densidade da água para unidades de volume e peso.
 #
+# A ideia básica é:
+# - 1 litro (l) de água = 1000 mililitros (ml) = 1000 gramas (g)
+# - 1 mililitro (ml) de água = 1 grama (g)
+# - 1 quilograma (kg) de água = 1000 gramas (g) = 1000 mililitros (ml)
+#
+# @note O dicionário pode ser expandido para incluir mais unidades e fatores de conversão conforme necessário.
 conversion_factors = {
     # Volume to Weight (assuming density of water)
     'l': {'ml': Decimal('1000'), 'cl': Decimal('100'), 'dl': Decimal('10'), 'l': Decimal('1'), 'g': Decimal('1000'), 'kg': Decimal('1')},
@@ -89,7 +102,8 @@ conversion_factors = {
 # Convert a quantity from one unit to another using a dictionary of conversion factors 
 def convert_measure(quantity, from_unit, to_unit, conversion_factors):
     """
-    Converte uma quantidade de uma unidade para outra, usando um dicionário de fatores de conversão. 
+    @brief Convert Uma quantidade de uma unidade para outra.
+    @details Converte uma quantidade de uma unidade para outra, usando um dicionário de fatores de conversão. 
     Trata casos diretos e requer conversões recursivas se necessário.
     
     @param quantity <int> Quantidade a ser convertida.
@@ -99,7 +113,9 @@ def convert_measure(quantity, from_unit, to_unit, conversion_factors):
     
     @return <tuplo> contendo a quantidade convertida e a unidade final.
     
-    @throw ValueError Se não encontrar um caminho de conversão válido.
+    @note Funcção usada para podermos subtrair/adicionar quantidades em unidades diferentes do mesmo produto
+    
+    @warning ValueError Se não encontrar um caminho de conversão válido.
     """
     from_unit = from_unit.lower().strip('s')  # Normalize the from_unit name
     to_unit = to_unit.lower().strip('s')  # Normalize the to_unit name
@@ -157,7 +173,8 @@ def insertStock_table(name):
 # Insert a new Stock item into stock_details with expiration date
 def insertStock(name, quantity, unit, expiration_date):
     """
-    Insere um item no stock da despensa com os detalhes fornecidos, incluindo a data de validade. 
+    @brief Insere um item no stock da despensa com os detalhes fornecidos.
+    @details Insere um item no stock da despensa com os detalhes fornecidos, incluindo a data de validade. 
     Se o item já existir, apenas atualiza os detalhes.
     
     @param name <string> Nome do item.
@@ -207,7 +224,8 @@ def insertStock(name, quantity, unit, expiration_date):
 # Remove [update] stock item from stock_details           
 def removeStock(name, quantity, unit):
     """
-    Remove ou atualiza a quantidade de um item no stock baseado no nome e na quantidade especificada. 
+    @brief Remove ou atualiza a quantidade de um item.
+    @details Remove ou atualiza a quantidade de um item no stock baseado no nome e na quantidade especificada. 
     Considera a conversão de unidades se necessário.
     
     @param name <string> Nome do item a ser removido.
@@ -284,7 +302,8 @@ def removeStock(name, quantity, unit):
 # Get all stock details
 def getStockDetails():
     """
-    Procura e retorna todos os detalhes de cada item em stock, incluindo nome, quantidade, unidade e data de validade.
+    @brief Procura e retorna todos os detalhes de cada item em stock.
+    @details Procura e retorna todos os detalhes de cada item em stock, incluindo nome, quantidade, unidade e data de validade.
     
     @return <list> Lista de strings descrevendo cada item em stock, ou None se ocorrer um erro.
     """
@@ -316,7 +335,8 @@ def getStockDetails():
 # Search for a stock item in the pantry table
 def searchStock(name):
     """
-    Procura por um produto específico no stock e retorna a soma total das quantidades numa unidade base, 
+    @brief Procura por um item específico no stock.
+    @details Procura por um produto específico no stock e retorna a soma total das quantidades numa unidade base, 
     convertendo as unidades conforme necessário.
     
     @param name <string> Nome do item a ser procurado no stock.
@@ -368,9 +388,11 @@ def searchStock(name):
 # remove all entries of a stock item from stock_details
 def removeAllStock(name):
     """
-    Remove todos os registros de um item específico (name) da tabela stock_details (despensa).
+    @brief Remove todos os registos de um item.
+    @details Remove todos os registos de um item específico (name) da tabela stock_details (despensa).
     
     @param name <string> Nome do item cujos detalhes devem ser removidos completamente.
+    
     @return <string> Mensagem de sucesso ou de erro.
     """
     conn, cursor = connectDatabase()
@@ -405,9 +427,10 @@ def removeAllStock(name):
 # clear all entries from stock_details table
 def clearStock():
     """
-    Limpa todos os registos da tabela de stock_details (Despensa).
+    @brief Limpa a despensa.
+    @details Limpa todos os registos da tabela de stock_details (Despensa).
     
-    @return None
+    @return Clear all stock details from stock_details | Failed to clear all stock details from stock_details.
     """
     conn, cursor = connectDatabase()
     if conn is not None:
@@ -430,10 +453,12 @@ def clearStock():
 # Insert a new Stock item into grocery_list
 def insertGrocery(name):
     """
-    Insere um item na lista de compras, verificando primeiro se ele já existe no stock. 
+    @brief Insere um item na lista de compras.
+    @details Insere um item na lista de compras, verificando primeiro se ele já existe no stock. 
     Se não existir, o item é adicionado ao estoque e à lista de compras.
     
     @param name <string> Nome do item a ser inserido na lista de compras.
+    
     @return <string> Mensagem de sucesso ou falha.
     """
     conn, cursor = connectDatabase()
@@ -478,9 +503,11 @@ def insertGrocery(name):
 # Remove a Stock item from grocery_list
 def removeGrocery(name):
     """
-    Remove um item da lista de compras baseado no nome fornecido.
+    @brief Remove um item da lista de compras.
+    @details Remove um item da lista de compras baseado no nome fornecido.
     
     @param name <string> Nome do item a ser removido da lista de compras.
+    
     @return <string> Mensagem de sucesso ou falha.
     """
     conn, cursor = connectDatabase()
@@ -504,7 +531,9 @@ def removeGrocery(name):
 # Get all items in the grocery list
 def showAllGrocery():
     """
-    Procura e retorna todos os nomes dos itens presentes na lista de compras.
+    @brief Mostra todos os itens na lista de compras.
+    @details Mostra todos os itens na lista de compras, retornando uma lista de nomes de itens.
+    
     
     @return <list> Lista de nomes dos itens na lista de compras, ou None se ocorrer um erro.
     """
@@ -529,9 +558,10 @@ def showAllGrocery():
 # clear all entries from grocery_list table
 def clearGrocery():
     """
-    Limpa todos os registos da tabela da lista de compras.
+    @brief Limpa a lista de compras.
+    @details Limpa todos os registos da tabela da lista de compras.
     
-    @return None
+    @return Clear all stock details from grocerylist | Failed to clear all stock details from grocerylist.
     """
     conn, cursor = connectDatabase()
     if conn is not None:

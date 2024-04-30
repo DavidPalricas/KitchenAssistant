@@ -47,16 +47,20 @@ curl -X POST http://127.0.0.1:5000/send-email \
     "from_addr": "kitchen_assistant@outlook.com",
     "to_addr": "inesaguia@ua.pt",
     "subject": "Aviso de Produtos Próximos da Data de Expiração",
-    "body": <html><body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
-            <h1>Alerta de Produtos!</h1>
-            <p>Caro cliente, queremos informar que os seguintes produtos estão próximos da sua data de expiração:</p>
-            <ul><li>Maçãs</li><li>Bananas</li><li>Iogurte</li></ul>
-            <p>Por favor, verifique estes produtos e aproveite-os enquanto estão frescos!</p>
-        <p>Este email foi enviado automaticamente pelo <strong>Kitchen Assistant</strong>. Não é necessário responder a este email.</p>
-        <footer><p>Com os melhores cumprimentos,</p><p><strong>Equipa Kitchen Assistant</strong></p></footer>
-        </body></html>,
+    "body": "This is a test email sent from the Flask application.",
     "smtp_server": "smtp-mail.outlook.com",
     "smtp_port": 587,
     "password": "kitchen123."
 }'
 
+curl -X POST http://127.0.0.1:5000/send-email \
+        -H "Content-Type: application/json" \
+        -d '{
+            "from_addr": "kitchen_assistant@outlook.com",
+            "to_addr": "<SUBSTITUIR PELO EMAIL DESTINO>",
+            "subject": "Aviso de Produtos Próximos da Data de Expiração",
+            "body": "This is a test email sent from the Flask application.",
+            "smtp_server": "smtp-mail.outlook.com",
+            "smtp_port": 587,
+            "password": "<PASSWORD DO EMAIL kitchen_assistant@outlook.com >"
+        }'
