@@ -18,8 +18,8 @@ Antes de correr o projeto :
 | Doxygen    | `brew install doxygen`       | [Doxygen's Website](https://www.doxygen.nl/index.html) |
 
 
-| Dependency      | macOS Installation                                                   | Windows Installation                                              |
-|-----------------|----------------------------------------------------------------------|-------------------------------------------------------------------|
+| Dependency  | macOS Installation                                                   | Windows Installation                                              |
+|-------------|----------------------------------------------------------------------|-------------------------------------------------------------------|
 | Java v.21       | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) | [Java's Website](https://learn.microsoft.com/en-us/java/openjdk/download) |
 | NodeJs          | [nodeJS's Website](https://nodejs.org/en)                            | [nodeJS's Website](https://nodejs.org/en)                        |
 | └───────────────| `npm install -g http-server`                                         | `npm install -g http-server`                                     |
