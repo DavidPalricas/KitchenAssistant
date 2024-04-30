@@ -26,6 +26,20 @@ Antes de correr o projeto :
 | 6 | Abrir o IM | GoogleChrome browser | `https://127.0.0.1:8082/index.htm` | `https://127.0.0.1:8082/index.htm` |
 | 7 | Abrir o Assistente | GoogleChrome browser | `https://127.0.0.1:8082/appGui.htm` | `https://127.0.0.1:8082/appGui.htm` |
 
+| Steps | Description | Directory | macOS Commands | Windows Commands |
+|-------|-------------|-----------|----------------|------------------|
+| 1     | Run FusionEngine | ../FusionEngine | `java -jar FusionEngine.jar` | `java -jar FusionEngine.jar` |
+| 2     | Run the IM (Interaction Manager) | ../mmiframeworkV2 | `java -jar mmiframeworkV2.jar` | `java -jar mmiframeworkV2.jar` |
+| 3     | Run RASA | ../Assistente | | |
+| 3.1   | Activate the virtual environment | ../Assistente | `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env` | `activate rasa-env` |
+| 3.2   | Train the NLU model | ../Assistente | `rasa train` | `rasa train` |
+| 3.3   | Run RASA | ../Assistente | `rasa run --enable-api --cors="*"` | `rasa run --enable-api --cors="*"` |
+| 4     | Run the server for endpoints | ../WebAppAssistantV2/APP2 | `python app.py` | `python app.py` |
+| 5     | Run the Assistant | ../WebAppAssistantV2 | `http-server -p 8082 -S -C cert.pem -K key.pem` | `http-server -p 8082 -S -C cert.pem -K key.pem` |
+| 6     | Open the IM in a browser | Google Chrome | `https://127.0.0.1:8082/index.htm` | `https://127.0.0.1:8082/index.htm` |
+| 7     | Open the Assistant in a browser | Google Chrome | `https://127.0.0.1:8082/appGui.htm` | `https://127.0.0.1:8082/appGui.htm` |
+
+
 ## Primeiro Passo: Correr o FusionEngine
 
 O FusionEngine é um bloco que permite adicionar diferentes módulos.
