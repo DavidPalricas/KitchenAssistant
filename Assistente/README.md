@@ -13,12 +13,12 @@ Antes de correr o projeto :
 
 ## Como usar o Assisteste:
 
-| Steps | Descrição                  | dir                          | Mac Commands                       | Win Commands                       |  
-|-------|----------------------------|------------------------------|------------------------------------|------------------------------------|
-|   1   | Correr o FusionEngine      | ../Assistente/FusionEngine   | `java -jar FusionEngine.jar`        | `java -jar FusionEngine.jar`       |
-|   2   | Correr o IM                | ../Assistente/mmiframeworkV2 | `java -jar mmiframeworkV2.jar`      | `java -jar mmiframeworkV2.jar`     |
-|-------|-----------------------------------|------------------------------------|------------------------------------|
-
+| Steps | Descrição                  | dir               | Mac Commands                       | Win Commands                       |  
+|-------|----------------------------|-------------------|------------------------------------|------------------------------------|
+|   1   | Correr o FusionEngine      | ../FusionEngine   | `java -jar FusionEngine.jar`        | `java -jar FusionEngine.jar`       |
+|   2   | Correr o IM                | ../mmiframeworkV2 | `java -jar mmiframeworkV2.jar`      | `java -jar mmiframeworkV2.jar`     |
+|   3   | Correr o RASA              | ../Assistente     | 
+|   3.1 | Ativar o ambiente virtual  | ../Assistente     | `conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env` | `activate rasa-env` |
 
 ## Primeiro Passo: Correr o FusionEngine
 
