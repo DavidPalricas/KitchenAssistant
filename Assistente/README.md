@@ -26,7 +26,7 @@ Antes de correr o projeto :
 | 6 | Abrir o IM | GoogleChrome browser | `https://127.0.0.1:8082/index.htm` | `https://127.0.0.1:8082/index.htm` |
 | 7 | Abrir o Assistente | GoogleChrome browser | `https://127.0.0.1:8082/appGui.htm` | `https://127.0.0.1:8082/appGui.htm` |
 
-
+```
 KitchenAssistant/
 │
 ├── Assistente/
@@ -47,7 +47,7 @@ KitchenAssistant/
 │ └── http-server -p 8082 -S -C cert.pem -K key.pem
 │
 └── index.html
-
+```
 
 ## Primeiro Passo: Correr o FusionEngine
 
