@@ -13,64 +13,17 @@ Antes de correr o projeto :
 
 ## Execução do Assisteste:
 
-```
-KitchenAssistant/
-│
-├── Assistente/
-│ ├── FusionEngine/
-│ │ └── [1º] : Correr o FusionEngine
-│ │   └── java -jar FusionEngine.jar
-| |
-│ └── mmiframeworkV2/
-│   └── [2º] : Correr o IM
-│     └── java -jar mmiframeworkV2.jar
-|
-├── Assistente/
-│ └── [3º] : Correr o RASA
-│   ├── 3.1 : Ativar o ambiente virtual
-│   | ├── MacOS: 
-|   | | └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
-│   | └── Windows: Abrir o terminal 'miniconda'
-|   |   └── activate rasa-env
-|   |
-│   ├── 3.2 : Treinar o modelo de .nlu
-│   | ├── MacOS: 
-|   | | └── rasa train
-│   | └── Windows: No terminal 'miniconda'
-|   |   └── rasa train
-|   |
-│   └── 3.3 : 
-│     ├── MacOS: 
-|     | └── rasa run --enable-api --cors="*"
-│     └── Windows: No terminal 'miniconda'
-|       └── rasa run --enable-api --cors="*"
-|   
-└── WebAppAssistantV2/
-  ├── APP2/
-  │ └── [4º] : Correr o servidor de todos os endpoints:
-  │   └── python app.py
-  |
-  ├── [5º] : Correr o Assistente 
-  | └── http-server -p 8082 -S -C cert.pem -K key.pem
-  |
-  ├── [6º] : Abrir o IM
-  | └── https://127.0.0.1:8082/index.htm
-  |
-  └── [7º] : Abrir o Assistente
-    └── https://127.0.0.1:8082/appGui.htm
 
-```
+## Primeiro Passo: 
 
-## Primeiro Passo: Correr o FusionEngine
+Correr o FusionEngine
 
-O FusionEngine é um bloco que permite adicionar diferentes módulos.
-
-```
+```bash
 KitchenAssistant/
 │
 └── Assistente/
-  ├── FusionEngine/
-    └── [1º] : Correr o FusionEngine
+  └── FusionEngine/
+    └── '1º' : Correr o FusionEngine
       └── java -jar FusionEngine.jar
 ```
 
@@ -80,9 +33,9 @@ KitchenAssistant/
 KitchenAssistant/
 │
 └── Assistente/
-  |
+  │
   └── mmiframeworkV2/
-    └── [2º] : Correr o IM
+    └── '2º' : Correr o IM
       └── java -jar mmiframeworkV2.jar
 ```
 
@@ -94,22 +47,22 @@ O Rasa usa para dar reconhecer as entidades e intents.
 KitchenAssistant/
 │
 └── Assistente/
-  └── [3º] : Correr o RASA
+  └── '3º' : Correr o RASA
     ├── 3.1 : Ativar o ambiente virtual
-    | ├── MacOS: 
-    | | └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
-    | └── Windows: Abrir o terminal 'miniconda'
-    |   └── activate rasa-env
-    |
+    │ ├── MacOS: 
+    │ │ └── conda activate /usr/local/Caskroom/miniconda/base/envs/rasa-env
+    │ └── Windows: Abrir o terminal 'miniconda'
+    │   └── activate rasa-env
+    │
     ├── 3.2 : Treinar o modelo de .nlu
-    | ├── MacOS: 
-    | | └── rasa train
-    | └── Windows: No terminal 'miniconda'
-    |   └── rasa train
-    |
+    │ ├── MacOS: 
+    │ │ └── rasa train
+    │ └── Windows: No terminal 'miniconda'
+    │   └── rasa train
+    │
     └── 3.3 : 
       ├── MacOS: 
-      | └── rasa run --enable-api --cors="*"
+      │ └── rasa run --enable-api --cors="*"
       └── Windows: No terminal 'miniconda'
         └── rasa run --enable-api --cors="*"
 ```
@@ -131,7 +84,7 @@ KitchenAssistant/
 KitchenAssistant/
 │   
 └── WebAppAssistantV2/
-  └── [5º] : Correr o Assistente 
+  └── '5º' : Correr o Assistente 
     └── http-server -p 8082 -S -C cert.pem -K key.pem
 ```
 
@@ -141,7 +94,7 @@ KitchenAssistant/
 KitchenAssistant/
 │  
 └── WebAppAssistantV2/
-  └── [6º] : Abrir o IM
+  └── '6º' : Abrir o IM
     └── https://127.0.0.1:8082/index.htm
 ```
 
@@ -151,7 +104,7 @@ KitchenAssistant/
 KitchenAssistant/
 │   
 └── WebAppAssistantV2/
-  └── [7º] : Abrir o Assistente
+  └── '7º' : Abrir o Assistente
     └── https://127.0.0.1:8082/appGui.htm
 ```
 
