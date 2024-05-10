@@ -115,11 +115,17 @@ nlu:
 - intent: ask_random_recipe
   examples: |
     - Gostaria de uma sugestão de receita
+    - Gostaria de 1 sugestão de receita
     - Podes-me fazer uma sugestão de receita
+    - Podes-me fazer 1 sugestão de receita
     - Podes-me sugerir uma receita
+    - Podes-me sugerir 1 receita
     - Quero uma sugestão de receita
+    - Quero 1 sugestão de receita
     - Quero uma sugestão
+    - Quero 1 sugestão
     - Sugere-me uma receita
+    - Sugere-me 1 receita
     - sugere-me algo
 
 # Ask for REPETE THE STEP (Assuming that we know what step we are)
@@ -232,17 +238,21 @@ nlu:
   examples: |
     - O que tenho na despensa
     - O que tenho para cozinhar
+    - O que tenho para fazer 1 receita
     - O que tenho para fazer uma receita
     - Mostra-me o que tenho na despensa
     - Mostra-me o que tenho para cozinhar
     - Mostra-me o que tenho para fazer uma receita
+    - Mostra-me o que tenho para fazer 1 receita
     - Quais são os ingredientes que tenho
     - Quais são os ingredientes que tenho na despensa
     - Quais são os ingredientes que tenho para cozinhar
     - Quais são os ingredientes que tenho para fazer uma receita
+    - Quais são os ingredientes que tenho para fazer 1 receita
     - Diz-me o que tenho na despensa
     - Diz-me o que tenho para cozinhar
     - Diz-me o que tenho para fazer uma receita
+    - Diz-me o que tenho para fazer 1 receita
 
 # Add ingredients to the pantry
 - intent: add_pantry
@@ -474,14 +484,26 @@ nlu:
 - intent: joke
   examples: |
     - Conta-me uma piada
+    - Conta-ma 1 piada
     - Diz-me uma piada
+    - Diz-me 1 piada
     - Podes contar-me uma piada
+    - Podes contar-me 1 piada
     - Conta-me uma anedota
+    - Conta-me 1 anedota
     - Diz-me uma anedota
+    - Diz-me 1 anedota
     - Podes contar-me uma anedota
+    - Podes contar-me 1 anedota
     - Conta-me uma piada, por favor
+    - Conta-me 1 piada, por favor
     - Diz-me uma piada, por favor
+    - Diz-me 1 piada, por favor
     - Podes contar-me uma piada, por favor
+    - Podes contar-me 1 piada, por favor
     - Conta-me uma anedota, por favor
+    - Conta-me 1 anedota, por favor
     - Diz-me uma anedota, por favor
+    - Diz-me 1 anedota, por favor
     - Podes contar-me uma anedota, por favor
+    - Podes contar-me 1 anedota, por favor
