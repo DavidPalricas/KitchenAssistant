@@ -46,7 +46,7 @@
   <hr>
   
   <h3>System Architecture</h3>
-  <img src="/readme/img/sys_arc_black.png" alt="Alt Text"> 
+  <img src="/readme/img/system_architecture" alt="System-Architecure-Image"> 
   
   <hr>
   
@@ -62,11 +62,6 @@
     </thead>
     <tbody>
         <tr>
-            <td>Ruben Marinho</td>
-            <td>a40115@ua.pt</td>
-            <td><a href="https://github.com/RoninDaimyo">Ruben's Git</a></td>
-        </tr>
-        <tr>
             <td>Pedro Carneiro</td>
             <td>pedrocarneiro@ua.pt</td>
             <td><a href="https://github.com/PedroMiguelTorresCarneiro">Pedro's Git</a></td>
@@ -75,11 +70,6 @@
             <td>Inês Águia</td>
             <td>inesaguia@ua.pt</td>
             <td><a href="https://github.com/inesaguia">Inês's Git</a></td>
-        </tr>
-        <tr>
-            <td>João Rodrigues</td>
-            <td>rafa.mac@ua.pt</td>
-            <td><a href="https://github.com/MacarioRodrigues">João's Git</a></td>
         </tr>
         <tr>
             <td>David Palricas</td>
