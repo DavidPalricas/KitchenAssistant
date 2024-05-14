@@ -46,7 +46,7 @@
   <hr>
   
   <h3>System Architecture</h3>
-  <img src="/readme/img/system_architecture" alt="System-Architecure-Image"> 
+  <img src="/readme/img/system_architecture.png" alt="System-Architecure-Image"> 
   
   <hr>
   
