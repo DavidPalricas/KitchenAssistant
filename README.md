@@ -4,7 +4,7 @@
 
 <hr>
 
-<h3>Supervisors:</h3>
+<h3>Mentors:</h3>
 <ul>
   <li>Nuno Almeida (nunoalmeida@ua.pt)</li>
   <li>Ana Patrícia Rocha (aprocha@ua.pt)</li>
