@@ -46,6 +46,23 @@
       .recognized{
         font-size:x-large;
       }
+
+      #startInteraction{
+        height:160px;
+        width:160px;
+        border-radius: 100px;
+        border: none;
+        background-color: #4F5D73;
+        color: burlywood;
+        font-style: italic;
+        font-size: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 30%;
+        left: 44%;
+      }
+
+    
     </style>
   </head>
   <body>
@@ -125,11 +142,28 @@
     <script type="module">
 
         document.addEventListener('DOMContentLoaded', function() {
-          document.getElementById('startInteraction').addEventListener('click', function() {
+          let interaction_button = document.getElementById('startInteraction');
+          interaction_button.addEventListener('click', function() {
               // Inicia o reconhecimento de fala
               recognition.start();
               console.log("Interação iniciada pelo botão.");
+              interaction_button.innerHTML= "Pode falar!";
+              interaction_button.style.scale = 0.8;
+              interaction_button.style.transition = "0.5s";
+              interaction_button.style.backgroundColor = "#8ea7cf";
           });
+
+            
+          recognition.onend = function() {
+          console.log("Fim da interação.");
+          interaction_button.innerHTML= "Iniciar Interação";
+          interaction_button.style.scale = 1;
+          interaction_button.style.transition = "0.5s";
+          interaction_button.style.backgroundColor = "#4F5D73";
+          };
+           
+     
+
         });
 
 
