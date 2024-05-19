@@ -2004,7 +2004,7 @@
                                         voice = c.nlu.audioReconized; // ------------------------------------------------------ Get the voice from the user
                                         openChatBox(); // --------------------------------------------------------------------- Open the chat box
                                         clearChatMessages() // ---------------------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-                                        addMsgToChat('Você',': ' + voice); // ------------------------------------------------- Add the voice to the chat
+                                        addMsgToChat('Você', voice); // ------------------------------------------------- Add the voice to the chat
                                         addMsgToChat('Assistente','Escolha uma receita para começar a preparação'); // -------- Add the Assistent message to the chat
                                         break;
                                     case "ask_for_tools":
@@ -2043,7 +2043,7 @@
                                         voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
                                         openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
                                         clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-                                        addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                                        addMsgToChat('Você',voice); // -------------------------------------- Add the voice to the chat
                                         // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
                                         addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                                         break;
@@ -2081,7 +2081,7 @@
                                         voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
                                         openChatBox(); // ---------------------------------------------------------- Open the chat box (for the first interaction)
                                         clearChatMessages() // ----------------------------------------------------- Clear the chat messages (when asked for a new recipe)
-                                        addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                                        addMsgToChat('Você',voice); // -------------------------------------- Add the voice to the chat
                                         // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
                                         addMsgToChat('Assistente','INICIAR A PREPARAÇÃO : Vamos começar com a receita');
                                         break;
@@ -2091,7 +2091,7 @@
                                         //console.log("REPEAT INSTRUCTION: ", repeat_instruction.actual_instruction);
                                         voice = c.nlu.audioReconized; // ------------------------------------------- Get the voice from the user
                                         //openChatBox();
-                                        addMsgToChat('Você',': ' + voice); // -------------------------------------- Add the voice to the chat
+                                        addMsgToChat('Você',voice); // -------------------------------------- Add the voice to the chat
                                         addMsgToChat('Assistente', repeat_instruction.actual_instruction); // ------ Add the actual instruction to the chat
                                         sendToVoice("A instrução é: "+ repeat_instruction.actual_instruction); // -- SEND THE VOICE THE ACTUAL INSTRUCTION
                                         // ------------------------------------------------------------------------- Add the Assistent message to the chat (hint for the user)
@@ -2117,7 +2117,7 @@
                                         if (next_instruction == null) { // ----------------------------------------- If there are NO MORE instructions
                                             //console.log("NO MORE INSTRUCTIONS");
                                             //openChatBox();
-                                            addMsgToChat('Você',': ' + voice);
+                                            addMsgToChat('Você',voice);
                                             addMsgToChat('Assistente','FIM DA RECEITA : A receita terminou');
                                             sendToVoice("A receita terminou");
                                             break;
@@ -2125,7 +2125,7 @@
                                             step++; // ---------------------------------------------------------------- Increment the step
                                             //console.log("NEXT INSTRUCTION: ", next_instruction.next_instruction);
                                             //openChatBox();
-                                            addMsgToChat('Você',': ' + voice); // ------------------------------------- Add the voice to the chat
+                                            addMsgToChat('Você',voice); // ------------------------------------- Add the voice to the chat
                                             addMsgToChat('Assistente', next_instruction.next_instruction); // --------- Add the next instruction to the chat
                                             // ------------------------------------------------------------------------ SEND THE VOICE THE NEXT INSTRUCTION
                                             sendToVoice("A próxima instrução é: "+next_instruction.next_instruction); 
