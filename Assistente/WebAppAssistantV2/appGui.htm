@@ -2113,8 +2113,9 @@
                                     case "ask_next_step":
                                         console.log("ASK NEXT STEP -----------------------------");
                                         let next_instruction = await getNextInstruction(recipe_id, step); // ------- Get the next instruction for the recipe
+                                        console.log("NEXT INSTRUCTION: ", next_instruction);
                                         voice = c.nlu.audioReconized;
-                                        if (next_instruction == null) { // ----------------------------------------- If there are NO MORE instructions
+                                        if (next_instruction.next_instruction === null) { // ----------------------------------------- If there are NO MORE instructions
                                             //console.log("NO MORE INSTRUCTIONS");
                                             //openChatBox();
                                             addMsgToChat('Você',voice);
