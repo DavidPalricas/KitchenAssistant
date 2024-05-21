@@ -460,7 +460,7 @@
         */
         let email = {
             from_addr: "kitchen_assistant@outlook.com",
-            to_addr: "davidpalricas@ua.pt",
+            to_addr: "pedrocarneiro@ua.pt",
             subject: null,
             body: null,
             smtp_server: "smtp-mail.outlook.com",
@@ -2229,6 +2229,7 @@
                                     case "add_pantry_barcode":
                                         console.log("ADD PANTRY BARCODE -----------------------------");
                                         sendToVoice("Passe o código de barras do produto na câmera"); // ---------------------- SEND THE VOICE TO THE USER
+                                        addMsgToChat("Assistente", "Passe o código de barras do produto na câmera"); // ------------ Add the message to the chat
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
@@ -2239,6 +2240,8 @@
                                         break;
                                     case "remove_pantry_barcode":
                                         console.log("REMOVE PANTRY BARCODE -----------------------------");
+                                        sendToVoice("Passe o código de barras do produto na câmera"); // ---------------------- SEND THE VOICE TO THE USER
+                                        addMsgToChat("Assistente", "Passe o código de barras do produto na câmera"); // ------------ Add the message to the chat
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
                                         await remove_stock(); // ----------------------------------------------------------- Insert the product to the pantry
