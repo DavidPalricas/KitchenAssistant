@@ -69,7 +69,7 @@
           transform: translateX(-50%);
           width: 90%;
           max-width: 500px;
-          max-height: 1000px;
+          max-height: 500px;
           overflow-y: auto;
           /* Permite Scroll Vertical */
       }
@@ -2405,6 +2405,7 @@
                                         console.log("ASP VALUE: ", parts);
                                         if(parts[0] == "0"){
                                             sendToVoice("O produto " + product["name"] + " não se encontra na despensa"); // ---------------------- SEND THE VOICE TO THE USER
+                                            addMsgToChat("Assistente", "O produto " + product["name"] + " não se encontra na despensa"); // --- Add the message to the chat
                                         }else{
                                             answer = "Tem "+ parts[0]+ " " + parts[1]+ " de "+ product["name"] + " na despensa";
                                             sendToVoice(answer); // ---------------------- SEND THE VOICE TO THE USER
