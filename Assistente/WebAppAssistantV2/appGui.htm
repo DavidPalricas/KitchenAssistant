@@ -2156,10 +2156,12 @@
                                         let quantity = c.nlu.quantity; // -------------------------------------------- Get the quantity
                                         if(quantity)
                                             product["quantity"] = quantity; // ----------------------------------------- Store the quantity
-                                        let unit = c.nlu.unit; // ------------------------------------------------------ Get the unit
-                                        if(unit){
-                                            unit = await get_product_unit(unit)
-                                            product["unit"] = unit["message"]; // --------------------------------------------------- Store the unit
+                                        let unit = c.nlu.audioReconized; // ------------------------------------------------------ Get the unit
+                                        unit = await get_product_unit(unit)
+                                        if(unit["message"] != null){
+                                            
+                                            console.log("UNIT: ------------------> ", unit);
+                                            product["unit"] = await unit["message"]; // --------------------------------------------------- Store the unit
                                         }else
                                             product["unit"] = "uni"; // -------------------------------------------------- Default unit
                                         // name && quantity
@@ -2273,10 +2275,11 @@
                                         let quantity_rmv = c.nlu.quantity; // -------------------------------------------- Get the quantity
                                         if(quantity_rmv)
                                             product["quantity"] = quantity_rmv; // ----------------------------------------- Store the quantity
-                                        let unit_rmv = c.nlu.unit; // ------------------------------------------------------ Get the unit
-                                        if(unit_rmv){
-                                            unit_rmv = await get_product_unit(unit_rmv)
-                                            product["unit"] = unit_rmv["message"]; // --------------------------------------------------- Store the unit
+                                        let unit_rmv = c.nlu.audioReconized; // ------------------------------------------------------ Get the unit
+                                        unit_rmv = await get_product_unit(unit_rmv)
+                                        if(unit_rmv["message"] != null){
+                                            
+                                            product["unit"] = await unit_rmv["message"]; // --------------------------------------------------- Store the unit
                                         }else
                                             product["unit"] = "uni"; // -------------------------------------------------- Default unit
                                         // name && quantity
@@ -2427,10 +2430,11 @@
                                         if(add_pdb_flag){
                                             console.log("GET QUANTITY INGREDIENT -----------------------------");
                                             product["quantity"] = c.nlu.quantity; // ------------------------------------- Get & Store the quantity
-                                            let unidade = c.nlu.unit; // ------------------------------------------------- Get the unit
-                                            if(unidade){
-                                                unidade = await get_product_unit(unidade);
-                                                product["unit"] = unidade["message"]; // -------------------------------------------- Store the unit
+                                            let unidade = c.nlu.audioReconized; // ------------------------------------------------- Get the unit
+                                            unidade = await get_product_unit(unidade);
+                                            if(unidade["message"] != null){
+                                                
+                                                product["unit"] = await unidade["message"]; // -------------------------------------------- Store the unit
                                             }else
                                                 product["unit"] = "uni"; // ---------------------------------------------- Infer & Store the unit
                                             /*let name = c.nlu.audioReconized; // ---------------------------------------------------- Get the ingredient
