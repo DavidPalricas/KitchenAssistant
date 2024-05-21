@@ -460,7 +460,7 @@
         */
         let email = {
             from_addr: "kitchen_assistant@outlook.com",
-            to_addr: "inesaguia@ua.pt",
+            to_addr: "davidpalricas@ua.pt",
             subject: null,
             body: null,
             smtp_server: "smtp-mail.outlook.com",
@@ -1438,7 +1438,7 @@
             
                         try {
                             product_info= await getProduct_scanner(frame); //[product_name, product_quantity, product_image]
-                            scanner_text.innerHTML = "Lendo o côdigo de barras do produto... " 
+                            scanner_text.innerHTML = "A ler o côdigo de barras do produto... " 
                         } catch (err) {
                             console.error('Error getting product scanner: ', err);
                             reject(err);
@@ -2225,7 +2225,7 @@
                                         break;
                                     case "add_pantry_barcode":
                                         console.log("ADD PANTRY BARCODE -----------------------------");
-                                        sendToVoice("Passe o código de barras do produto na câmera par lê-lo"); // ---------------------- SEND THE VOICE TO THE USER
+                                        sendToVoice("Passe o código de barras do produto na câmera"); // ---------------------- SEND THE VOICE TO THE USER
                                         clearContent(); // -------------------------------------------------------- Clear the content
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
