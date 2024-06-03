@@ -392,6 +392,13 @@
               <!-- Mensagens do chat aparecerão aqui-->
   
           </div>
+
+          <div class="card-footer">
+            <input id="chat-input" type="text" class="form-control" placeholder="Digite sua mensagem">
+
+        </div>
+
+          
   
        
       </div>
@@ -484,6 +491,7 @@
         mmiCli_Out.onOpen.on(socketOpenHandler);
         mmiCli_Out.openSocket();
 
+
         /**
             * PT: Manipula o evento de abertura de conexão do socket.
             * Este manipulador de evento é chamado quando um evento 'open' ocorre no socket. Ele verifica
@@ -505,6 +513,8 @@
             }
         }
         
+
+
         /**
             * PT: Abre a caixa de Ajuda
             * EN: Open the Help Box
@@ -557,6 +567,28 @@
         // Append the message to the chat
         $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
         }
+
+        function Get_user_text(){
+            $("#chat-input").keypress(function(event) {
+            if (event.which === 13) { 
+            
+                let message = $(this).val(); 
+                $(this).val("");
+
+                addMsgToChat("Você", message); 
+
+                mmiCli_13.sendToIM(new LifeCycleEvent("CHAT_ANSWER", "IM", "text-1", "ctx-1").
+                                    doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+                                    setValue(JSON.stringify({text: message})))); // ------------ Call the function to get the quantity
+
+                
+
+               
+
+            }
+
+        });
+       }
 
         /**
             * PT: Limpa o conteúdo da página
@@ -803,6 +835,8 @@
             table.appendChild(tbody);
             container.appendChild(table);
         }
+
+        
         
         /**
             * PT: Adiciona uma tabela com as Receitas à página
@@ -1877,6 +1911,10 @@
             "requeijão", "iogurte", "natas", "natas de soja", "mascarpone", "ricotta", "ovos"
         ];
 
+        $(document).ready(function() {
+            Get_user_text();
+        });
+
         /**
             * [PT] Gere as mensagens recebidas através do WebSocket e responde com ações específicas baseadas na intenção detectada (switch case).
             * Esta função processa dados recebidos, verificando o conteúdo de cada mensagem. Dependendo da intenção identificada (`intent`),
@@ -1950,10 +1988,15 @@
             *  - case "default": [PT] Responder com uma mensagem padrão
             *                    [EN] Respond with a default message
         */
+        
+
+
         async function im1MessageHandler(data){
 
             console.log("--------------im1MessageHandler---------------");
+            
 
+         
             if(data != null && data!="RENEW" && data!="OK"){
                 //console.log(data);
                 var content = $(data).find("emma\\:interpretation").first().text().trim();
@@ -2606,6 +2649,10 @@
 
         // code to send a message to the IM -------------------------------------------------------------------
         var mmiCli_12 = new MMIClient(null, "https://"+host+":8000/IM/USER1/SPEECH_ANSWER");
+
+
+
+        var  mmiCli_13 = new MMIClient(null, "https://"+host+":8000/IM/USER1/CHAT_ANSWER");
 
 
         //mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").

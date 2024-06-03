@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
       body {
@@ -62,6 +63,24 @@
         left: 44%;
       }
 
+      #toggle-mic{
+        height:120px;
+        width:120px;
+        border-radius: 100px;
+        border: none;
+        background-color: #4F5D73;
+        color: burlywood;
+        font-style: italic;
+        font-size: 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+
+      }
+
+
+
     
     </style>
   </head>
@@ -73,6 +92,8 @@
       -->
 
     <button id="startInteraction">Iniciar Interação</button>
+
+    <button id = "toggle-mic"> <i class="fa-solid fa-microphone fa-3x"></i></button>
 
 
     <div class="bottomNav">
@@ -141,6 +162,8 @@
 
     <script type="module">
 
+       let mic_on = true;
+
         document.addEventListener('DOMContentLoaded', function() {
           let interaction_button = document.getElementById('startInteraction');
           interaction_button.addEventListener('click', function() {
@@ -164,6 +187,30 @@
            
      
 
+        });
+
+
+        const toggle_mic = document.getElementById('toggle-mic');
+
+        toggle_mic.addEventListener('click', function() {
+          const mic_container = document.getElementsByClassName("container");
+          const init = document.getElementById('startInteraction');
+          if (mic_on) {
+        
+            toggle_mic.innerHTML = '<i class="fa-solid fa-microphone-slash fa-3x"></i>';
+            
+         
+            mic_on = false;
+
+         
+         
+          } else {
+        
+            toggle_mic.innerHTML = '<i class="fa-solid fa-microphone fa-3x"></i>';
+            mic_on = true;
+          
+          
+          }
         });
 
 
@@ -747,7 +794,7 @@
         }
 
 
-        // como comunicar inversamente com o APPGUI ------------------> TEMOS DE FAZER ISTO DE FORMA A ATIVAR O MICRO
+        // como comunicar inversamente com o APPGUI ------------------> VIA MICRO
         var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out1 = null;
         mmiCli_Out1 = new MMIClientSocket(mmiCli_Out_add + "ASSISTANT_ANSWER");
@@ -760,6 +807,41 @@
             run_delay();
         }
         // -------------------------------------------------------------------------------------------------------------
+        
+
+        
+        // como comunicar inversamente com o APPGUI ------------------> VIA CHA
+        var mmiCli_Out_add2 = "wss://"+host+":8005/IM/USER1/";
+        var mmiCli_Out2 = null;
+        mmiCli_Out2 = new MMIClientSocket(mmiCli_Out_add2 + "ASSISTANT_ANSWER_CHAT");
+        mmiCli_Out2.onMessage.on(im1MessageHandler2);
+        mmiCli_Out2.onOpen.on(socketOpenHandler);
+        mmiCli_Out2.openSocket();
+
+        function im1MessageHandler2(data){
+            /* Inicia o reconhecimento de fala
+            var message = {'intent':'greet', 'audioReconized': final_transcript }
+            var messaget = btoa(unescape(encodeURIComponent(final_transcript)));
+            var result = {  "text": messaget };
+            console.log("CHAT " + result);
+            */
+
+            var content = $(data).find("emma\\:interpretation").first().text().trim();
+            content = content.substring(1, content.length-1); // Remove { e }
+
+            let index = content.indexOf(":");
+
+            content = content.substring(index+2, content.length-1); // Obtem tudo depois de "text:" e remove as aspas
+
+            console.log("CONTEUDO DA CHAT BOX " + content);
+
+          sendMMI(content);
+            
+
+         
+        }
+        // -------------------------------------------------------------------------------------------------------------
+
         
         function delay(ms) {
           return new Promise(resolve => setTimeout(resolve, ms));
