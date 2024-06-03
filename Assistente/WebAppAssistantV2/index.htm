@@ -198,15 +198,19 @@
           if (mic_on) {
         
             toggle_mic.innerHTML = '<i class="fa-solid fa-microphone-slash fa-3x"></i>';
-            
+
+            init.style.display = "none";
+
+            mic_container[0].style.display = "none";
+
          
             mic_on = false;
 
-         
-         
           } else {
         
             toggle_mic.innerHTML = '<i class="fa-solid fa-microphone fa-3x"></i>';
+            init.style.display = "block";
+            mic_container[0].style.display = "block";
             mic_on = true;
           
           
