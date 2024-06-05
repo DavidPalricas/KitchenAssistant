@@ -261,13 +261,13 @@
   <body>
     <h1 style="background-color: #4F5D73; margin: 0;">CASA VIVA + APP GUI</h1>
     
-    <!-- PUSH TO TALK Button -->
+    <!-- PUSH TO TALK Button 
     <button id="push-button" type="button" class="btn btn-sucess">
         PUSH TO TALK
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-soundwave" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5m-2 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-6 1.5A.5.5 0 0 1 5 6v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m-10 1A.5.5 0 0 1 3 7v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5m12 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5"/>
         </svg>
-    </button>
+    </button> -->
 
     <!-- HELP Button -->
     <button id="help-button" type="button" class="btn btn-sucess">
@@ -290,7 +290,6 @@
                   <ul>
                       <li>Viva</li>
                       <li>Olá, Assistente</li>
-                      <li>Mais exemplos de cumprimentos em linguagem natural aceites</li>
                   </ul>
               </li>
               <li><strong>Solicitação de Receitas:</strong>
@@ -307,42 +306,89 @@
                               <li>Mostra-me uma receita de [peixe]</li>
                           </ul>
                       </li>
-                      <li>Mais exemplos de solicitação em linguagem natural aceites</li>
                   </ul>
               </li>
-              <li><strong>Iniciar a preparação da Receita (previamente escolhida):</strong>
-                  <ul>
-                      <li>Vamos começar a cozinhar</li>
-                      <li>Vamos começar com a receita</li>
-                      <li>Mais exemplos de Iniciar em linguagem natural aceites</li>
-                  </ul>
+              <li><strong>RECEITA:</strong>
+                <ul>
+                    <li><strong>Iniciar a preparação da Receita (previamente escolhida):</strong>
+                        <ul>
+                            <li>Vamos começar a cozinhar</li>
+                            <li>Vamos começar com a receita</li>
+                        </ul>
+                    </li>
+                    <li><strong>Prosseguir para o próximo passo:</strong>
+                        <ul>
+                            <li>Avança para o próximo passo</li>
+                            <li>Acabei este passo dá-me o próximo</li>
+                        </ul>
+                    </li>
+                    <li><strong>Repetir um passo:</strong>
+                        <ul>
+                            <li>Repete por favor</li>
+                            <li>Não percebi, podes repetir</li>
+                        </ul>
+                    </li>
+                </ul>
               </li>
-              <li><strong>Prosseguir para o próximo passo:</strong>
-                  <ul>
-                      <li>Avança para o próximo passo</li>
-                      <li>Acabei este passo dá-me o próximo</li>
-                      <li>Mais exemplos de Avançar em linguagem natural aceites</li>
-                  </ul>
+              <li><strong>DESPENSA:</strong>
+                <ul>
+                    <li><strong>Adicionar:</strong>
+                        <ul>
+                            <li>Adiciona 3 kg de Arroz à despensa!</li>
+                            <li>[BARCODE] Lê o código de barras e adiciona à despensa!</li>
+                        </ul>
+                    </li>
+                    <li><strong>Remover:</strong>
+                        <ul>
+                            <li>Remove 3 ovos da despensa.</li>
+                            <li>[BARCODE] Remove este produto da despensa!</li>
+                        </ul>
+                    </li>
+                    <li><strong>Remover TUDO:</strong>
+                        <ul>
+                            <li>Limpa a despensa.</li>
+                            <li>Usei todo o Açucar.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Mostrar:</strong>
+                        <ul>
+                            <li>Mostra-me o que tenho na despensa.</li>
+                            <li>Diz-me o que tenho para cozinhar.</li>
+                        </ul>
+                    </li>
+                </ul>
               </li>
-              <li><strong>Repetir um passo:</strong>
-                  <ul>
-                      <li>Repete por favor</li>
-                      <li>Não percebi, podes repetir</li>
-                      <li>Mais exemplos de Repetir em linguagem natural aceites</li>
-                  </ul>
+              <li><strong>Lista de Compras:</strong>
+                <ul>
+                    <li><strong>Adicionar:</strong>
+                        <ul>
+                            <li>Adiciona Arroz à lista de compras</li>
+                            <li>Acrescenta na lista de compras Azeite.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Limpar a lista:</strong>
+                        <ul>
+                            <li>Comprei todos os ingredientes da lista de compras.</li>
+                            <li>Comprei tudo o que faltava.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Enviar por email:</strong>
+                        <ul>
+                            <li>Envia-me a lista de compras por email.</li>
+                        </ul>
+                    </li>
+                </ul>
               </li>
               <li><strong>Desativação do Assistente:</strong>
                   <ul>
                       <li>Adeus assistente</li>
                       <li>tchau assistente</li>
-                      <li>Mais exemplos de Despedida em linguagem natural aceites</li>
                   </ul>
               </li>
               <li><strong>BONUS : PIADAS</strong>
                   <ul>
                       <li>Conta-me um piada</li>
                       <li>Conta-me uma anedota</li>
-                      <li>Mas exemplos de Pedido de Piadas em linguagem natural aceites</li>
                   </ul>
               </li>
           </ol>
@@ -577,8 +623,8 @@
             });
         }
 
-        // Add event listener to the button
-        document.getElementById('push-button').addEventListener('click', handleButtonPress);
+        // Add event listener to the button _ TESTING FUTURE WORK
+        //document.getElementById('push-button').addEventListener('click', handleButtonPress);
 
         // Function to be called when the button is pressed
         function handleButtonPress() {
