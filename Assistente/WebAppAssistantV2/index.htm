@@ -799,7 +799,8 @@
 
 
         // como comunicar inversamente com o APPGUI ------------------> VIA MICRO
-        var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
+        let counter = 0;
+        //var mmiCli_Out_add = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out1 = null;
         mmiCli_Out1 = new MMIClientSocket(mmiCli_Out_add + "ASSISTANT_ANSWER");
         mmiCli_Out1.onMessage.on(im1MessageHandler1);
@@ -808,16 +809,24 @@
 
         function im1MessageHandler1(data){
             // Inicia o reconhecimento de fala
-            run_delay();
+            if(counter == 0){
+              console.log("Skipping socket opening...");
+              counter++;
+            }else{
+              run_delay();
+              
+            }
+            
         }
         // -------------------------------------------------------------------------------------------------------------
         
 
         
         // como comunicar inversamente com o APPGUI ------------------> VIA CHA
-        var mmiCli_Out_add2 = "wss://"+host+":8005/IM/USER1/";
+        let counter1 = 0;
+        //var mmiCli_Out_add2 = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out2 = null;
-        mmiCli_Out2 = new MMIClientSocket(mmiCli_Out_add2 + "ASSISTANT_ANSWER_CHAT");
+        mmiCli_Out2 = new MMIClientSocket(mmiCli_Out_add + "ASSISTANT_ANSWER_CHAT");
         mmiCli_Out2.onMessage.on(im1MessageHandler2);
         mmiCli_Out2.onOpen.on(socketOpenHandler);
         mmiCli_Out2.openSocket();
@@ -829,31 +838,47 @@
             var result = {  "text": messaget };
             console.log("CHAT " + result);
             */
+            if(counter1 == 0){
+              console.log("Skipping socket opening...");
+              counter1++;
+            }else{
+              var content = $(data).find("emma\\:interpretation").first().text().trim();
+              content = content.substring(1, content.length-1); // Remove { e }
 
-            var content = $(data).find("emma\\:interpretation").first().text().trim();
-            content = content.substring(1, content.length-1); // Remove { e }
+              let index = content.indexOf(":");
 
-            let index = content.indexOf(":");
+              content = content.substring(index+2, content.length-1); // Obtem tudo depois de "text:" e remove as aspas
 
-            content = content.substring(index+2, content.length-1); // Obtem tudo depois de "text:" e remove as aspas
+              console.log("CONTEUDO DA CHAT BOX " + content);
 
-            console.log("CONTEUDO DA CHAT BOX " + content);
+              sendMMI(content);
 
-          sendMMI(content);
+              
+            }
+
+            
         }
         // -------------------------------------------------------------------------------------------------------------
 
         // como comunicar inversamente com o APPGUI ------------------> PUSH TO TALK
-        var mmiCli_Out_add3 = "wss://"+host+":8005/IM/USER1/";
+        let counter2 = 0;
+        //var mmiCli_Out_add3 = "wss://"+host+":8005/IM/USER1/";
         var mmiCli_Out3 = null;
-        mmiCli_Out3 = new MMIClientSocket(mmiCli_Out_add3 + "INDEX_PUSH_TO_TALK");
+        mmiCli_Out3 = new MMIClientSocket(mmiCli_Out_add + "INDEX_PUSH_TO_TALK");
         mmiCli_Out3.onMessage.on(im1MessageHandler3);
         mmiCli_Out3.onOpen.on(socketOpenHandler);
         mmiCli_Out3.openSocket();
 
         function im1MessageHandler3(data){
           console.log("PUSH TO TALK");
-          mic_start_caption()
+          if(counter == 0){
+            console.log("Skipping socket opening...");
+            counter2++;
+          }else{
+            mic_start_caption()
+            
+          }
+          
         }
         // -------------------------------------------------------------------------------------------------------------
 
