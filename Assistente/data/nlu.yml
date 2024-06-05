@@ -87,11 +87,14 @@ nlu:
   examples: |
     - Quero uma receita de [bacalhau](receita)
     - Quero 1 receita de [lasanha](receita)
-    - Hoje quero fazer receita de [lasanha](receita)
-    - Quero fazer receita de [pasta](receita)
-    - Quero fazer receita de [bolo](receita)
+    - Hoje quero fazer uma receita de [lasanha](receita)
+    - Hoje quero fazer 1 receita de [lasanha](receita)
+    - Quero fazer uma receita de [pasta](receita)
+    - Quero fazer 1 receita de [bolo](receita)
     - Mostra-me uma receita de [peixe](receita)
     - Mostra-me 1 receita de [carne](receita)
+    - Dá-me uma receita de [bacalhau](receita)
+    - Dá-me 1 receita de [bacalhau](receita)
 - regex: receita
   examples: |
     - (?<=de\s)(\S+(?:\s+\S+)*)
@@ -168,8 +171,8 @@ nlu:
   examples: |
     - Avança para o próximo passo
     - Podes avançar
-    - Acabei este passo da-me o proximo
-    - Passa para o proximo passo
+    - Acabei este passo dá-me o próximo
+    - Passa para o próximo passo
     - Quero avançar
     - Quero o próximo passo
     - Quero o passo seguinte
@@ -267,6 +270,8 @@ nlu:
     - Comprei [3](quantidade) [kilos](unidade) de [peitos de frango](ingrediente)
     - Trouxe [peitos de frango](ingrediente) do supermercado
     - Trouxe [3](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) do supermercado
+    - Acrescenta [3](quantidade) [ovos](ingrediente) à despensa
+    - Acrescenta [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) à despensa
 
 #- regex: quantidade
 #  examples: |
@@ -281,16 +286,18 @@ nlu:
   examples: |
     - Lê o código de barras e adiciona à despensa
     - Lê o código de barras deste produto
-    - Passe este produto
+    - Passa este produto
     - Adiciona este produto à despensa
-   
+    - Acrescenta este produto à despensa
+
 # remove ingredients from the pantry by scanning the barcode
 - intent: remove_pantry_barcode
   examples: |
     - Lê o código de barras e remove da despensa
     - Lê o código de barras deste produto e remove da despensa
-    - Passe este produto e remove da despensa
+    - Passa este produto e remove da despensa
     - Remove este produto da despensa
+    - Retira este produto da despensa
 
 # Remove ingredients from the pantry
 - intent: remove_pantry
@@ -312,6 +319,9 @@ nlu:
     - Comi [1](quantidade) [cebola](ingrediente)
     - Comi [250](quantidade) [gramas](unidade) de [açúcar](ingrediente)
     - Comi [3](quantidade) [maçãs](ingrediente)
+    - Retira [3](quantidade) [ovos](ingrediente) da despensa
+    - Retira [2](quantidade) [kilos](unidade) de [peitos de frango](ingrediente) da despensa
+
 
 # Remove all ingredients from the pantry
 - intent: remove_all_pantry
@@ -326,6 +336,8 @@ nlu:
     - Comi toda a [alface](ingrediente)
     - Usei as [maçãs](ingrediente) todas
     - Usei a [alface](ingrediente) toda
+    - Acabei com a [alface](ingrediente) toda
+    - Acabei com o [leite](ingrediente) todo
 
 # Remove all ingredients from the GROCERY LIST
 - intent: remove_all_shopping_list
@@ -344,6 +356,8 @@ nlu:
     - Adiciona [ovos](ingrediente) à lista de compras
     - Adiciona [peitos de frango](ingrediente) à lista de compras
     - Acrescenta na lista de compras [cebola](ingrediente)
+    - Coloca [peitos de frango](ingrediente) na lista de compras
+
 
 # add ingridiente that we didnt have to make a recipe to the shopping list
 #- intent: add_recipe_ingredients_pantry
@@ -371,6 +385,7 @@ nlu:
     - Diz-me o que tenho na lista de compras
     - Diz-me o que tenho para comprar
     - Diz-me o que tenho para fazer a receita 
+    - Mostra-me a lista de compras
 
 # send the shopping list to the email
 - intent: send_shopping_list
@@ -382,6 +397,7 @@ nlu:
     - Envia a lista de compras para o meu email, por favor
     - Envia a lista de compras para o email, por favor
     - Envia a lista de compras para o meu email, por favor
+    - Envia-me a lista de compras para o email
     
 # check if a ingredient is in the pantry
 - intent: ask_specific_pantry
@@ -394,6 +410,8 @@ nlu:
     - Verifica se tenho [ovos](ingrediente) na despensa
     - Quantos [ovos](ingrediente) tenho
     - Quantas [alfaces](ingrediente) tenho
+    - Há [ovos](ingrediente) na despensa
+    - Existem [ovos](ingrediente) na despensa
 
 # ---------------------------------------------------------------------------------------------- [COMMON]
 # get quantity of an ingredient
