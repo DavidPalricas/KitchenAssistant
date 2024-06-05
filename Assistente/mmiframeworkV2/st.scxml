@@ -264,6 +264,11 @@
 					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, 'SPEECHINCONTROL', mmi:newRequestId(contextId), currAction, Action)}" />
 					<send event="mmi:startRequest" target="SPEECHINCONTROL" targettype="MC" namelist="startRequest" />
 				</if>
+				<!-- ENDPOINT PARA COMUNICAR COM O APPGUI  -->
+				<if cond="${_eventdata.sourceMC eq 'SPEECH_ANSWER'}">
+					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, 'ASSISTANT_ANSWER', mmi:newRequestId(contextId), currAction, Action)}" />
+					<send event="mmi:startRequest" target="ASSISTANT_ANSWER" targettype="MC" namelist="startRequest" />
+				</if>
 				<!-- ENDPOINT PARA COMUNICAR COM O INDEX(IM) VIA VOZ -->
 				<if cond="${_eventdata.sourceMC eq 'SPEECH_ANSWER'}">
 					<commons:var name="startRequest" expr="${mmi:newStartRequest(contextId, source, 'ASSISTANT_ANSWER', mmi:newRequestId(contextId), currAction, Action)}" />

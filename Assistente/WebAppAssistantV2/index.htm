@@ -812,6 +812,7 @@
             if(counter == 0){
               console.log("Skipping socket opening...");
               counter++;
+              console.log("MIC counter: "+ counter);
             }else{
               run_delay();
               
@@ -853,10 +854,9 @@
 
               sendMMI(content);
 
-              
+              counter1++;
+              console.log("CHAT counter: "+ counter1);
             }
-
-            
         }
         // -------------------------------------------------------------------------------------------------------------
 
@@ -870,10 +870,11 @@
         mmiCli_Out3.openSocket();
 
         function im1MessageHandler3(data){
-          console.log("PUSH TO TALK");
-          if(counter == 0){
+          
+          if(counter2 == 0){
             console.log("Skipping socket opening...");
             counter2++;
+            console.log("PUSH TO TALK counter: "+ counter2);
           }else{
             mic_start_caption()
             

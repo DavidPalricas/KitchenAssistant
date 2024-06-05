@@ -276,16 +276,6 @@
             <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
         </svg>
     </button>
-
-    <!-- MIC FEEDBACK Button -->
-    <button id="mic-button" type="button" class="btn btn-sucess">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
-            <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0z"/>
-            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
-        </svg>
-        
-        <div class="recognized" id="transcript"></div>
-    </button>
     
     <!-- Help Pop-up Window -->
     <div id="help-box" class="card position-fixed shadow d-none">
@@ -594,7 +584,7 @@
         function handleButtonPress() {
             mmiCli_14.sendToIM(new LifeCycleEvent("PUSH_TALK", "IM", "text-1", "ctx-1").
             doStartRequest(new EMMA("text-", "text", "command", 1, 0).
-            setValue(JSON.stringify({text: "PUSH TO TALK"})))); // ------------ Call the function to get the quantity
+            setValue(JSON.stringify({message: "PUSH TO TALK"})))); // ------------ Call the function to get the quantity
         }
 
         /**
@@ -2209,6 +2199,7 @@
                                             product["quantity"] = quantity; // ----------------------------------------- Store the quantity
                                         let unit = c.nlu.audioReconized; // ------------------------------------------------------ Get the unit
                                         unit = await get_product_unit(unit)
+                                        console.log("UNIT: ------------------> ", unit);
                                         if(unit["message"] != null){
                                             
                                             console.log("UNIT: ------------------> ", unit);

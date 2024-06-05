@@ -169,7 +169,8 @@ def get_unit(sentence):
     
     @note Caso não seja encontrada uma unidade de medida composta, a função tentará identificar unidades de medida simples.
     """
-    words = sentence.split() # --------------------------------------- Split the sentence into words
+    lower = sentence.lower()
+    words = lower.split() # --------------------------------------- Split the sentence into words
     multi_word_units = [unit for unit in unit_list if ' ' in unit] # ----- Get multi-word units
 
     # ---------------------------------------------------------------- Check for multi-word units
