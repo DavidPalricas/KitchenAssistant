@@ -840,13 +840,31 @@
             console.log("CONTEUDO DA CHAT BOX " + content);
 
           sendMMI(content);
-            
-
-         
         }
         // -------------------------------------------------------------------------------------------------------------
 
-        
+        // como comunicar inversamente com o APPGUI ------------------> PUSH TO TALK
+        var mmiCli_Out_add3 = "wss://"+host+":8005/IM/USER1/";
+        var mmiCli_Out3 = null;
+        mmiCli_Out3 = new MMIClientSocket(mmiCli_Out_add3 + "INDEX_PUSH_TO_TALK");
+        mmiCli_Out3.onMessage.on(im1MessageHandler3);
+        mmiCli_Out3.onOpen.on(socketOpenHandler);
+        mmiCli_Out3.openSocket();
+
+        function im1MessageHandler3(data){
+          console.log("PUSH TO TALK");
+          mic_start_caption()
+        }
+        // -------------------------------------------------------------------------------------------------------------
+
+        /* FUNCTION TO START CAPTURING */
+        function mic_start_caption(){
+          recognition.start();
+          circle.animate(20, 0, 'now').attr({ fill: '#00a431' });
+          transcriptDiv.textContent = "...";
+        }
+
+        /* FUNCTION TO INTRODUCE A DELAY BEFORE ASSISTANT TURNS MIC ON */
         function delay(ms) {
           return new Promise(resolve => setTimeout(resolve, ms));
         }

@@ -214,31 +214,8 @@
           color: black; /* Ensures that <li> elements within .card-body are black */
       }
 
-      #help-button {
-        width: 40px;
-        height: 40px;
-        position: fixed; /* Mantém o botão fixo na tela */
-        bottom: 96%; /* Posiciona o botão 20px acima da parte inferior da tela */
-        left: 98%; /* Inicia o botão na metade da largura da tela */
-        transform: translateX(-50%); /* Desloca o botão para esquerda em 50% de sua própria largura, centralizando-o horizontalmente */
-        z-index: 1000; /* Garante que o botão fique acima de outros elementos da página */
-        background-color: burlywood;
-        color: #4F5D73;
-        border: none;
-        cursor: pointer;
-        border-radius: 10%;
-      }
 
-      #help-button:hover {
-        background-color:#4F5D73;
-        border: 2px solid burlywood !important;
-        color: burlywood !important;
-      }
-
-      #help-button:hover .fa-message{
-        color: burlywood !important;
-      }
-        #webcam-container {
+      #webcam-container {
         margin: auto;
         width: 50%;
     }
@@ -273,6 +250,10 @@
        
     }
 
+    #mic-button {
+        justify-content: center;
+        
+    }
       
     </style>
 
@@ -280,9 +261,30 @@
   <body>
     <h1 style="background-color: #4F5D73; margin: 0;">CASA VIVA + APP GUI</h1>
     
-    <!-- Help Button -->
-    <button id="help-button" type="button" class="bi bi-app">
-      <i class="fa fa-info fa-2x"></i>
+    <!-- PUSH TO TALK Button -->
+    <button id="push-button" type="button" class="btn btn-sucess">
+        PUSH TO TALK
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-soundwave" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5m-2 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-6 1.5A.5.5 0 0 1 5 6v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m-10 1A.5.5 0 0 1 3 7v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5m12 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5"/>
+        </svg>
+    </button>
+
+    <!-- HELP Button -->
+    <button id="help-button" type="button" class="btn btn-sucess">
+        INFO
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
+            <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
+        </svg>
+    </button>
+
+    <!-- MIC FEEDBACK Button -->
+    <button id="mic-button" type="button" class="btn btn-sucess">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
+            <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0z"/>
+            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
+        </svg>
+        
+        <div class="recognized" id="transcript"></div>
     </button>
     
     <!-- Help Pop-up Window -->
@@ -568,6 +570,7 @@
         $("#chat-messages").append(`<div><strong class="sender">${sender}:</strong> <span class="message">${message}</span></div>`);
         }
 
+        
         function Get_user_text(){
             $("#chat-input").keypress(function(event) {
             if (event.which === 13) { 
@@ -580,15 +583,19 @@
                 mmiCli_13.sendToIM(new LifeCycleEvent("CHAT_ANSWER", "IM", "text-1", "ctx-1").
                                     doStartRequest(new EMMA("text-", "text", "command", 1, 0).
                                     setValue(JSON.stringify({text: message})))); // ------------ Call the function to get the quantity
+                }
+            });
+        }
 
-                
+        // Add event listener to the button
+        document.getElementById('push-button').addEventListener('click', handleButtonPress);
 
-               
-
-            }
-
-        });
-       }
+        // Function to be called when the button is pressed
+        function handleButtonPress() {
+            mmiCli_14.sendToIM(new LifeCycleEvent("PUSH_TALK", "IM", "text-1", "ctx-1").
+            doStartRequest(new EMMA("text-", "text", "command", 1, 0).
+            setValue(JSON.stringify({text: "PUSH TO TALK"})))); // ------------ Call the function to get the quantity
+        }
 
         /**
             * PT: Limpa o conteúdo da página
@@ -2647,12 +2654,15 @@
         
         
 
-        // code to send a message to the IM -------------------------------------------------------------------
+        // code to send a message to the IM -----------------------------------------------------------AWNSER------
         var mmiCli_12 = new MMIClient(null, "https://"+host+":8000/IM/USER1/SPEECH_ANSWER");
 
 
-
+        // code to send a message to the IM -------------------------------------------------------------CHAT------
         var  mmiCli_13 = new MMIClient(null, "https://"+host+":8000/IM/USER1/CHAT_ANSWER");
+
+        // code to send a message to the IM -----------------------------------------------------PUSH-TO-TALK------
+        var  mmiCli_14 = new MMIClient(null, "https://"+host+":8000/IM/USER1/PUSH_TALK");
 
 
         //mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
