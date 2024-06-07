@@ -505,7 +505,7 @@
         */
         let email = {
             from_addr: "kitchen_assistant@outlook.com",
-            to_addr: "pedrocarneiro@ua.pt",
+            to_addr: "davidpalricas@ua.pt",
             subject: null,
             body: null,
             smtp_server: "smtp-mail.outlook.com",
@@ -2321,6 +2321,7 @@
                                         add_pdb_flag = true; // ------------------------------------------------------ Set the flag to true
                                         await takeSnapshot(); // ----------------------------------------------------- Read the barcode
                                         sendToVoice("O produto foi lido com sucesso, indique a data de validade"); //- SEND THE VOICE TO THE USER
+                                        addMsgToChat("Assistente","O produto foi lido com sucesso, indique a data de validade");
                                         mmiCli_12.sendToIM(new LifeCycleEvent("SPEECH_ANSWER", "IM", "text-1", "ctx-1").
                                             doStartRequest(new EMMA("text-", "text", "command", 1, 0).
                                             setValue(JSON.stringify({text: "Get Expiration Date"})))); // ------------ Call the function to get the expiration date
